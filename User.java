@@ -1,9 +1,19 @@
-public class User {
-    String networkId;
-    String password;
-    String faculty;
+enum accountType{Staff, Student}
 
-    public boolean changePassword(){
-        
+public class User {
+    public accountType status;
+    public String userID; 
+    public String name;
+    public String email;
+    public String passHash;
+    public String faculty;
+
+    public User(String name, String email, String faculty, String passHash){
+        this.name = name;
+        this.email = email;
+        this.faculty = faculty;
+        this.passHash = passHash;
+        this.userID = email.split("@")[0]; //userID is the characters before the '@' in the email address.
+        this.status = email.split("@")[1].startsWith("e") ? accountType.Student : accountType.Staff; //if the character after the '@' is 'e', then it is a student.
     }
 }
