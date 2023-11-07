@@ -1,11 +1,12 @@
 import java.util.Scanner;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class LoginApp{
 
     //hashes the input string and returns the hash using SHA-256 hash algorithm
-    public static String sha256(String data){
+    public static String hash(String data){
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(data.getBytes());
@@ -24,6 +25,37 @@ public class LoginApp{
         }
     }
 
+    public static User validateUser(String userID, String password) throws IOException{
+        User[] userList = UserManager.getStaffStudents();
+        User foundUser = null;
+        for(User user : userList){
+            if(userID.equals(user.userID)){
+                foundUser = user;
+            }
+        }
+        if(foundUser == null){
+            System.out.println("User not found. Try again.");
+            return null;
+        }
+        if(!foundUser.passHash.equals(hash(password))){
+            System.out.println("Incorrect password. Try again");
+            return null;
+        }
+        return foundUser;
+    }
+
+    public static void displayStudentFunctions(){
+
+    }
+
+    public static void displayCommiteeFunctions(){
+
+    }
+
+    public static void displayStaffFunctions(){
+
+    }
+
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println(
@@ -36,50 +68,33 @@ public class LoginApp{
         System.out.println("Camp Application And Management System");
         System.out.println("Login to get started.");
 
-        User userLoggedIn = null; //this variable stores the User that is currently logged in.
+        User userLoggedIn = null; //this variable stores the User object that is currently logged in.
 
         while(true){
             System.out.printf("UserID: ");
             String userInput = sc.nextLine();
             System.out.printf("Password: ");
             String passwInput = sc.nextLine();
-
-            User[] userList = UserManager.getStaffStudents();
-            for(User user : userList){
-                if(userInput.equals(user.userID)){
-                    userLoggedIn = user;
-                    break;
-                }
-            }
-
-            if(userLoggedIn == null){
-                System.out.println("User not found. Try again.");
-                continue;
-            }
-
-            if(!userLoggedIn.passHash.equals(sha256(passwInput))){
-                System.out.println("Incorrect password. Try again");
-                continue;
-            }
-            break;
+            userLoggedIn = validateUser(userInput, passwInput);
+            if(userLoggedIn != null)break;
         }
 
         System.out.println("Login successful.");
         System.out.printf("Welcome, %s! Logged in as: %s\n", userLoggedIn.name, userLoggedIn.status == accountType.Staff ? "Staff Member" : "Student");
         
-        //more functions to be added here depending on whether the user is a Student or Staff but i think this is ok for now.
+        //more functions to be added here depending on whether the user is a Student, Staff, or Camp Commitee Member but i think this is ok for now.
         while(true){
             System.out.println("What would you like to do?");
             System.out.println("1: Change password");
             System.out.println("0: Exit Program"); 
 
             int choice = sc.nextInt();
-            sc.nextLine(); //to remove the newline character from the carraige
+            sc.nextLine();
             switch (choice) {
                 case 1:
                     System.out.printf("Type your new password: ");
                     String newPassword = sc.nextLine();
-                    UserManager.changePassword(userLoggedIn, sha256(newPassword));
+                    UserManager.changePasswordHash(userLoggedIn, hash(newPassword));
                     System.out.println("Password changed!");
                     continue;
                 case 0:
@@ -90,5 +105,5 @@ public class LoginApp{
                     continue;
             }
         }
-    }  
+    }
 }

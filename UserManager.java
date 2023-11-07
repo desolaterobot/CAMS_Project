@@ -8,12 +8,7 @@ import java.util.Scanner;
 //since this is a very basic CSV reader, in order to create objects from CSV data, i assume we will be extedning this class to a class that can do that.
 //in order for this to work the data folder must be present in the same directory as this file
 
-class CSVreader{
-    //run this function to try the CSV reader.
-    public static void main(String[] a) throws IOException{
-        CSVreader.printData("data/camps.csv");
-    }
- 
+class CSVreader{ 
     //returns an array of strings, with each string a line from the csv file. excludes the headings.
     public static String[] getLines(String filepath) throws IOException{
         List<String> stringList = new ArrayList<>();
@@ -47,14 +42,15 @@ class CSVreader{
         }
     }
 
-    //appends a line at the bottom of the CSV file.
+    //appends a line at the bottom of the CSV file. used to add a data value into a CSV.
     public static void addLine(String filepath, String line) throws IOException{
         FileWriter fw = new FileWriter(filepath, true);
         fw.write(line + "\n");
         fw.close();
     }
 
-    //deletes a line according to the first entry of the line.
+    //DELETES a line according to the first entry of the line.
+    //linear search through the lines of the CSV file, then removes the line with the given first entry (usually the name of the item)
     public static void deleteLine(String filepath, String firstEntry) throws IOException{
         String[] lines = getLinesWithHeader(filepath);
         int index = 0;
@@ -78,7 +74,7 @@ class CSVreader{
         fw.close();
     }   
 
-    //change a line in a csv file according to the first entry
+    //MODIFY a line in a csv file according to the first entry
     public static void modifyLine(String filepath, String firstEntry, String newLine) throws IOException{
         String[] lines = getLinesWithHeader(filepath);
         int index = 0;
@@ -105,8 +101,7 @@ class CSVreader{
     }
 }
 
-//this data manager class converts CSV data to objects and vice versa
-
+//this user manager class converts CSV data to User objects
 public class UserManager extends CSVreader{
 
     private static User[] getUsers(String userfilepath) throws IOException{
@@ -121,14 +116,17 @@ public class UserManager extends CSVreader{
         return userList.toArray(userarray);
     }
 
+    //returns a User list of staff
     public static User[] getStaff() throws IOException{
         return getUsers("data/staff.csv");
     }
 
+    //returns a User list of students
     public static User[] getStudents() throws IOException{
         return getUsers("data/student.csv");
     }
 
+    //returns a User list of staff and students
     public static User[] getStaffStudents() throws IOException{
         List<User> userList = new ArrayList<User>();
         User[] arr1 = getUsers("data/staff.csv");
@@ -143,8 +141,8 @@ public class UserManager extends CSVreader{
         return userList.toArray(combinedArray);
     }
 
-    //changes the password hash entry of the user
-    public static void changePassword(User user, String newPassHash) throws IOException{
+    //changes the password hash entry of a user in the database
+    public static void changePasswordHash(User user, String newPassHash) throws IOException{
         String file;
         if(user.status == accountType.Staff){
             file = "data/staff.csv";
