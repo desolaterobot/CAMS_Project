@@ -102,7 +102,7 @@ class CSVreader{
 }
 
 //this user manager class converts CSV data to User objects
-public class UserManager extends CSVreader{
+class UserManager extends CSVreader{
 
     private static User[] getUsers(String userfilepath) throws IOException{
         String[] staffList = getLines(userfilepath);
@@ -152,6 +152,8 @@ public class UserManager extends CSVreader{
         String newLine = String.format("%s,%s,%s,%s", user.name, user.email, user.faculty, newPassHash);
         modifyLine(file, user.name, newLine);
     }
+}
 
-    //more user manager functions like those related to storing/showing camps... enquiries... etc...
+class CampManager extends CSVreader{
+    
 }

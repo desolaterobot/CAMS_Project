@@ -25,6 +25,7 @@ public class LoginApp{
         }
     }
 
+    //check if a given username and password pair is valid.
     public static User validateUser(String userID, String password) throws IOException{
         User[] userList = UserManager.getStaffStudents();
         User foundUser = null;
@@ -42,18 +43,6 @@ public class LoginApp{
             return null;
         }
         return foundUser;
-    }
-
-    public static void displayStudentFunctions(){
-
-    }
-
-    public static void displayCommiteeFunctions(){
-
-    }
-
-    public static void displayStaffFunctions(){
-
     }
 
     public static void main(String[] args) throws Exception {
@@ -76,17 +65,17 @@ public class LoginApp{
             System.out.printf("Password: ");
             String passwInput = sc.nextLine();
             userLoggedIn = validateUser(userInput, passwInput);
-            if(userLoggedIn != null)break;
+            if(userLoggedIn != null) break;
         }
 
         System.out.println("Login successful.");
         System.out.printf("Welcome, %s! Logged in as: %s\n", userLoggedIn.name, userLoggedIn.status == accountType.Staff ? "Staff Member" : "Student");
-        
+
         //more functions to be added here depending on whether the user is a Student, Staff, or Camp Commitee Member but i think this is ok for now.
         while(true){
             System.out.println("What would you like to do?");
             System.out.println("1: Change password");
-            System.out.println("0: Exit Program"); 
+            System.out.println("0: Logout"); 
 
             int choice = sc.nextInt();
             sc.nextLine();
