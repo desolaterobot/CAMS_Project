@@ -141,12 +141,11 @@ public class CampManager extends CSVreader{
         System.out.println("Enter the registration deadline, in the format: dd/mm/yyyy");
         Date registrationDeadline = strToDate(sc.nextLine());
 
-        System.out.println("Should this camp be open to the whole NTU (type 1) or only for your faculty? (type 0)");
-        int choice = sc.nextInt();
-        boolean onlyFaculty = choice == 0 ? true : false;
-        
         System.out.println("Enter the location of the camp");
         String location = sc.nextLine();
+
+        System.out.println("Enter a brief description for this camp.");
+        String description = sc.nextLine();
 
         System.out.println("Enter the total number of attendee slots.");
         int totalSlots = sc.nextInt();
@@ -154,19 +153,19 @@ public class CampManager extends CSVreader{
         System.out.println("Enter the total number of committee slots.");
         int commiteeSlots = sc.nextInt();
 
-        System.out.println("Enter a brief description for this camp.");
-        String description = sc.nextLine();
+        System.out.println("Should this camp be open to the whole NTU (type 1) or only for your faculty? (type 0)");
+        int choice = sc.nextInt();
+        boolean onlyFaculty = choice == 1 ? false : true;
 
         System.out.println("Initial visibility? Visible (type 1) or Invisible? (type 0)");
         int choice2 = sc.nextInt();
-        boolean visibility = choice2 == 0 ? true : false;
-
-        sc.close();
-
-        Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, null, onlyFaculty, location, description, staffInCharge.userID, null, visibility, totalSlots, commiteeSlots);
+        boolean visible = choice2 == 1 ? true : false;
+        sc.nextLine();
+        String[] emptyArray = new String[0];
+        Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.userID, emptyArray, visible, totalSlots, commiteeSlots);
         
         try{
-            addLine("data/camps.csv", campToLine(c));
+            addLine("data/camps.csv", campToLine(createdCamp));
         }catch(IOException e){
             e.printStackTrace();
         }

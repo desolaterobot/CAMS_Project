@@ -47,6 +47,17 @@ class UserManager extends CSVreader{
 
     //DATA READING///////////////////////////////////////////////////////////////////////////////////////
 
+    //find a single user 
+    public static User getUser(String userID){
+        for(User u : getStaffStudents()){
+            if(u.userID.equals(userID)){
+                return u;
+            }
+        }
+        System.out.println("User not found in database.");
+        return null;
+    }
+
     //returns a User list of staff
     public static User[] getStaff(){
         return getUsers("data/staff.csv");

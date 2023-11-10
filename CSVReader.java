@@ -125,8 +125,8 @@ public class CSVreader{
     //and returning a list of Strings: {"BRANDON", "CALVIN"}
 
     public static String[] stringToList(String stringList){
-        if(stringList == "[]"){
-            return null;
+        if(stringList.equals("[]")){
+            return new String[0];
         }
         if(!(stringList.startsWith("[") && stringList.endsWith("]"))){
             System.out.println("String must be contained within [] and contain | as a delimiter.");
@@ -138,7 +138,7 @@ public class CSVreader{
 
     //this does the opposite
     public static String listToString(String[] listOfStrings){
-        if(listOfStrings == null){
+        if(listOfStrings.length == 0){
             return "[]";
         }
         StringBuilder str = new StringBuilder("[");

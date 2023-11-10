@@ -6,6 +6,7 @@ public class CampApp{
     public static User userLoggedIn = null; //this variable stores the User object that is currently logged in.
 
     public static void main(String[] args) throws Exception {
+
         Scanner sc = new Scanner(System.in);
         System.out.println(
         " ██████╗ █████╗ ███╗   ███╗███████╗\r\n" + 
@@ -40,6 +41,7 @@ public class CampApp{
             System.out.println("1: Change password");
             System.out.println("2: Show all visible camps");
             System.out.println("3: Show all camps created by you (bypasses visibility)");
+            System.out.println("4: Create a new camp.");
             System.out.println("0: Logout");
 
             int choice = sc.nextInt();
@@ -56,6 +58,9 @@ public class CampApp{
                     break;
                 case 3:
                     CampManager.printCamps(CampManager.getCampsByStaffID(userLoggedIn.userID), false);
+                    break;
+                case 4:
+                    CampManager.createCamp(userLoggedIn);
                     break;
                 case 0:
                     System.out.println("Logging out. Goodbye!");
