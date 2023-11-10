@@ -4,17 +4,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Staff extends User{
 
-    private boolean verifyDate(String userInput){
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        try {
-            LocalDate selectedDate = LocalDate.parse(userInput, dateFormatter);
-        }catch(java.time.format.DateTimeParseException e) {
-            System.out.println("Invalid date format. Please use the format specified.");
-            return false;
-        }
-        return true;
-    }
-
     public Camp createCamp(){
         Scanner sc = new Scanner(System.in);
 

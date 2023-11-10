@@ -1,111 +1,20 @@
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//class for a basic CSV file reader.
-//this CSV reader assumes that the first line of every .csv file are the headings, so they will not be treated as data
-//since this is a very basic CSV reader, in order to create objects from CSV data, i assume we will be extedning this class to a class that can do that.
-//in order for this to work the data folder must be present in the same directory as this file
-
-class CSVreader{ 
-    //returns an array of strings, with each string a line from the csv file. excludes the headings.
-    public static String[] getLines(String filepath) throws IOException{
-        List<String> stringList = new ArrayList<>();
-        Scanner sc = new Scanner(new File(filepath));
-        while (sc.hasNextLine()){
-            stringList.add(sc.nextLine());
-        }
-        sc.close();
-        stringList.remove(0); //remove the header
-        return stringList.toArray(new String[stringList.size()]);
-    }
-
-    //same as above but includes the header as well.
-    public static String[] getLinesWithHeader(String filepath) throws IOException{
-        List<String> stringList = new ArrayList<>();
-        Scanner sc = new Scanner(new File(filepath));
-        while (sc.hasNextLine()){
-            stringList.add(sc.nextLine());
-        }
-        sc.close();
-        return stringList.toArray(new String[stringList.size()]);
-    }
-
-    //prints the contents of the CSV file.
-    public static void printData(String filepath) throws IOException{
-        String[] lines = getLines(filepath);
-        int index = 1;
-        for(String line : lines){
-            System.out.printf("Item %d: %s \n", index, line);
-            index++;
-        }
-    }
-
-    //appends a line at the bottom of the CSV file. used to add a data value into a CSV.
-    public static void addLine(String filepath, String line) throws IOException{
-        FileWriter fw = new FileWriter(filepath, true);
-        fw.write(line + "\n");
-        fw.close();
-    }
-
-    //DELETES a line according to the first entry of the line.
-    //linear search through the lines of the CSV file, then removes the line with the given first entry (usually the name of the item)
-    public static void deleteLine(String filepath, String firstEntry) throws IOException{
-        String[] lines = getLinesWithHeader(filepath);
-        int index = 0;
-        int indexToDelete = -1;
-        for(String line : lines){
-            if(line.startsWith(firstEntry, 0)){
-                indexToDelete = index;
-            }
-            index++;
-        }
-        if(indexToDelete == -1){
-            System.out.println("Cannot find item.");
-            return;
-        }
-        FileWriter fw = new FileWriter(filepath, false);
-        for(int x = 0; x<lines.length; x++){
-            if(x != indexToDelete){
-                fw.write(lines[x] + "\n");   
-            }
-        }
-        fw.close();
-    }   
-
-    //MODIFY a line in a csv file according to the first entry
-    public static void modifyLine(String filepath, String firstEntry, String newLine) throws IOException{
-        String[] lines = getLinesWithHeader(filepath);
-        int index = 0;
-        int indexToModify = -1;
-        for(String line : lines){
-            if(line.startsWith(firstEntry, 0)){
-                indexToModify = index;
-            }
-            index++;
-        }
-        if(indexToModify == -1){
-            System.out.println("Cannot find item.");
-            return;
-        }
-        FileWriter fw = new FileWriter(filepath, false);
-        for(int x = 0; x<lines.length; x++){
-            if(x == indexToModify){
-                fw.write(newLine + "\n");   
-            }else{
-                fw.write(lines[x] + "\n");   
-            }
-        }
-        fw.close();
-    }
-}
-
 //this user manager class converts CSV data to User objects
 class UserManager extends CSVreader{
-
-    private static User[] getUsers(String userfilepath) throws IOException{
-        String[] staffList = getLines(userfilepath);
+    
+    private static User[] getUsers(String userfilepath){
+        String[] staffList = null;
+        try{
+            staffList = getLines(userfilepath);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
         List<User> userList = new ArrayList<User>();
         User[] userarray = new User[staffList.length];
         for(String s : staffList){
@@ -116,21 +25,45 @@ class UserManager extends CSVreader{
         return userList.toArray(userarray);
     }
 
+    //hashes the input string and returns the hash using SHA-256 hash algorithm
+    public static String hash(String data){
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(data.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //DATA READING///////////////////////////////////////////////////////////////////////////////////////
+
     //returns a User list of staff
-    public static User[] getStaff() throws IOException{
+    public static User[] getStaff(){
         return getUsers("data/staff.csv");
     }
 
     //returns a User list of students
-    public static User[] getStudents() throws IOException{
+    public static User[] getStudents(){
         return getUsers("data/student.csv");
     }
 
     //returns a User list of staff and students
-    public static User[] getStaffStudents() throws IOException{
+    public static User[] getStaffStudents(){
         List<User> userList = new ArrayList<User>();
-        User[] arr1 = getUsers("data/staff.csv");
-        User[] arr2 = getUsers("data/student.csv");
+        User[] arr1 = null;
+        User[] arr2 = null;
+        arr1 = getUsers("data/staff.csv");
+        arr2 = getUsers("data/student.csv");
         for(User u : arr1){
             userList.add(u);
         }
@@ -141,8 +74,32 @@ class UserManager extends CSVreader{
         return userList.toArray(combinedArray);
     }
 
+    //check if a given username and password pair is valid, returns a User object of the specified userID if passw is correct
+    //returns null if wrong or user cannot be found.
+    public static User validateUser(String userID, String password){
+        User[] userList = getStaffStudents();
+        User foundUser = null;
+        for(User user : userList){
+            if(userID.equals(user.userID)){
+                foundUser = user;
+            }
+        }
+        if(foundUser == null){
+            System.out.println("User not found. Try again.");
+            return null;
+        }
+        if(!foundUser.passHash.equals(hash(password))){
+            System.out.println("Incorrect password. Try again");
+            return null;
+        }
+        return foundUser;
+    }
+
+    //DATA MODIFICATION//////////////////////////////////////////////////////////////////////////////////
+
     //changes the password hash entry of a user in the database
-    public static void changePasswordHash(User user, String newPassHash) throws IOException{
+    public static void changePassword(User user, String newPassword){
+        String newPassHash = hash(newPassword);
         String file;
         if(user.status == accountType.Staff){
             file = "data/staff.csv";
@@ -150,10 +107,10 @@ class UserManager extends CSVreader{
             file = "data/student.csv";
         }
         String newLine = String.format("%s,%s,%s,%s", user.name, user.email, user.faculty, newPassHash);
-        modifyLine(file, user.name, newLine);
+        try{
+            modifyLine(file, user.name, newLine);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
-}
-
-class CampManager extends CSVreader{
-    
 }
