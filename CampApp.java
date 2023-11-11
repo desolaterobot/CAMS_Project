@@ -6,7 +6,6 @@ public class CampApp{
     public static User userLoggedIn = null; //this variable stores the User object that is currently logged in.
 
     public static void main(String[] args) throws Exception {
-
         Scanner sc = new Scanner(System.in);
         System.out.println(
         " ██████╗ █████╗ ███╗   ███╗███████╗\r\n" + 

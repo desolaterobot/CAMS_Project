@@ -125,7 +125,8 @@ public class CSVreader{
     //and returning a list of Strings: {"BRANDON", "CALVIN"}
 
     public static String[] stringToList(String stringList){
-        if(stringList.equals("[]")){
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX" + stringList);
+        if(stringList.equals("]")){
             return new String[0];
         }
         if(!(stringList.startsWith("[") && stringList.endsWith("]"))){
@@ -137,7 +138,8 @@ public class CSVreader{
     }   
 
     //this does the opposite
-    public static String listToString(String[] listOfStrings){
+    public static String listToString(Iterable listOfStrings){
+        System.out.println("start l2s");
         if(listOfStrings.length == 0){
             return "[]";
         }
@@ -145,7 +147,7 @@ public class CSVreader{
         for(String value : listOfStrings){
             str.append(value + "|");
         }
-        str.deleteCharAt(str.length() - 1);
+        str.deleteCharAt(str.length()-1);
         str.append("]");
         return str.toString();
     }
