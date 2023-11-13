@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 //this user manager class converts CSV data to User objects
 class UserManager extends CSVreader{
+
+    public static void main(String[] a){
+        System.out.println("test");
+    }
     
     private static User[] getUsers(String userfilepath){
         String[] staffList = null;
-        try{
-            staffList = getLines(userfilepath);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        staffList = getLines(userfilepath);
         List<User> userList = new ArrayList<User>();
         User[] userarray = new User[staffList.length];
         for(String s : staffList){
@@ -54,7 +54,7 @@ class UserManager extends CSVreader{
                 return u;
             }
         }
-        System.out.println("User not found in database.");
+        System.out.printf("User %s not found in database.\n", userID);
         return null;
     }
 
@@ -118,10 +118,6 @@ class UserManager extends CSVreader{
             file = "data/student.csv";
         }
         String newLine = String.format("%s,%s,%s,%s", user.name, user.email, user.faculty, newPassHash);
-        try{
-            modifyLine(file, user.name, newLine);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        modifyLine(file, user.name, newLine);
     }
 }

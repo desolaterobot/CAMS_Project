@@ -2,12 +2,20 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CampManager extends CSVreader{
+
+    public static void main(String[] a){
+        System.out.println("test");
+        Camp c = getCamp("hyper camp");
+        addAttendee(c, "IMAS");
+    }
 
     private static Date strToDate(String str){
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -41,6 +49,10 @@ public class CampManager extends CSVreader{
     }
 
     public static void printCamps(Camp[] campArray, boolean onlyVisible){
+        if(campArray.length == 0){
+            System.out.println("No camps to show.");
+            return;
+        }
         int x = 1;
         if(!onlyVisible){
             for(Camp c : campArray){
@@ -67,11 +79,7 @@ public class CampManager extends CSVreader{
 
     public static Camp[] getCampDatabase(){
         String[] lines = null;
-        try{
-            lines = getLines("data/camps.csv");
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        lines = getLines("data/camps.csv");
         List<Camp> campList = new LinkedList<>(); 
         for(String line : lines){
             String[] item = line.split(",");
@@ -124,6 +132,16 @@ public class CampManager extends CSVreader{
         return campList.toArray(new Camp[campList.size()]);
     }
 
+    public static Camp getCamp(String campName){
+        for(Camp c : getCampDatabase()){
+            if(c.campName.equals(campName)){
+                return c;
+            }
+        }
+        System.out.println("Camp not found.");
+        return null;
+    }
+
     //DATA MODIFICATION //////////////////////////////////////////////////////////////////////////////////////
 
     public static void createCamp(User staffInCharge){
@@ -161,31 +179,27 @@ public class CampManager extends CSVreader{
         int choice2 = sc.nextInt();
         boolean visible = choice2 == 1 ? true : false;
         sc.nextLine();
+
         String[] emptyArray = new String[0];
+
         Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.userID, emptyArray, visible, totalSlots, commiteeSlots);
         
-        try{
-            addLine("data/camps.csv", campToLine(createdCamp));
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        addLine("data/camps.csv", campToLine(createdCamp));
     }
 
-    //the campName passed into this function is the PREVIOUS name, in case user wants to change the camp name.
-    //this is because modifyLine() searches for the camp using its name, not by an index
-    public static void editCamp(String campName, Camp updatedCamp){
-        try{
-            modifyLine("data/camps.csv", campName, campToLine(updatedCamp));
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+    //not allowed to edit names, since we index by name to filter camps
+    public static void editCamp(Camp updatedCamp){
+        modifyLine("data/camps.csv", updatedCamp.campName, campToLine(updatedCamp));
     }
 
     public static void deleteCamp(Camp toBeDeleted){
-        try{
-            deleteLine("data/camps.csv", toBeDeleted.campName);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        deleteLine("data/camps.csv", toBeDeleted.campName);
+    }
+
+    public static void addAttendee(Camp toBeModified, String attendeeUserID){
+        List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
+        attendeeList.add(attendeeUserID);
+        toBeModified.attendees = attendeeList.toArray(new String[0]);
+        editCamp(toBeModified);
     }
 }

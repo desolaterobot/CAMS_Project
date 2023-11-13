@@ -1,6 +1,6 @@
 Camp Name,Start Date,End Date,Registration Deadline,Committee List,onlyFaculty,Location,Description,Staff,Attendees,Visible,TotalSlots,CampComitteSlots
 super camp,01/11/2023,04/11/2023,15/10/2023,[YCHERN|KOH1],Yes,Yunnan Garden,A camp for all SCSE students.,OURIN,[BR015|LE51],Yes,20,5
-hyper camp,01/11/2023,04/11/2023,15/10/2023,[DON84],No,Yunnan Garden,A camp for all SCSE students.,UPAM,[DL007|KOH1],No,30,5
-stupid camp,01/11/2023,07/2/2023,15/1/2023,[SL22],No,Hall 2,A camp for all SCSE students.,ANWIT,[DON84|CHAN],Yes,40,10
+hyper camp,01/11/2023,04/11/2023,15/10/2023,[DON84],No,Yunnan Garden,A camp for all SCSE students.,UPAM,[DL007|KOH1|IMAS],No,30,5
+stupid camp,01/11/2023,07/2/2023,15/1/2023,[SL22],No,Hall 1,A camp for all SCSE students.,ANWIT,[DON84|CHAN],Yes,40,10
 scse camp,01/11/2023,09/11/2023,15/10/2023,[AKY013],No,Yunnan Garden,A camp for all SCSE students.,ARVI,[DON84|SL22],Yes,30,5
 yet another camp,01/11/2023,04/11/2023,15/10/2023,[BR015],No,Yunnan Garden,A camp for all SCSE students.,ARVI,[CT113|AKY013],Yes,30,5

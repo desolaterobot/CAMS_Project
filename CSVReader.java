@@ -8,11 +8,16 @@ import java.util.Scanner;
 //since this is a very basic CSV reader, in order to create objects from CSV data, we will need to extend this class to more specialized classes.
 
 public class CSVreader{
+    public static void main(String[] a){
+        System.out.println("test");
+    }
+    
     //returns an array of strings, with each string a line from the csv file. excludes the headings.
     public static String[] getLines(String filepath){
         List<String> stringList = new ArrayList<>();
+        Scanner sc = null;
         try{
-            Scanner sc = new Scanner(new File(filepath));
+            sc = new Scanner(new File(filepath));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -27,8 +32,9 @@ public class CSVreader{
     //same as above but includes the header as well.
     public static String[] getLinesWithHeader(String filepath){
         List<String> stringList = new ArrayList<>();
+        Scanner sc = null;
         try{
-            Scanner sc = new Scanner(new File(filepath));
+            sc = new Scanner(new File(filepath));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -51,13 +57,14 @@ public class CSVreader{
 
     //appends a line at the bottom of the CSV file. used to add a data value into a CSV.
     public static void addLine(String filepath, String line){
+        FileWriter fw = null;
         try{
-            FileWriter fw = new FileWriter(filepath, true);
+            fw = new FileWriter(filepath, true);
+            fw.write(line + "\n");
+            fw.close();
         }catch(IOException e){
             e.printStackTrace();
         }
-        fw.write(line + "\n");
-        fw.close();
     }
 
     //DELETES a line according to the first entry of the line.
@@ -76,17 +83,18 @@ public class CSVreader{
             System.out.println("Cannot find item.");
             return;
         }
+        FileWriter fw = null;
         try{
-            FileWriter fw = new FileWriter(filepath, false);
+            fw = new FileWriter(filepath, false);
+            for(int x = 0; x<lines.length; x++){
+                if(x != indexToDelete){
+                    fw.write(lines[x] + "\n");   
+                }
+            }
+            fw.close();
         }catch(IOException e){
             e.printStackTrace();
         }
-        for(int x = 0; x<lines.length; x++){
-            if(x != indexToDelete){
-                fw.write(lines[x] + "\n");   
-            }
-        }
-        fw.close();
     }   
 
     //MODIFY a line in a csv file according to the first entry
@@ -104,19 +112,20 @@ public class CSVreader{
             System.out.println("Cannot find item.");
             return;
         }
+        FileWriter fw = null;
         try{
-            FileWriter fw = new FileWriter(filepath, false);
+            fw = new FileWriter(filepath, false);
+            for(int x = 0; x<lines.length; x++){
+                if(x == indexToModify){
+                    fw.write(newLine + "\n");   
+                }else{
+                    fw.write(lines[x] + "\n");   
+                }
+            }
+            fw.close();
         }catch(IOException e){
             e.printStackTrace();
         }
-        for(int x = 0; x<lines.length; x++){
-            if(x == indexToModify){
-                fw.write(newLine + "\n");   
-            }else{
-                fw.write(lines[x] + "\n");   
-            }
-        }
-        fw.close();
     }
 
     //some csv data can contain lists. for instance, the camp.csv file 
@@ -125,21 +134,20 @@ public class CSVreader{
     //and returning a list of Strings: {"BRANDON", "CALVIN"}
 
     public static String[] stringToList(String stringList){
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX" + stringList);
-        if(stringList.equals("]")){
-            return new String[0];
+        if(stringList.equals("[]")){
+            String[] empty = new String[0];
+            return empty;
         }
         if(!(stringList.startsWith("[") && stringList.endsWith("]"))){
-            System.out.println("String must be contained within [] and contain | as a delimiter.");
+            System.out.println("String must be contained within [] and must be seperated by |. " + stringList);
             return null;
         }
         stringList = stringList.substring(1, stringList.length()-1);
-        return stringList.split("\\|");
+        return stringList.split("\\|", -1);
     }   
 
     //this does the opposite
-    public static String listToString(Iterable listOfStrings){
-        System.out.println("start l2s");
+    public static String listToString(String[] listOfStrings){
         if(listOfStrings.length == 0){
             return "[]";
         }

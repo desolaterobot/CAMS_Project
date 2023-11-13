@@ -6,6 +6,7 @@ import java.util.Date;
 //class that allows for conversion of Date to String
 //only for dd/mm/yyyy format!!!!
 public class DateStr {
+
     public static Date strToDate(String str){
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
