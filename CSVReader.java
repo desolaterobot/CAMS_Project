@@ -7,12 +7,22 @@ import java.util.Scanner;
 //this CSV reader assumes that the first line of every .csv file are the headings, so they will not be treated as data
 //since this is a very basic CSV reader, in order to create objects from CSV data, we will need to extend this class to more specialized classes.
 
+/**
+ * This class provides basic functionality for reading and manipulating CSV files.
+ * It includes methods to read, print, add, delete, and modify lines in a CSV file.
+ * Additionally, it handles the conversion of data types such as lists, sentences, booleans, and integers.
+ */
+
 public class CSVreader{
     public static void main(String[] a){
         System.out.println("test");
     }
-    
-    //returns an array of strings, with each string a line from the csv file. excludes the headings.
+     /**
+     * Returns an array of strings, with each string representing a line from the CSV file (excluding the header).
+     *
+     * @param filepath The path of the CSV file to read.
+     * @return An array of strings representing lines from the CSV file.
+     */
     public static String[] getLines(String filepath){
         List<String> stringList = new ArrayList<>();
         Scanner sc = null;
@@ -29,7 +39,12 @@ public class CSVreader{
         return stringList.toArray(new String[stringList.size()]);
     }
 
-    //same as above but includes the header as well.
+    /**
+     * Returns an array of strings, including the header and each line from the CSV file.
+     *
+     * @param filepath The path of the CSV file to read.
+     * @return An array of strings representing lines from the CSV file with the header included.
+     */
     public static String[] getLinesWithHeader(String filepath){
         List<String> stringList = new ArrayList<>();
         Scanner sc = null;
@@ -45,7 +60,11 @@ public class CSVreader{
         return stringList.toArray(new String[stringList.size()]);
     }
 
-    //prints the contents of the CSV file.
+    /**
+     * Prints the contents of the CSV file to the console.
+     *
+     * @param filepath The path of the CSV file to print.
+     */
     public static void printData(String filepath){
         String[] lines = getLines(filepath);
         int index = 1;
@@ -55,7 +74,12 @@ public class CSVreader{
         }
     }
 
-    //appends a line at the bottom of the CSV file. used to add a data value into a CSV.
+     /**
+     * Appends a line at the bottom of the CSV file, used to add a data value into the CSV.
+     *
+     * @param filepath The path of the CSV file to which the line will be added.
+     * @param line     The line to be added to the CSV file.
+     */
     public static void addLine(String filepath, String line){
         FileWriter fw = null;
         try{
@@ -66,9 +90,12 @@ public class CSVreader{
             e.printStackTrace();
         }
     }
-
-    //DELETES a line according to the first entry of the line.
-    //linear search through the lines of the CSV file, then removes the line with the given first entry (usually the name of the item)
+    /**
+     * Deletes a line from the CSV file based on the first entry (usually the name of the item).
+     *
+     * @param filepath    The path of the CSV file from which the line will be deleted.
+     * @param firstEntry  The value of the first entry to identify the line to be deleted.
+     */
     public static void deleteLine(String filepath, String firstEntry){
         String[] lines = getLinesWithHeader(filepath);
         int index = 0;
@@ -97,7 +124,13 @@ public class CSVreader{
         }
     }   
 
-    //MODIFY a line in a csv file according to the first entry
+    /**
+     * Modifies a line in the CSV file based on the first entry.
+     *
+     * @param filepath    The path of the CSV file in which the line will be modified.
+     * @param firstEntry  The value of the first entry to identify the line to be modified.
+     * @param newLine     The new line that will replace the existing line.
+     */
     public static void modifyLine(String filepath, String firstEntry, String newLine){
         String[] lines = getLinesWithHeader(filepath);
         int index = 0;
@@ -127,7 +160,12 @@ public class CSVreader{
             e.printStackTrace();
         }
     }
-
+    /**
+     * Parses a string representing a list, e.g., "[BRANDON|CALVIN]", and returns an array of strings {"BRANDON", "CALVIN"}.
+     *
+     * @param stringList The string representation of a list.
+     * @return An array of strings representing the list.
+     */
     //some csv data can contain lists. for instance, the camp.csv file 
     //contains data fields that might be list of values: Attendees, Commitees, etc
     //this takes care of that by parsing a string such as "[BRANDON|CALVIN]"
@@ -146,7 +184,12 @@ public class CSVreader{
         return stringList.split("\\|", -1);
     }   
 
-    //this does the opposite
+    /**
+     * Converts an array of strings into a string representing a list, e.g., {"BRANDON", "CALVIN"} to "[BRANDON|CALVIN]".
+     *
+     * @param listOfStrings The array of strings to be converted into a list.
+     * @return A string representing the list.
+     */
     public static String listToString(String[] listOfStrings){
         if(listOfStrings.length == 0){
             return "[]";
@@ -159,7 +202,13 @@ public class CSVreader{
         str.append("]");
         return str.toString();
     }
-
+    
+    /**
+     * Replaces commas in a string with a special pattern "%^&".
+     *
+     * @param str The input string.
+     * @return The string with commas replaced by "%^&".
+     */
     //sentences are hard to include in a .csv, because they may contain commas
     //which causes delimiter error. in order to store sentences in CSV's 
     //we convert all commas into another lesser-known char pattern while writing
@@ -168,11 +217,22 @@ public class CSVreader{
         return str.replace(",", "%^&");
     }
 
+    /**
+     * Replaces the special pattern "%^&" with commas in a string.
+     *
+     * @param str The input string with the special pattern.
+     * @return The string with "%^&" replaced by commas.
+     */
     public static String getCommas(String str){
         return str.replace("%^&", ",");
     }
 
-    //convert booleans to "Yes"/"No" strings and vice versa
+    /**
+     * Converts a string representing "Yes" or "No" to a boolean value.
+     *
+     * @param str The input string ("Yes" or "No").
+     * @return The boolean value corresponding to the input string.
+     */
     public static boolean toBool(String str){
         if(str.equals("Yes")){
             return true;
@@ -181,15 +241,32 @@ public class CSVreader{
         }
     }
 
+    /**
+     * Converts a boolean value to a string ("Yes" or "No").
+     *
+     * @param bool The boolean value to be converted.
+     * @return The string representation of the boolean value.
+     */
     public static String boolToStr(boolean bool){
         return bool ? "Yes" : "No";
     }
 
-    //convert string to int and vice versa
+    /**
+     * Converts a string to an integer.
+     *
+     * @param str The input string representing an integer.
+     * @return The integer value corresponding to the input string.
+     */
     public static int toInt(String str){
         return Integer.parseInt(str);
     }
 
+    /**
+     * Converts an integer to a string.
+     *
+     * @param integer The integer value to be converted.
+     * @return The string representation of the integer value.
+     */
     public static String intToStr(int integer){
         return Integer.toString(integer);
     }
