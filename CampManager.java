@@ -13,8 +13,6 @@ public class CampManager extends CSVreader{
 
     public static void main(String[] a){
         System.out.println("test");
-        Camp c = getCamp("hyper camp");
-        addAttendee(c, "IMAS");
     }
 
     private static Date strToDate(String str){

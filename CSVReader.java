@@ -17,6 +17,7 @@ public class CSVreader{
     public static void main(String[] a){
         System.out.println("test");
     }
+    
      /**
      * Returns an array of strings, with each string representing a line from the CSV file (excluding the header).
      *
@@ -166,10 +167,6 @@ public class CSVreader{
      * @param stringList The string representation of a list.
      * @return An array of strings representing the list.
      */
-    //some csv data can contain lists. for instance, the camp.csv file 
-    //contains data fields that might be list of values: Attendees, Commitees, etc
-    //this takes care of that by parsing a string such as "[BRANDON|CALVIN]"
-    //and returning a list of Strings: {"BRANDON", "CALVIN"}
 
     public static String[] stringToList(String stringList){
         if(stringList.equals("[]")){
