@@ -41,25 +41,26 @@ public class CampApp{
                 userLoggedIn = UserManager.validateUser(userInput, passwInput);
                 if(userLoggedIn != null) {
                     System.out.println("Login successful.");
-                System.out.printf("Welcome, %s! Logged in as: %s\n", userLoggedIn.name, userLoggedIn.status == accountType.Staff ? "Staff Member" : "Student");
+                    System.out.printf("Welcome, %s! Logged in as: %s\n", userLoggedIn.name, userLoggedIn.status == accountType.Staff ? "Staff Member" : "Student");
 
-                if(userLoggedIn.Status == accountType.Staff){
-                    //if staff. if student/commitee then print a seperate login menu function
-                    printStaffLoginMenu();
-                    sc.close();
-                    }
-                else if(userLoggedIn.Status == accountType.Student){
-                    printStudentLoginMenu();
-                    sc.close();
-                    }
-                /*else if(userLoggedIn.Status == accountType.CCM){
-                    printCCMLoginMenu();
-                    sc.close();
-                    }*/
+                    if(userLoggedIn.Status == accountType.Staff){
+                        //if staff. if student/commitee then print a seperate login menu function
+                        printStaffLoginMenu();
+                        sc.close();
+                        }
+                    else if(userLoggedIn.Status == accountType.Student){
+                        printStudentLoginMenu();
+                        sc.close();
+                        }
+                    /*else if(userLoggedIn.Status == accountType.CCM){
+                        printCCMLoginMenu();
+                        sc.close();
+                        }*/
+                    
+                }
                 else{
                     System.out.println("Login unsuccessful.");
                 }
-        }
     }
 
     /**
