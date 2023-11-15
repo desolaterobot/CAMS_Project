@@ -9,12 +9,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Manages camps, including reading from and writing to CSV files, creating, editing, and deleting camps.
+ */
 public class CampManager extends CSVreader{
 
+    
     public static void main(String[] a){
         System.out.println("test");
     }
 
+    /**
+     * Converts a string representation of a date to a Date object.
+     *
+     * @param str The string representation of the date.
+     * @return The corresponding Date object.
+     */
     private static Date strToDate(String str){
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
@@ -27,6 +37,12 @@ public class CampManager extends CSVreader{
         return date;
     }
 
+    /**
+     * Converts a Date object to a string representation.
+     *
+     * @param date The Date object to be converted.
+     * @return The string representation of the date.
+     */
     private static String dateToStr(Date date){
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String str = null;
@@ -38,6 +54,12 @@ public class CampManager extends CSVreader{
         return str;
     }
 
+    /**
+     * Converts a Camp object to a CSV-formatted string.
+     *
+     * @param c The Camp object to be converted.
+     * @return The CSV-formatted string representation of the Camp.
+     */
     private static String campToLine(Camp c){
         String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", 
         removeCommas(c.campName), dateToStr(c.startDate), dateToStr(c.endDate), dateToStr(c.registrationDeadline), 
@@ -46,6 +68,12 @@ public class CampManager extends CSVreader{
         return line;
     }
 
+    /**
+     * Prints information about camps, including their names, descriptions, locations, dates, and availability.
+     *
+     * @param campArray    The array of Camp objects to be printed.
+     * @param onlyVisible  If true, only visible camps will be printed; if false, all camps will be printed.
+     */
     public static void printCamps(Camp[] campArray, boolean onlyVisible){
         if(campArray.length == 0){
             System.out.println("No camps to show.");
@@ -73,8 +101,13 @@ public class CampManager extends CSVreader{
         System.out.println("---------------------------------------------------------------------------");
     }
 
-    //DATA READING ///////////////////////////////////////////////////////////////////////////////////////////
+    // DATA READING METHODS ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Retrieves the camp database from the CSV file and returns an array of Camp objects.
+     *
+     * @return An array of Camp objects representing the camp database.
+     */
     public static Camp[] getCampDatabase(){
         String[] lines = null;
         lines = getLines("data/camps.csv");
@@ -86,6 +119,12 @@ public class CampManager extends CSVreader{
         return campList.toArray(new Camp[campList.size()]);
     }
 
+    /**
+     * Retrieves camps created by a staff member based on their user ID.
+     *
+     * @param staffID The user ID of the staff member.
+     * @return An array of Camp objects created by the specified staff member.
+     */
     public static Camp[] getCampsByStaffID(String staffUserID){
         List<Camp> campList = new LinkedList<>(); 
         for(Camp c : getCampDatabase()){
@@ -96,6 +135,12 @@ public class CampManager extends CSVreader{
         return campList.toArray(new Camp[campList.size()]);
     }
 
+    /**
+     * Retrieves camps attended by a participant based on their user ID.
+     *
+     * @param attendeeID The user ID of the participant.
+     * @return An array of Camp objects attended by the specified participant.
+     */
     public static Camp[] getCampsByAttendeeID(String attendeeID){
         List<Camp> campList = new LinkedList<>(); 
         for(Camp c : getCampDatabase()){
@@ -113,6 +158,12 @@ public class CampManager extends CSVreader{
         return campList.toArray(new Camp[campList.size()]);
     }
 
+    /**
+     * Retrieves camps associated with a committee based on its ID.
+     *
+     * @param commiteeID The ID of the committee.
+     * @return An array of Camp objects associated with the specified committee.
+     */
     public static Camp[] getCampsByCommiteeID(String commiteeID){
         List<Camp> campList = new LinkedList<>(); 
         for(Camp c : getCampDatabase()){
@@ -130,6 +181,12 @@ public class CampManager extends CSVreader{
         return campList.toArray(new Camp[campList.size()]);
     }
 
+    /**
+     * Retrieves a specific camp based on its name.
+     *
+     * @param campName The name of the camp.
+     * @return The Camp object with the specified name.
+     */
     public static Camp getCamp(String campName){
         for(Camp c : getCampDatabase()){
             if(c.campName.equals(campName)){
@@ -140,8 +197,13 @@ public class CampManager extends CSVreader{
         return null;
     }
 
-    //DATA MODIFICATION //////////////////////////////////////////////////////////////////////////////////////
+    // DATA MODIFICATION METHODS ////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Creates a new camp based on user input and adds it to the camp database.
+     *
+     * @param staffInCharge The staff member creating the camp.
+     */
     public static void createCamp(User staffInCharge){
         Scanner sc = new Scanner(System.in);
 
@@ -186,14 +248,30 @@ public class CampManager extends CSVreader{
     }
 
     //not allowed to edit names, since we index by name to filter camps
+    /**
+     * Edits the information of an existing camp.
+     *
+     * @param updatedCamp The updated Camp object.
+     */
     public static void editCamp(Camp updatedCamp){
         modifyLine("data/camps.csv", updatedCamp.campName, campToLine(updatedCamp));
     }
 
+    /**
+     * Deletes a camp from the camp database.
+     *
+     * @param toBeDeleted The Camp object to be deleted.
+     */
     public static void deleteCamp(Camp toBeDeleted){
         deleteLine("data/camps.csv", toBeDeleted.campName);
     }
 
+    /**
+     * Adds an attendee to a camp.
+     *
+     * @param toBeModified The Camp object to which the attendee is added.
+     * @param attendeeUserID The user ID of the attendee.
+     */
     public static void addAttendee(Camp toBeModified, String attendeeUserID){
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
         attendeeList.add(attendeeUserID);
