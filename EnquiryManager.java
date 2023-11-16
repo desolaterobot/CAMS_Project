@@ -1,3 +1,5 @@
+package Test;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -5,7 +7,7 @@ import java.util.List;
  * The EnquiryManager class manages user inquiries and replies, interacting with CSV data.
  * It provides methods to retrieve, add, and manipulate enquiries and their replies.
  */
-public class EnquiryManager extends CSVreader{
+public class EnquiryManager extends CSVReader{
     /**
      * Main method for testing and demonstrating the functionality of the EnquiryManager class.
      *

@@ -1,6 +1,9 @@
+package Test;
+
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 enum accountType{Staff, Student}
 
@@ -10,7 +13,7 @@ enum accountType{Staff, Student}
  */
 public class User {
     /** The account type of the user (Staff or Student or Committee). */
-    public accountType status;
+    public accountType Status;
 
     /** The user ID generated from the email address (characters before '@'). */
     public String userID; 
@@ -44,6 +47,18 @@ public class User {
      * @param isCommitteeMember Indicates whether the user is a camp committee member.
      * @param committeeCamp   The camp for which the user is a committee member (if applicable).
      */
+    
+    public User(String name, String email, String faculty, String passHash){
+        this.name = name;
+        this.email = email;
+        this.faculty = faculty;
+        this.passHash = passHash;
+        this.userID = email.split("@")[0]; //userID is the characters before the '@' in the email address.
+        this.Status = email.split("@")[1].startsWith("e") ? accountType.Student : accountType.Staff; //if the character after the '@' is 'e', then it is a student.
+    }
+    
+    
+    
     public User(String name, String email, String faculty, String passHash, accountType status,
                 boolean isCommitteeMember, List<String> committeeCamps) {
         this.name = name;
@@ -51,9 +66,8 @@ public class User {
         this.faculty = faculty;
         this.passHash = passHash;
         this.userID = email.split("@")[0];
-        this.status = status;
+        this.Status = status;
         this.isCommitteeMember = isCommitteeMember;
         this.committeeCamp = committeeCamp;
-        }    
     }
 }

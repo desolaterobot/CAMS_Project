@@ -1,3 +1,5 @@
+package Test;
+
 import java.util.Scanner;
 import java.io.IOException;
 
@@ -41,7 +43,7 @@ public class CampApp{
                 userLoggedIn = UserManager.validateUser(userInput, passwInput);
                 if(userLoggedIn != null) {
                     System.out.println("Login successful.");
-                    System.out.printf("Welcome, %s! Logged in as: %s\n", userLoggedIn.name, userLoggedIn.status == accountType.Staff ? "Staff Member" : "Student");
+                    System.out.printf("Welcome, %s! Logged in as: %s\n", userLoggedIn.name, userLoggedIn.Status == accountType.Staff ? "Staff Member" : "Student");
 
                     if(userLoggedIn.Status == accountType.Staff){
                         //if staff. if student/commitee then print a seperate login menu function
@@ -61,6 +63,9 @@ public class CampApp{
                 else{
                     System.out.println("Login unsuccessful.");
                 }
+
+            }
+        }
     }
 
     /**

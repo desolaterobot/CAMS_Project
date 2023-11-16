@@ -1,3 +1,5 @@
+package Test;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Scanner;
  * Additionally, it handles the conversion of data types such as lists, sentences, booleans, and integers.
  */
 
-public class CSVreader{
+public class CSVReader{
     public static void main(String[] a){
         System.out.println("test");
     }

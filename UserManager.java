@@ -1,3 +1,5 @@
+package Test;
+
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -10,7 +12,7 @@ import java.util.Scanner;
  * It includes methods for reading user data from CSV files, hashing passwords, and modifying user information.
  */
 //this user manager class converts CSV data to User objects
-class UserManager extends CSVreader{
+class UserManager extends CSVReader{
 
     public static void main(String[] a){
         System.out.println("test");
@@ -150,7 +152,7 @@ class UserManager extends CSVreader{
     public static void changePassword(User user, String newPassword){
         String newPassHash = hash(newPassword);
         String file;
-        if(user.status == accountType.Staff){
+        if(user.Status == accountType.Staff){
             file = "data/staff.csv";
         }else{
             file = "data/student.csv";

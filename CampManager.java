@@ -1,3 +1,5 @@
+package Test;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,7 +14,7 @@ import java.util.Scanner;
 /**
  * Manages camps, including reading from and writing to CSV files, creating, editing, and deleting camps.
  */
-public class CampManager extends CSVreader{
+public class CampManager extends CSVReader{
 
     
     public static void main(String[] a){
