@@ -27,8 +27,11 @@ public class User {
     /** The faculty to which the user belongs. */
     public String faculty;
 
-    // Determine the status based on the domain
-    public String domain;
+    /** Indicates whether the user is a camp committee member. */
+    public boolean isCommitteeMember;
+
+    /** The camp for which the user is a committee member (if applicable). */
+    public String committeeCamp;
     
     /**
      * Constructs a new User with the given parameters.
