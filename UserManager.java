@@ -5,13 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The UserManager class manages user-related operations in the Camp Application and Management System.
+ * It includes methods for reading user data from CSV files, hashing passwords, and modifying user information.
+ */
 //this user manager class converts CSV data to User objects
 class UserManager extends CSVreader{
 
     public static void main(String[] a){
         System.out.println("test");
     }
-    
+
+    /**
+     * Retrieves an array of User objects from the specified CSV file.
+     *
+     * @param userfilepath The path of the CSV file containing user data.
+     * @return An array of User objects.
+     */
     private static User[] getUsers(String userfilepath){
         String[] staffList = null;
         staffList = getLines(userfilepath);
@@ -25,7 +35,12 @@ class UserManager extends CSVreader{
         return userList.toArray(userarray);
     }
 
-    //hashes the input string and returns the hash using SHA-256 hash algorithm
+    /**
+     * Hashes the input string using the SHA-256 hash algorithm.
+     *
+     * @param data The input string to be hashed.
+     * @return The hashed string.
+     */
     public static String hash(String data){
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -47,7 +62,12 @@ class UserManager extends CSVreader{
 
     //DATA READING///////////////////////////////////////////////////////////////////////////////////////
 
-    //find a single user 
+    /**
+     * Finds a single user by the given userID.
+     *
+     * @param userID The ID of the user to find.
+     * @return The User object if found, otherwise null.
+     */
     public static User getUser(String userID){
         for(User u : getStaffStudents()){
             if(u.userID.equals(userID)){
@@ -58,17 +78,29 @@ class UserManager extends CSVreader{
         return null;
     }
 
-    //returns a User list of staff
+    /**
+     * Returns an array of User objects representing staff members.
+     *
+     * @return An array of User objects.
+     */
     public static User[] getStaff(){
         return getUsers("data/staff.csv");
     }
 
-    //returns a User list of students
+    /**
+     * Returns an array of User objects representing students.
+     *
+     * @return An array of User objects.
+     */
     public static User[] getStudents(){
         return getUsers("data/student.csv");
     }
 
-    //returns a User list of staff and students
+    /**
+     * Returns an array of User objects representing both staff and students.
+     *
+     * @return An array of User objects.
+     */
     public static User[] getStaffStudents(){
         List<User> userList = new ArrayList<User>();
         User[] arr1 = null;
@@ -85,8 +117,14 @@ class UserManager extends CSVreader{
         return userList.toArray(combinedArray);
     }
 
-    //check if a given username and password pair is valid, returns a User object of the specified userID if passw is correct
-    //returns null if wrong or user cannot be found.
+    /**
+     * Checks if a given username and password pair is valid.
+     * Returns a User object of the specified userID if the password is correct.
+     *
+     * @param userID The user ID.
+     * @param password The user password.
+     * @return The User object if authentication is successful, otherwise null.
+     */
     public static User validateUser(String userID, String password){
         User[] userList = getStaffStudents();
         User foundUser = null;
