@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-enum accountType{Staff, Student, Committee}
+enum accountType{Staff, Student}
 
 /**
  * The User class represents a user in the Camp Application and Management System.
@@ -29,32 +29,28 @@ public class User {
 
     // Determine the status based on the domain
     public String domain;
+    
     /**
      * Constructs a new User with the given parameters.
      *
-     * @param name     The name of the user.
-     * @param email    The email address of the user.
-     * @param faculty  The faculty to which the user belongs.
-     * @param passHash The hashed password of the user.
+     * @param name            The name of the user.
+     * @param email           The email address of the user.
+     * @param faculty         The faculty to which the user belongs.
+     * @param passHash        The hashed password of the user.
+     * @param status          The account type of the user (Staff or Student).
+     * @param isCommitteeMember Indicates whether the user is a camp committee member.
+     * @param committeeCamp   The camp for which the user is a committee member (if applicable).
      */
-    public User(String name, String email, String faculty, String passHash){
+    public User(String name, String email, String faculty, String passHash, accountType status,
+                boolean isCommitteeMember, List<String> committeeCamps) {
         this.name = name;
         this.email = email;
         this.faculty = faculty;
         this.passHash = passHash;
-        this.userID = email.split("@")[0]; //userID is the characters before the '@' in the email address.
-        //this.status = email.split("@")[1].startsWith("e") ? accountType.Student : accountType.Staff; //if the character after the '@' is 'e', then it is a student.
-
-        // Extract the part after '@' and convert it to lowercase for case-insensitive comparison
-        this.domain = email.split("@")[1].toLowerCase();
-    
-        // Determine the status based on the domain
-        if (domain.startsWith("e")) {
-            this.status = accountType.Student; // if the character after the '@' is 'e', then it is a student.
-        } else if (domain.startsWith("c")) {
-            this.status = accountType.Committee; // if the character after the '@' is 'c', then it is a committee member.
-        } else {
-            this.status = accountType.Staff; // default to Staff if it doesn't match 'e' or 'c'
-        }
+        this.userID = email.split("@")[0];
+        this.status = status;
+        this.isCommitteeMember = isCommitteeMember;
+        this.committeeCamp = committeeCamp;
+        }    
     }
 }
