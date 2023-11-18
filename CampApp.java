@@ -52,7 +52,13 @@ public class CampApp{
                         
                         }
                     else if(userLoggedIn.Status == accountType.Student){
-                        printStudentLoginMenu();
+                    	if (userLoggedIn.isCommitteeMember) {
+                    		printCCMLoginMenu();
+                    	}
+                    	else {
+                    		printStudentLoginMenu();
+                    	}
+                    	
                         break;
                         
                         }
@@ -118,9 +124,6 @@ public class CampApp{
 	    while(true){
 	        System.out.println("\nWhat would you like to do?");
 	        System.out.println("1: Change password");
-	        System.out.println("2: Show all visible camps");
-	        System.out.println("3: Show all camps created by you (bypasses visibility)");
-	        System.out.println("4: Create a new camp.");
 	        System.out.println("0: Logout");
 	
 	        int choice = sc.nextInt();
@@ -145,5 +148,31 @@ public class CampApp{
 //need to implment
 
 
-    public static void printCCMLoginMenu(){} //need to implment
+    public static void printCCMLoginMenu(){
+    	Scanner sc = new Scanner(System.in);
+	    while(true){
+	        System.out.println("\nWhat would you like to do?");
+	        System.out.println("1: Change password");
+	        System.out.println("2: i am committee");
+	        System.out.println("0: Logout");
+	
+	        int choice = sc.nextInt();
+	        sc.nextLine();
+	        switch (choice) {
+	            case 1:
+	                System.out.printf("Type your new password: ");
+	                String newPassword = sc.nextLine();
+	                UserManager.changePassword(userLoggedIn, newPassword);
+	                System.out.println("Password changed!");
+	                continue;
+	            case 0:
+	                System.out.println("Logging out. Goodbye!");
+	                userLoggedIn = null;
+	                return;
+	            default:
+	                System.out.println("Invalid response. Try again.");
+	                continue;
+	        }
+	    }
+    } //need to implment
 }
