@@ -31,7 +31,8 @@ class UserManager extends CSVReader{
         User[] userarray = new User[staffList.length];
         for(String s : staffList){
             String[] stringValues = s.split(",");
-            User newUser = new User(stringValues[0], stringValues[1], stringValues[2], stringValues[3]);
+            boolean isCommitteeMember = Boolean.parseBoolean(stringValues[4]);
+            User newUser = new User(stringValues[0], stringValues[1], stringValues[2], stringValues[3], isCommitteeMember ,stringValues[5]);
             userList.add(newUser);
         }
         return userList.toArray(userarray);
