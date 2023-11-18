@@ -30,16 +30,16 @@ public class CampApp{
             " ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\r");
             System.out.println("Camp Application And Management System");
             System.out.println("Login to get started. Type 'e' to exit.");
-
+            System.out.printf("UserID: ");
+            String userInput = sc.nextLine();
+            System.out.printf("Password: ");
+            String passwInput = sc.nextLine();
             while(true){
-                System.out.printf("UserID: ");
-                String userInput = sc.nextLine();
                 if(userInput.equals("e")){
                     sc.close();
                     return;
                 }
-                System.out.printf("Password: ");
-                String passwInput = sc.nextLine();
+                
                 userLoggedIn = UserManager.validateUser(userInput, passwInput);
                 if(userLoggedIn != null) {
                     System.out.println("Login successful.");
@@ -48,11 +48,13 @@ public class CampApp{
                     if(userLoggedIn.Status == accountType.Staff){
                         //if staff. if student/commitee then print a seperate login menu function
                         printStaffLoginMenu();
-                        sc.close();
+                        break;
+                        
                         }
                     else if(userLoggedIn.Status == accountType.Student){
                         printStudentLoginMenu();
-                        sc.close();
+                        break;
+                        
                         }
                     /*else if(userLoggedIn.Status == accountType.CCM){
                         printCCMLoginMenu();
@@ -62,6 +64,7 @@ public class CampApp{
                 }
                 else{
                     System.out.println("Login unsuccessful.");
+                    break;
                 }
 
             }
@@ -102,7 +105,6 @@ public class CampApp{
                 case 0:
                     System.out.println("Logging out. Goodbye!");
                     userLoggedIn = null;
-                    sc.close();
                     return;
                 default:
                     System.out.println("Invalid response. Try again.");
@@ -111,7 +113,37 @@ public class CampApp{
         }
     }
 
-    public static void printStudentLoginMenu(){} //need to implment
+    public static void printStudentLoginMenu() {
+    	Scanner sc = new Scanner(System.in);
+	    while(true){
+	        System.out.println("\nWhat would you like to do?");
+	        System.out.println("1: Change password");
+	        System.out.println("2: Show all visible camps");
+	        System.out.println("3: Show all camps created by you (bypasses visibility)");
+	        System.out.println("4: Create a new camp.");
+	        System.out.println("0: Logout");
+	
+	        int choice = sc.nextInt();
+	        sc.nextLine();
+	        switch (choice) {
+	            case 1:
+	                System.out.printf("Type your new password: ");
+	                String newPassword = sc.nextLine();
+	                UserManager.changePassword(userLoggedIn, newPassword);
+	                System.out.println("Password changed!");
+	                continue;
+	            case 0:
+	                System.out.println("Logging out. Goodbye!");
+	                userLoggedIn = null;
+	                return;
+	            default:
+	                System.out.println("Invalid response. Try again.");
+	                continue;
+	        }
+	    }
+    } 
+//need to implment
+
 
     public static void printCCMLoginMenu(){} //need to implment
 }
