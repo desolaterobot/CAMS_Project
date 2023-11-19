@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 public class Student extends User{
 	boolean isCommitteeMember;
-
-	public Student(String name, String email, String faculty, String password) {
+	String whichCommitteeCamp;
+	
+	public Student(String name, String email, String faculty, String password,boolean isCommitteeMember,String whichCommitteeCamp) {
 		super(name, email, faculty, password);
-		this.isCommitteeMember = false;
+		this.isCommitteeMember = isCommitteeMember;
+		this.whichCommitteeCamp = whichCommitteeCamp;
 		// TODO Auto-generated constructor stub
 		
 	}

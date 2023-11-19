@@ -8,24 +8,9 @@ public class CampApp {
 	
 	public static void main(String[] args0) {
 		CampApp app = new CampApp();
-		
-		//app.initialize();
-		
+				
 		app.run();
-	}
-	
-//	public void initialize() {
-//		students = loadStudents("data/student.csv");
-//		
-//		staff = loadStaff("data/staff.csv");
-//		
-//		camps = loadCamps("data/camps.csv");
-//		
-//		//enquiries = loadEnquiries("data/enquiries.csv");
-//		
-//		//suggestion = loadSuggestions("data/suggestions.csv");
-//	}
-	
+	}	
 	
 	public void run() {
 		UserManager UserManager = new UserManager();
@@ -77,21 +62,19 @@ public class CampApp {
 //		return Camps;
 //	}
 	
-
-	
-
-	
 	public static void printStudentMenu(Student student) {
-		System.out.println("1.");
-		System.out.println("2.");
-		System.out.println("3.");
-		System.out.println("4.");
+		System.out.println("1. Register Camp");
+		System.out.println("2. View Camps");
+		System.out.println("3. Submit Enquiry");
+		System.out.println("4. Withdraw Camp");
 		System.out.println("5.");
-		System.out.println("10.");
+		System.out.println("11. Logout");
 		if(student.isCommitteeMember()) {
-			System.out.println("6.");
-			System.out.println("7.");
-			System.out.println("8.");
+			System.out.println("6. Reply Enquiry");
+			System.out.println("7. View Suggestions");
+			System.out.println("8. Edit Suggestions");
+			System.out.println("9. Submit Suggestions");
+			System.out.println("10. View Camp Details");
 		}
 		
 	}
@@ -115,7 +98,7 @@ public class CampApp {
 			
 			sc.nextLine();
 			
-			if(choice==10) return;
+			if(choice==11) return;
 			
 			if(student.isCommitteeMember()) {
 				handleCommitteeMemberChoice(student,choice);
@@ -134,15 +117,25 @@ public class CampApp {
 		switch(choice) {
 		case 6:
 			System.out.println("Student 6");
-			//submitSuggestion(student);
+			//replyEnquiry(student);
+			
 			break;
 		case 7:
 			System.out.println("Student 7");
-			//viewCommitteeCampDetails(student);
+			//viewSuggestion(student);
 			break;
 		case 8:
 			System.out.println("Student 8");
-			//viewSuggestion(student);
+			//editSuggestion(student);
+			break;
+		case 9:
+			System.out.println("Student 9");
+			//submitSuggestion(student);
+			break;
+		case 10:
+			System.out.println("Student 10");
+			//viewCommitteeCampDetails(student);
+			
 			break;
 		default:
 			handleStudentChoice(student,choice);
@@ -259,12 +252,7 @@ public class CampApp {
 				break;
 			case 12:
 				return;
-		}
-		}
-		
-		
-		
+			}
+		}	
 	}
-	
-	
 }

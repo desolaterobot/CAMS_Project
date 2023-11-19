@@ -16,6 +16,7 @@ class UserManager extends CSVReader{
 
     public static void main(String[] a){
         System.out.println("test");
+        List<User> user = loadUsers();
     }
 
     /**
@@ -67,10 +68,6 @@ class UserManager extends CSVReader{
 		List<Student> Students = loadStudents("data/student.csv");
 		
 		for(Student s : Students) {
-			System.out.println(s.userID);
-			System.out.println(userId);
-			System.out.println(s.getPassword());
-			System.out.println(password);
 			if(s.getUserId().equals(userId) && s.getPassword().equals(hash(password))) {
 			return s;
 			}
@@ -123,9 +120,7 @@ class UserManager extends CSVReader{
      * @return The User object if found, otherwise null.
      */
     public static Student getStudent(String userID){
-    	List<Student> Students = new ArrayList<>();
-    	
-    	Students = loadStudents("data/students.csv");
+    	List<Student> Students = loadStudents("data/students.csv");
     	
         for(Student u : Students){
             if(u.userID.equals(userID)){
@@ -137,11 +132,21 @@ class UserManager extends CSVReader{
     }
     
     public static Staff getStaff(String userID) {
-    	List<Staff> Staffs = new ArrayList<>();
-    	
-    	Staffs = loadStaff("data/staff.csv");
+    	List<Staff> Staffs = loadStaff("data/staff.csv");
     	
     	for(Staff u : Staffs){
+            if(u.userID.equals(userID)){
+                return u;
+            }
+        }
+        System.out.printf("Staff %s not found in database.\n", userID);
+        return null;
+    }
+    
+    public static User getUser(String userID) {
+    	List<User> Users = loadUsers();
+    	
+    	for(User u : Users){
             if(u.userID.equals(userID)){
                 return u;
             }
@@ -163,15 +168,15 @@ class UserManager extends CSVReader{
 			String faculty = part[2];
 			String password = part[3];
 			boolean committeeMember  = Boolean.parseBoolean(part[4]);
+			String whichCampCommittee = null;
 			
 			if(committeeMember) {
-				Student student = new Student(userId,email,faculty,password);
-				student.setCommitteeMember(true);
+				whichCampCommittee = part[5];
+				Student student = new Student(userId, email, faculty, password, committeeMember, whichCampCommittee);
 				users.add(student);
 			}
 			else {
-			
-			Student student = new Student(userId, email, faculty, password);
+			Student student = new Student(userId, email, faculty, password, committeeMember, whichCampCommittee);
 			users.add(student);
 			}
 		}
@@ -197,7 +202,43 @@ class UserManager extends CSVReader{
 		return users;
 	}
 	
-
+	
+	
+	public static List<User> loadUsers(){
+		List<User> Users = new ArrayList<>();
+		String[] files = {"data/student.csv","data/staff.csv"};
+		
+		for(String file : files) {
+			String[] lines = CSVReader.getLines(file);
+			
+			for(String line: lines) {
+				String[] part = line.split(",");
+				
+				String userId = part[0];
+				String email = part[1];
+				String faculty = part[2];
+				String password = part[3];
+				
+				boolean isCommitteeMember = false;
+				String whichCampCommittee = null;
+				
+				if(file.toLowerCase().contains("student")) {
+					if(part.length > 4) {
+					isCommitteeMember = Boolean.parseBoolean(part[4]);
+					whichCampCommittee = part[5];
+					}
+					
+					Student student = new Student(userId, email, faculty, password, isCommitteeMember, whichCampCommittee);
+					Users.add(student);
+				}
+				else if(file.toLowerCase().contains("staff")) {
+					Staff staff = new Staff(userId, email, faculty, password);
+					Users.add(staff);
+				}
+			}
+	}
+		return Users;		
+}
 	
     /**
      * Returns an array of User objects representing staff members.
@@ -288,5 +329,6 @@ class UserManager extends CSVReader{
         String newLine = String.format("%s,%s,%s,%s", user.name, user.email, user.faculty, newPassHash);
         modifyLine(file, user.name, newLine);
     }
+
 
 }
