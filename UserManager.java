@@ -24,19 +24,70 @@ class UserManager extends CSVReader{
      * @param userfilepath The path of the CSV file containing user data.
      * @return An array of User objects.
      */
-    private static User[] getUsers(String userfilepath){
-        String[] staffList = null;
-        staffList = getLines(userfilepath);
-        List<User> userList = new ArrayList<User>();
-        User[] userarray = new User[staffList.length];
-        for(String s : staffList){
-            String[] stringValues = s.split(",");
-            boolean isCommitteeMember = Boolean.parseBoolean(stringValues[4]);
-            User newUser = new User(stringValues[0], stringValues[1], stringValues[2], stringValues[3], isCommitteeMember ,stringValues[5]);
-            userList.add(newUser);
-        }
-        return userList.toArray(userarray);
-    }
+//    private static User[] getUsers(String userfilepath){
+//        String[] staffList = null;
+//        staffList = getLines(userfilepath);
+//        List<User> userList = new ArrayList<User>();
+//        User[] userarray = new User[staffList.length];
+//        for(String s : staffList){
+//            String[] stringValues = s.split(",");
+//            boolean isCommitteeMember = Boolean.parseBoolean(stringValues[4]);
+//            User newUser = new User(stringValues[0], stringValues[1], stringValues[2], stringValues[3], isCommitteeMember ,stringValues[5]);
+//            userList.add(newUser);
+//        }
+//        return userList.toArray(userarray);
+//    }
+    
+	public void login() {
+		//prompt for userID and pw
+		//authenticate user
+		//if student, showStudentMenu()
+		//if staff, showStaffMenu()
+		//else return to login menu for incorrect auth
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("User ID");
+		String userId = sc.nextLine();
+		
+		System.out.println("Password");
+		String password = sc.nextLine();
+		Student student = authStudent(userId,password);
+		if(student !=null) {
+			CampApp.showStudentMenu(student);
+			return;
+		}
+		Staff staff = authSaff(userId,password);
+		if(staff !=null) {
+			CampApp.showStaffMenu(staff);
+			return;
+		}
+	}
+	
+	public Student authStudent(String userId, String password) {
+		List<Student> Students = loadStudents("data/student.csv");
+		
+		for(Student s : Students) {
+			System.out.println(s.userID);
+			System.out.println(userId);
+			System.out.println(s.getPassword());
+			System.out.println(password);
+			if(s.getUserId().equals(userId) && s.getPassword().equals(hash(password))) {
+			return s;
+			}
+		}
+		return null;
+	}
+	
+	public Staff authSaff(String userId, String password) {
+		List<Staff> Staffs = loadStaff("data/staff.csv");
+		
+		for(Staff s : Staffs) {
+			if(s.getUserId().equals(userId) && s.getPassword().equals(hash(password))) {
+			return s;
+			}
+		}
+		return null;
+	}
 
     /**
      * Hashes the input string using the SHA-256 hash algorithm.
@@ -71,54 +122,130 @@ class UserManager extends CSVReader{
      * @param userID The ID of the user to find.
      * @return The User object if found, otherwise null.
      */
-    public static User getUser(String userID){
-        for(User u : getStaffStudents()){
+    public static Student getStudent(String userID){
+    	List<Student> Students = new ArrayList<>();
+    	
+    	Students = loadStudents("data/students.csv");
+    	
+        for(Student u : Students){
             if(u.userID.equals(userID)){
                 return u;
             }
         }
-        System.out.printf("User %s not found in database.\n", userID);
+        System.out.printf("Student %s not found in database.\n", userID);
         return null;
     }
+    
+    public static Staff getStaff(String userID) {
+    	List<Staff> Staffs = new ArrayList<>();
+    	
+    	Staffs = loadStaff("data/staff.csv");
+    	
+    	for(Staff u : Staffs){
+            if(u.userID.equals(userID)){
+                return u;
+            }
+        }
+        System.out.printf("Staff %s not found in database.\n", userID);
+        return null;
+    }
+    
+	public static List<Student> loadStudents(String file) {
+		List<Student> users = new ArrayList<>();
+		
+		String[] lines = CSVReader.getLines(file);
+		
+		for(String line : lines) {
+			String[] part = line.split(",");
+			
+			String userId = part[0];
+			String email = part[1];
+			String faculty = part[2];
+			String password = part[3];
+			boolean committeeMember  = Boolean.parseBoolean(part[4]);
+			
+			if(committeeMember) {
+				Student student = new Student(userId,email,faculty,password);
+				student.setCommitteeMember(true);
+				users.add(student);
+			}
+			else {
+			
+			Student student = new Student(userId, email, faculty, password);
+			users.add(student);
+			}
+		}
+		return users;
+	}
+	
+	public static List<Staff> loadStaff(String file) {
+		List<Staff> users = new ArrayList<>();
+		
+		String[] lines = CSVReader.getLines(file);
+		
+		for(String line : lines) {
+			String[] part = line.split(",");
+			
+			String userId = part[0];
+			String email = part[1];
+			String faculty = part[2];
+			String password = part[3];
+			
+			Staff staff = new Staff(userId, email, faculty, password);
+			users.add(staff);
+		}
+		return users;
+	}
+	
 
+	
     /**
      * Returns an array of User objects representing staff members.
      *
      * @return An array of User objects.
      */
-    public static User[] getStaff(){
-        return getUsers("data/staff.csv");
-    }
+//    public static User[] getStaff(){
+//        return getUsers("data/staff.csv");
+//    }
 
     /**
      * Returns an array of User objects representing students.
      *
      * @return An array of User objects.
      */
-    public static User[] getStudents(){
-        return getUsers("data/student.csv");
-    }
+//    public static User[] getStudents(){
+//        return getUsers("data/student.csv");
+//    }
 
     /**
      * Returns an array of User objects representing both staff and students.
      *
      * @return An array of User objects.
      */
-    public static User[] getStaffStudents(){
-        List<User> userList = new ArrayList<User>();
-        User[] arr1 = null;
-        User[] arr2 = null;
-        arr1 = getUsers("data/staff.csv");
-        arr2 = getUsers("data/student.csv");
-        for(User u : arr1){
-            userList.add(u);
-        }
-        for(User u : arr2){
-            userList.add(u);
-        }
-        User[] combinedArray = new User[arr1.length + arr2.length];
-        return userList.toArray(combinedArray);
-    }
+//    public static User[] getStaff(){
+//        List<User> userList = new ArrayList<User>();
+//        User[] arr1 = null;
+//        arr1 = getUsers("data/staff.csv");
+//        arr2 = getUsers("data/student.csv");
+//        for(User u : arr1){
+//            userList.add(u);
+//        }
+//        return userList;
+//    }
+    
+//    public static User[] getStudents() {
+//    	List<User> userList = new ArrayList<User>();
+//    	
+//    	User[] arr1 = null;
+//        arr1 = getUsers("data/student.csv");
+//        
+//        for(User u : arr1){
+//            userList.add(u);
+//        }
+//        
+//        return userList
+//        
+//    }
 
     /**
      * Checks if a given username and password pair is valid.
@@ -128,24 +255,24 @@ class UserManager extends CSVReader{
      * @param password The user password.
      * @return The User object if authentication is successful, otherwise null.
      */
-    public static User validateUser(String userID, String password){
-        User[] userList = getStaffStudents();
-        User foundUser = null;
-        for(User user : userList){
-            if(userID.equals(user.userID)){
-                foundUser = user;
-            }
-        }
-        if(foundUser == null){
-            System.out.println("User not found. Try again.");
-            return null;
-        }
-        if(!foundUser.passHash.equals(hash(password))){
-            System.out.println("Incorrect password. Try again");
-            return null;
-        }
-        return foundUser;
-    }
+//    public static User validateUser(String userID, String password){
+//        User[] userList = getStaffStudents();
+//        User foundUser = null;
+//        for(User user : userList){
+//            if(userID.equals(user.userID)){
+//                foundUser = user;
+//            }
+//        }
+//        if(foundUser == null){
+//            System.out.println("User not found. Try again.");
+//            return null;
+//        }
+//        if(!foundUser.passHash.equals(hash(password))){
+//            System.out.println("Incorrect password. Try again");
+//            return null;
+//        }
+//        return foundUser;
+//    }
 
     //DATA MODIFICATION//////////////////////////////////////////////////////////////////////////////////
 
@@ -161,4 +288,5 @@ class UserManager extends CSVReader{
         String newLine = String.format("%s,%s,%s,%s", user.name, user.email, user.faculty, newPassHash);
         modifyLine(file, user.name, newLine);
     }
+
 }

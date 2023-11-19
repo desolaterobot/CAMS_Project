@@ -1,178 +1,270 @@
 package Test;
 
-import java.util.Scanner;
-import java.io.IOException;
+import java.util.*;
 
- /**
- * The main class for the Camp Application and Management System.
- * Provides a text-based user interface for logging in, managing camps, and other functionalities.
- */
-public class CampApp{
 
-    /** The User object that is currently logged in. */
-    public static User userLoggedIn = null; 
-
-    /**
-     * The main method to start the Camp Application and Management System.
-     *
-     * @param args The command-line arguments (not used in this application).
-     * @throws Exception If an exception occurs during program execution.
-     */
-    public static void main(String[] args) throws Exception {
-        while(true){
-        Scanner sc = new Scanner(System.in);
-            System.out.println(
-            " ██████╗ █████╗ ███╗   ███╗███████╗\r\n" + 
-            "██╔════╝██╔══██╗████╗ ████║██╔════╝\r\n" + 
-            "██║     ███████║██╔████╔██║███████╗\r\n" + 
-            "██║     ██╔══██║██║╚██╔╝██║╚════██║\r\n" + 
-            "╚██████╗██║  ██║██║ ╚═╝ ██║███████║\r\n" + 
-            " ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\r");
-            System.out.println("Camp Application And Management System");
-            System.out.println("Login to get started. Type 'e' to exit.");
-            System.out.printf("UserID: ");
-            String userInput = sc.nextLine();
-            System.out.printf("Password: ");
-            String passwInput = sc.nextLine();
-            while(true){
-                if(userInput.equals("e")){
-                    sc.close();
-                    return;
-                }
-                
-                userLoggedIn = UserManager.validateUser(userInput, passwInput);
-                if(userLoggedIn != null) {
-                    System.out.println("Login successful.");
-                    System.out.printf("Welcome, %s! Logged in as: %s\n", userLoggedIn.name, userLoggedIn.Status == accountType.Staff ? "Staff Member" : "Student");
-
-                    if(userLoggedIn.Status == accountType.Staff){
-                        //if staff. if student/commitee then print a seperate login menu function
-                        printStaffLoginMenu();
-                        break;
-                        
-                        }
-                    else if(userLoggedIn.Status == accountType.Student){
-                    	if (userLoggedIn.isCommitteeMember) {
-                    		printCCMLoginMenu();
-                    	}
-                    	else {
-                    		printStudentLoginMenu();
-                    	}
-                    	
-                        break;
-                        
-                        }
-                    /*else if(userLoggedIn.Status == accountType.CCM){
-                        printCCMLoginMenu();
-                        sc.close();
-                        }*/
-                    
-                }
-                else{
-                    System.out.println("Login unsuccessful.");
-                    break;
-                }
-
-            }
-        }
-    }
-
-    /**
-     * Prints the staff login menu and handles staff-specific actions.
-     */
-    public static void printStaffLoginMenu(){
-        Scanner sc = new Scanner(System.in);
-        while(true){
-            System.out.println("\nWhat would you like to do?");
-            System.out.println("1: Change password");
-            System.out.println("2: Show all visible camps");
-            System.out.println("3: Show all camps created by you (bypasses visibility)");
-            System.out.println("4: Create a new camp.");
-            System.out.println("0: Logout");
-
-            int choice = sc.nextInt();
-            sc.nextLine();
-            switch (choice) {
-                case 1:
-                    System.out.printf("Type your new password: ");
-                    String newPassword = sc.nextLine();
-                    UserManager.changePassword(userLoggedIn, newPassword);
-                    System.out.println("Password changed!");
-                    continue;
-                case 2:
-                    CampManager.printCamps(CampManager.getCampDatabase(), true);
-                    break;
-                case 3:
-                    CampManager.printCamps(CampManager.getCampsByStaffID(userLoggedIn.userID), false);
-                    break;
-                case 4:
-                    CampManager.createCamp(userLoggedIn);
-                    break;
-                case 0:
-                    System.out.println("Logging out. Goodbye!");
-                    userLoggedIn = null;
-                    return;
-                default:
-                    System.out.println("Invalid response. Try again.");
-                    continue;
-            }
-        }
-    }
-
-    public static void printStudentLoginMenu() {
-    	Scanner sc = new Scanner(System.in);
-	    while(true){
-	        System.out.println("\nWhat would you like to do?");
-	        System.out.println("1: Change password");
-	        System.out.println("0: Logout");
+public class CampApp {
+	Scanner sc = new Scanner(System.in);
 	
-	        int choice = sc.nextInt();
-	        sc.nextLine();
-	        switch (choice) {
-	            case 1:
-	                System.out.printf("Type your new password: ");
-	                String newPassword = sc.nextLine();
-	                UserManager.changePassword(userLoggedIn, newPassword);
-	                System.out.println("Password changed!");
-	                continue;
-	            case 0:
-	                System.out.println("Logging out. Goodbye!");
-	                userLoggedIn = null;
-	                return;
-	            default:
-	                System.out.println("Invalid response. Try again.");
-	                continue;
-	        }
-	    }
-    } 
-//need to implment
-
-
-    public static void printCCMLoginMenu(){
-    	Scanner sc = new Scanner(System.in);
-	    while(true){
-	        System.out.println("\nWhat would you like to do?");
-	        System.out.println("1: Change password");
-	        System.out.println("2: i am committee");
-	        System.out.println("0: Logout");
+	public static void main(String[] args0) {
+		CampApp app = new CampApp();
+		
+		//app.initialize();
+		
+		app.run();
+	}
 	
-	        int choice = sc.nextInt();
-	        sc.nextLine();
-	        switch (choice) {
-	            case 1:
-	                System.out.printf("Type your new password: ");
-	                String newPassword = sc.nextLine();
-	                UserManager.changePassword(userLoggedIn, newPassword);
-	                System.out.println("Password changed!");
-	                continue;
-	            case 0:
-	                System.out.println("Logging out. Goodbye!");
-	                userLoggedIn = null;
-	                return;
-	            default:
-	                System.out.println("Invalid response. Try again.");
-	                continue;
-	        }
-	    }
-    } //need to implment
+//	public void initialize() {
+//		students = loadStudents("data/student.csv");
+//		
+//		staff = loadStaff("data/staff.csv");
+//		
+//		camps = loadCamps("data/camps.csv");
+//		
+//		//enquiries = loadEnquiries("data/enquiries.csv");
+//		
+//		//suggestion = loadSuggestions("data/suggestions.csv");
+//	}
+	
+	
+	public void run() {
+		UserManager UserManager = new UserManager();
+		while(true) {
+			System.out.println("1.login");
+			System.out.println("2.exit");
+			
+			int choice = sc.nextInt();
+			switch(choice) {
+				case 1:
+					UserManager.login();
+					break;
+				case 2:
+					sc.close();
+					return;
+				default:
+					System.out.println("Invalud choice. Please try again");
+					break;
+			}
+		}
+	}
+	
+//	public List<Camp> loadCamps(String file) {
+//		List<Camp> Camps = new ArrayList<>();
+//		
+//		String[] lines = CSVReader.getLines(file);
+//		
+//		for (String line: lines) {
+//			String[] part = line.split(",");
+//			
+//			String name = part[0];
+//			Date startDate = DateStr.strToDate(part[1]);
+//			Date endDate= DateStr.strToDate(part[2]);
+//			Date registrationDeadline= DateStr.strToDate(part[3]);
+//			String location= part[4];
+//			int totalSlots= Integer.parseInt(part[5]);
+//			int campCommitteeSlot= Integer.parseInt(part[6]);
+//			String description= part[7];
+//			boolean visible = Boolean.parseBoolean(part[9]);
+//			boolean onlyFaculty = Boolean.parseBoolean(part[10]);
+//			String staffInCharge= part[8];
+//			Staff inCharge = findStaffById(staffInCharge);
+//			
+//			Camp camp = new Camp(name,startDate,endDate,registrationDeadline,location,
+//					totalSlots,campCommitteeSlot,description,inCharge,visible,onlyFaculty);
+//			
+//			Camps.add(camp);
+//		}
+//		return Camps;
+//	}
+	
+
+	
+
+	
+	public static void printStudentMenu(Student student) {
+		System.out.println("1.");
+		System.out.println("2.");
+		System.out.println("3.");
+		System.out.println("4.");
+		System.out.println("5.");
+		System.out.println("10.");
+		if(student.isCommitteeMember()) {
+			System.out.println("6.");
+			System.out.println("7.");
+			System.out.println("8.");
+		}
+		
+	}
+	
+	public static void showStudentMenu(Student student) {
+		//student actions:
+		// - view open camps
+		// - register/withdraw from camp
+		// - submit enquiry for the camp they registered
+		// - view registered camp
+		
+		//if they are committee member actions:
+			//
+
+		Scanner sc = new Scanner(System.in);
+		
+		while(true) {
+			printStudentMenu(student);
+			
+			int choice = sc.nextInt();
+			
+			sc.nextLine();
+			
+			if(choice==10) return;
+			
+			if(student.isCommitteeMember()) {
+				handleCommitteeMemberChoice(student,choice);
+			}
+			
+			else {
+				handleStudentChoice(student,choice);
+			}
+				
+				
+			}
+		}
+	
+	public static void handleCommitteeMemberChoice(Student student, int choice) {
+		// TODO Auto-generated method stub
+		switch(choice) {
+		case 6:
+			System.out.println("Student 6");
+			//submitSuggestion(student);
+			break;
+		case 7:
+			System.out.println("Student 7");
+			//viewCommitteeCampDetails(student);
+			break;
+		case 8:
+			System.out.println("Student 8");
+			//viewSuggestion(student);
+			break;
+		default:
+			handleStudentChoice(student,choice);
+		}
+	}
+	
+	public static void handleStudentChoice(Student student, int choice) {
+		// TODO Auto-generated method stub
+		switch(choice) {
+		case 1:
+			System.out.println("Student 1");
+			//viewAailableCamps(student);
+			break;
+		case 2:
+			System.out.println("Student 2");
+			//registerCamp(student);
+			break;
+		case 3:
+			System.out.println("Student 3");
+			//withdrawCamp(student);
+			break;
+		case 4:
+			System.out.println("Student 4");
+			//submitEnquiry(student);
+			break;
+		case 5:
+			System.out.println("Student 5");
+			//viewegisteredCamp(student);
+			break;
+		case 10:
+			System.out.println("Student 10");
+			return;
+		}
+	}
+
+
+	public static void printStaffMenu() {
+		System.out.println("1. Create Camp");
+		System.out.println("2. Edit Camp");
+		System.out.println("3. Delete Camp");
+		System.out.println("4. Toggle Visibility");
+		System.out.println("5. View All Camps");
+		System.out.println("6. View My Camps");
+		System.out.println("7. View Enquiries");
+		System.out.println("8. Reply Enquiry");
+		System.out.println("9. View Suggestions");
+		System.out.println("10. Approve Suggestions");
+		System.out.println("11. Generate Report");
+		System.out.println("12. Exit");
+	}
+		
+	public static void showStaffMenu(Staff staff) {
+		//staff actions:
+		// - create/edit/delete camp
+		// - toggle camp visibility
+		// - view all camps
+		// - view camps created
+		// - view/reply to enquiries
+		// - approve suggestions
+		// - generate reports
+		Scanner sc = new Scanner(System.in);
+		
+		while(true) {
+			printStaffMenu();
+			
+			int choice = sc.nextInt();
+			
+			sc.nextLine();
+			
+			switch(choice) {
+			case 1:
+				System.out.println("Staff 1");
+				//CreateCamp(staff);
+				break;
+			case 2:
+				System.out.println("Staff 2");
+				//EditCamp(staff);
+				break;
+			case 3:
+				System.out.println("Staff 3");
+				//DeleteCamp(staff);
+				break;
+			case 4:
+				System.out.println("Staff 4");
+				//ToggleVisibility(staff);
+				break;
+			case 5:
+				System.out.println("Staff 5");
+				//ViewAllCamps(staff);
+				break;
+			case 6:
+				System.out.println("Staff 6");
+				//ViewMyCamps(staff);
+				break;
+			case 7:
+				System.out.println("Staff 7");
+				//ViewEnquiries(staff);
+				break;
+			case 8:
+				System.out.println("Staff 8");
+				//ReplyEnquiry(staff);
+				break;
+			case 9:
+				System.out.println("Staff 9");
+				//ViewSuggestions(staff);
+				break;
+			case 10:
+				System.out.println("Staff 10");
+				//ApproveSuggestion(staff);
+				break;
+			case 11:
+				System.out.println("Staff 11");
+				//GenerateReport(staff);
+				break;
+			case 12:
+				return;
+		}
+		}
+		
+		
+		
+	}
+	
+	
 }
