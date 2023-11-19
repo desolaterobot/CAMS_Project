@@ -19,7 +19,7 @@ public class EnquiryManager extends CSVReader{
         for(Enquiry e : allEnquiries){
             System.out.println(e.message);
         }
-        addEnquiry(UserManager.getUser("DIMAS001"), CampManager.getCamp("hyper camp"), "is this camp hyper enough for me?");
+        addEnquiry(UserManager.getStudent("DIMAS001"), CampManager.getCamp("hyper camp"), "is this camp hyper enough for me?");
         Enquiry[] allEnquiries2 = getEnquiryDatabase();
         for(Enquiry e : allEnquiries2){
             System.out.println(e.message);
@@ -51,7 +51,7 @@ public class EnquiryManager extends CSVReader{
         List<Enquiry> enqlist = new LinkedList<>();
         for(String s : enqs){
             String[] items = s.split(",");
-            enqlist.add(new Enquiry(items[0], UserManager.getUser(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), stringToList(items[4])));
+            enqlist.add(new Enquiry(items[0], UserManager.getStudent(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), stringToList(items[4])));
         }
         return enqlist.toArray(new Enquiry[enqlist.size()]);
     }

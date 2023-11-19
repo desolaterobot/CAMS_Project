@@ -96,6 +96,6 @@ public class Camp {
         this.visible = visible;
         this.commiteeList = commiteeList;
         this.attendees = attendees;
-        this.faculty = UserManager.getUser(staffInCharge).faculty;
+        this.faculty = UserManager.getStaff(staffInCharge).faculty;
     }
 }
