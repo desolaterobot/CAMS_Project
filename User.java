@@ -1,5 +1,3 @@
-package Test;
-
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
