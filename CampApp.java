@@ -1,14 +1,10 @@
-package Test;
-
 import java.util.*;
-
 
 public class CampApp {
 	Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args0) {
 		CampApp app = new CampApp();
-				
 		app.run();
 	}	
 	

@@ -1,5 +1,3 @@
-package Test;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,15 +13,7 @@ public class EnquiryManager extends CSVReader{
      */
     //I put incase u keeping this
     public static void main(String[] a){
-        Enquiry[] allEnquiries = getEnquiryDatabase();
-        for(Enquiry e : allEnquiries){
-            System.out.println(e.message);
-        }
-        addEnquiry(UserManager.getStudent("DIMAS001"), CampManager.getCamp("hyper camp"), "is this camp hyper enough for me?");
-        Enquiry[] allEnquiries2 = getEnquiryDatabase();
-        for(Enquiry e : allEnquiries2){
-            System.out.println(e.message);
-        }
+        
     }
 
     /**
@@ -57,6 +47,38 @@ public class EnquiryManager extends CSVReader{
     }
 
     /**
+     * Retrieves the array of enquiries for a specific camp from the CSV file.
+     *
+     * @param camp The camp object.
+     * @return An array of Enquiry objects containing the enquiries.
+     */
+    public static Enquiry[] getEnquiriesForCamp(Camp camp){
+        List<Enquiry> campEnqList = new LinkedList<>();
+        for(Enquiry e : getEnquiryDatabase()){
+            if(e.camp.campName.equals(camp.campName)){
+                campEnqList.add(e);
+            }
+        }
+        return campEnqList.toArray(new Enquiry[campEnqList.size()]);
+    }
+
+    /**
+     * Retrieves the array of enquiries created by a specific user from the CSV file.
+     *
+     * @param user The User object 
+     * @return An array of Enquiry objects containing the enquiries.
+     */
+    public static Enquiry[] getEnquiriesByUser(User user){
+        List<Enquiry> campEnqList = new LinkedList<>();
+        for(Enquiry e : getEnquiryDatabase()){
+            if(e.student.userID.equals(user.userID)){
+                campEnqList.add(e);
+            }
+        }
+        return campEnqList.toArray(new Enquiry[campEnqList.size()]);
+    }
+
+    /**
      * Adds a new enquiry to the CSV file.
      *
      * @param sender  The user sending the enquiry.
@@ -64,7 +86,8 @@ public class EnquiryManager extends CSVReader{
      * @param message The message content of the enquiry.
      */
     public static void addEnquiry(User sender, Camp camp, String message){
-        int enquiryID = getEnquiryDatabase().length;
+        Enquiry[] enqDB = getEnquiryDatabase();
+        int enquiryID = CSVReader.toInt(enqDB[enqDB.length-1].enquiryID)+1;
         String line = String.format("%d,%s,%s,%s,%s", enquiryID, sender.userID, removeCommas(camp.campName), removeCommas(message), listToString(new String[0]));
         addLine("data/enquiry.csv", line);
     }

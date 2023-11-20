@@ -1,5 +1,3 @@
-package Test;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,11 +13,6 @@ import java.util.Scanner;
  * Manages camps, including reading from and writing to CSV files, creating, editing, and deleting camps.
  */
 public class CampManager extends CSVReader{
-
-    
-    public static void main(String[] a){
-        System.out.println("test");
-    }
 
     /**
      * Converts a string representation of a date to a Date object.
@@ -62,7 +55,7 @@ public class CampManager extends CSVReader{
      * @param c The Camp object to be converted.
      * @return The CSV-formatted string representation of the Camp.
      */
-    private static String campToLine(Camp c){
+    public static String campToLine(Camp c){
         String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", 
         removeCommas(c.campName), dateToStr(c.startDate), dateToStr(c.endDate), dateToStr(c.registrationDeadline), 
         listToString(c.commiteeList), boolToStr(c.onlyFaculty), removeCommas(c.location), 
@@ -249,35 +242,4 @@ public class CampManager extends CSVReader{
         addLine("data/camps.csv", campToLine(createdCamp));
     }
 
-    //not allowed to edit names, since we index by name to filter camps
-    /**
-     * Edits the information of an existing camp.
-     *
-     * @param updatedCamp The updated Camp object.
-     */
-    public static void editCamp(Camp updatedCamp){
-        modifyLine("data/camps.csv", updatedCamp.campName, campToLine(updatedCamp));
-    }
-
-    /**
-     * Deletes a camp from the camp database.
-     *
-     * @param toBeDeleted The Camp object to be deleted.
-     */
-    public static void deleteCamp(Camp toBeDeleted){
-        deleteLine("data/camps.csv", toBeDeleted.campName);
-    }
-
-    /**
-     * Adds an attendee to a camp.
-     *
-     * @param toBeModified The Camp object to which the attendee is added.
-     * @param attendeeUserID The user ID of the attendee.
-     */
-    public static void addAttendee(Camp toBeModified, String attendeeUserID){
-        List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
-        attendeeList.add(attendeeUserID);
-        toBeModified.attendees = attendeeList.toArray(new String[0]);
-        editCamp(toBeModified);
-    }
 }

@@ -1,5 +1,3 @@
-package Test;
-
 /**
  * The EnquiryReply class represents a reply to an enquiry.
  * It contains information about the reply's ID, content, and the committee member who provided the reply.
