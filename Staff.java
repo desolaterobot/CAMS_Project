@@ -34,7 +34,6 @@ public class Staff extends User {
 
     public boolean editCamp(Camp camp) {
         /**Things staff can edit:
-         Camp Name
          Start Date
          End Date
          Registration Deadline
@@ -48,70 +47,65 @@ public class Staff extends User {
 
         while (true) {
             System.out.println("Enter number of what you want to edit:");
-            System.out.println("1. Camp Name");
-            System.out.println("2. Start Date");
-            System.out.println("3. End Date");
-            System.out.println("4. Registration Deadline");
-            System.out.println("5. Toggle Faculty only visibility");
-            System.out.println("6. Location");
-            System.out.println("7. Total Slots");
-            System.out.println("8. Camp Committee Slots (Max 10)");
-            System.out.println("9. Description");
-            System.out.println("10. View Current Changes");
-            System.out.println("11. Confirm Changes");
-            CampManager.editCamp(camp);
-            int choice = sc.nextInt();
+            System.out.println("1. Start Date");
+            System.out.println("2. End Date");
+            System.out.println("3. Registration Deadline");
+            System.out.println("4. Toggle Faculty only visibility");
+            System.out.println("5. Location");
+            System.out.println("6. Total Slots");
+            System.out.println("7. Camp Committee Slots (Max 10)");
+            System.out.println("8. Description");
+            System.out.println("9. View Current Changes");
+            System.out.println("10. Confirm Changes");
+            int choice = Integer.parseInt(sc.nextLine());
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter the name of the camp.");
-                    String name = sc.nextLine();
-                    camp.campName = name;
-                    break;
-                case 2:
                     System.out.println("Enter the start date of the camp, in the format: dd/mm/yyyy");
                     Date startDate = strToDate(sc.nextLine());
                     camp.startDate = startDate;
                     break;
-                case 3:
+                case 2:
                     System.out.println("Enter the end date of the camp, in the format: dd/mm/yyyy");
                     Date endDate = strToDate(sc.nextLine());
                     camp.endDate = endDate;
                     break;
-                case 4:
+                case 3:
                     System.out.println("Enter the registration deadline, in the format: dd/mm/yyyy");
                     Date registrationDeadline = strToDate(sc.nextLine());
                     camp.registrationDeadline = registrationDeadline;
                     break;
-                case 5:
+                case 4:
+
                     if (camp.onlyFaculty) camp.onlyFaculty = false;
                     else camp.onlyFaculty = true;
+                    System.out.println("Toggling to " + camp.onlyFaculty);
                     break;
-                case 6:
+                case 5:
                     System.out.println("Enter the location of the camp");
                     String location = sc.nextLine();
                     camp.location = location;
                     break;
-                case 7:
+                case 6:
                     System.out.println("Enter the total number of attendee slots.");
-                    int totalSlots = sc.nextInt();
+                    int totalSlots = Integer.parseInt(sc.nextLine());
                     camp.totalSlots = totalSlots;
                     break;
-                case 8:
+                case 7:
                     System.out.println("Enter the total number of committee slots. (Max 10)");
-                    int committeeSlots = sc.nextInt();
+                    int committeeSlots = Integer.parseInt(sc.nextLine());
                     if (committeeSlots > 10 || committeeSlots < 0) {
                         break;
                     } else {
                         camp.committeeSlots = committeeSlots;
                     }
                     break;
-                case 9:
+                case 8:
                     System.out.println("Enter a brief description for this camp.");
                     String description = sc.nextLine();
                     camp.description = description;
                     break;
-                case 10:
+                case 9:
                     System.out.println("Camp Name: " + camp.campName);
                     System.out.println("Start Date: "+ camp.startDate);
                     System.out.println("End Date: " + camp.endDate);
@@ -122,9 +116,8 @@ public class Staff extends User {
                     System.out.println("Total Slots: " + camp.totalSlots);
                     System.out.println("Committee Slots: " + camp.committeeSlots );
                     break;
-                case 11:
+                case 10:
                     CampManager.editCamp(camp);
-                    sc.close();
                     return true;
                 default:
                     System.out.println("Invalid input.");

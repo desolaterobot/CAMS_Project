@@ -9,6 +9,14 @@ public class CampApp {
 	}	
 	
 	public void run() {
+		System.out.println(
+			" ██████╗ █████╗ ███╗   ███╗███████╗\r\n" +
+			"██╔════╝██╔══██╗████╗ ████║██╔════╝\r\n" +
+			"██║     ███████║██╔████╔██║███████╗\r\n" +
+			"██║     ██╔══██║██║╚██╔╝██║╚════██║\r\n" +
+			"╚██████╗██║  ██║██║ ╚═╝ ██║███████║\r\n" +
+			" ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\r");
+		System.out.println("Camp Application And Management System");
 		UserManager UserManager = new UserManager();
 		while(true) {
 			System.out.println("1.login");
@@ -196,54 +204,68 @@ public class CampApp {
 		
 		while(true) {
 			printStaffMenu();
-			
-			int choice = sc.nextInt();
-			
-			sc.nextLine();
+
+			int choice = Integer.parseInt(sc.nextLine());
 			
 			switch(choice) {
 			case 1:
-				System.out.println("Staff 1");
-				//CreateCamp(staff);
+				System.out.println("Creating Camp.");
+				staff.createCamp();
 				break;
 			case 2:
-				System.out.println("Staff 2");
+				System.out.println("Editing Camp.");
+				List<Camp> camps = Arrays.asList(CampManager.getCampsByStaffID(staff.userID));
+				int i = 1;
+				for (Camp camp :
+						camps) {
+					System.out.println(i + ". "+ camp.campName);
+					i++;
+				}
+				System.out.println("Select Camp to edit.");
+				int campChoice;
+				while (true) {
+					campChoice = Integer.parseInt(sc.nextLine());
+					if (campChoice > i-1 || campChoice < 1) continue;
+					break;
+				}
+
+				staff.editCamp(camps.get(campChoice-1));
 				//EditCamp(staff);
 				break;
 			case 3:
-				System.out.println("Staff 3");
+				System.out.println("Deleting Camp.");
 				//DeleteCamp(staff);
 				break;
 			case 4:
-				System.out.println("Staff 4");
+				System.out.println("Toggling Visibility");
 				//ToggleVisibility(staff);
 				break;
 			case 5:
-				System.out.println("Staff 5");
+				System.out.println("View All Camps");
 				//ViewAllCamps(staff);
 				break;
 			case 6:
-				System.out.println("Staff 6");
+				System.out.println("View My Camps");
 				//ViewMyCamps(staff);
 				break;
 			case 7:
-				System.out.println("Staff 7");
+				System.out.println("View Enquiries.");
 				//ViewEnquiries(staff);
 				break;
 			case 8:
-				System.out.println("Staff 8");
+				System.out.println("Reply Enquiries");
 				//ReplyEnquiry(staff);
 				break;
 			case 9:
-				System.out.println("Staff 9");
+				System.out.println("View Suggestions");
 				//ViewSuggestions(staff);
 				break;
 			case 10:
-				System.out.println("Staff 10");
+				System.out.println("Approve Suggestions");
 				//ApproveSuggestion(staff);
 				break;
 			case 11:
-				System.out.println("Staff 11");
+				System.out.println("Generate Report");
 				//GenerateReport(staff);
 				break;
 			case 12:
