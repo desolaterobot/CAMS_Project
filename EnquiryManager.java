@@ -1,5 +1,3 @@
-package Test;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -75,6 +73,14 @@ public class EnquiryManager extends CSVReader{
 //    	}
 //    	return enqlist.toArray(new Enquiry[enqlist.size()]);
 //    }
+public static Enquiry[] getCampEnquiries(Camp camp) {
+    Enquiry[] enqs = getEnquiryDatabase();
+    List<Enquiry> enqlist = new LinkedList<>();
+    for(Enquiry enq : enqs)
+        if(enq.camp.campName.equals(camp.campName))
+            enqlist.add(enq);
+    return enqlist.toArray(new Enquiry[0]);
+}
 
     /**
      * Adds a new enquiry to the CSV file.
