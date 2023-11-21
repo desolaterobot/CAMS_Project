@@ -1,4 +1,4 @@
-package Test;
+package Camp;
 
 /**
  * The EnquiryReply class represents a reply to an enquiry.

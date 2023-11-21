@@ -1,4 +1,4 @@
-package Test;
+package Camp;
 
 import java.io.*;
 import java.util.ArrayList;

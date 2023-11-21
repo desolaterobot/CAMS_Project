@@ -1,4 +1,4 @@
-package Test;
+package Camp;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -45,7 +45,8 @@ public class Enquiry{
      * @param reply   The content of the reply.
      */
     public void reply(User replier, String reply){
-        int replyID = EnquiryManager.getEnquiryReplyDatabase().length;
+        EnquiryReply[] enqRDB = EnquiryManager.getEnquiryReplyDatabase();
+        int replyID = CSVReader.toInt(enqRDB[enqRDB.length-1].EnquiryReplyID)+1;
         String line = String.format("%d,%s,%s", replyID, CSVReader.removeCommas(reply), replier.userID);
         CSVReader.addLine("data/replies.csv", line); //done with appending a new reply into database
         //but still need to update the enquiry database as well:
@@ -54,6 +55,37 @@ public class Enquiry{
         String[] newIDStrings = intList.stream().map(Object::toString).toArray(String[]::new);
         String enqLine = String.format("%s,%s,%s,%s,%s", enquiryID, student.userID, CSVReader.removeCommas(camp.campName), CSVReader.removeCommas(message), CSVReader.listToString(newIDStrings));
         CSVReader.modifyLine("data/enquiry.csv", enquiryID, enqLine);
+    }
+
+    /**
+     * Edits an enquiry in database, only works if it has not been replied to.
+     *
+     * @param newEnquiryMessage The new enquiry message
+     * @return status of success
+     */
+    public boolean edit(String newMessage){
+        if(replies.length > 0){
+            System.out.println("Cannot edit replied enquiries.");
+            return false;
+        }
+        this.message = newMessage;
+        String enqLine = String.format("%s,%s,%s,%s,[]", enquiryID, student.userID, CSVReader.removeCommas(camp.campName), CSVReader.removeCommas(newMessage));
+        CSVReader.modifyLine("data/enquiry.csv", newMessage, enqLine);
+        return true;
+    }
+
+    /**
+     * Deletes an enquiry from database, only works if it has not been replied to.
+     *
+     * @return status of success
+     */
+    public boolean delete(){
+        if(replies.length > 0){
+            System.out.println("Cannot delete replied enquiries.");
+            return false;
+        }
+        CSVReader.deleteLine("data/enquiry.csv", enquiryID);
+        return true;
     }
 
     /**

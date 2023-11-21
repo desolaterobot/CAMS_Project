@@ -1,4 +1,4 @@
-package Test;
+package Camp;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -63,10 +63,10 @@ public class CampManager extends CSVReader{
      * @return The CSV-formatted string representation of the Camp.
      */
     private static String campToLine(Camp c){
-        String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", 
+        String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", 
         removeCommas(c.campName), dateToStr(c.startDate), dateToStr(c.endDate), dateToStr(c.registrationDeadline), 
-        listToString(c.commiteeList), boolToStr(c.onlyFaculty), removeCommas(c.location), 
-        removeCommas(c.description), c.staffInCharge, listToString(c.attendees), boolToStr(c.visible), intToStr(c.totalSlots), intToStr(c.committeeSlots));
+        listToString(c.committeeList), boolToStr(c.onlyFaculty), removeCommas(c.location), 
+        removeCommas(c.description), c.staffInCharge, listToString(c.attendees), boolToStr(c.visible), intToStr(c.totalSlots), intToStr(c.committeeSlots), listToString(c.withdrawals));
         return line;
     }
 
@@ -96,7 +96,7 @@ public class CampManager extends CSVReader{
                 System.out.printf("From %s to %s\n", dateToStr(c.startDate), dateToStr(c.endDate));
                 System.out.printf("Registration Deadline: %s\n", dateToStr(c.registrationDeadline));
                 System.out.printf("Total slots left: %d/%d\n", (c.totalSlots-c.attendees.length),c.totalSlots);
-                System.out.printf("Total commitee slots left: %d/%d\n", (c.committeeSlots-c.commiteeList.length),c.committeeSlots);
+                System.out.printf("Total commitee slots left: %d/%d\n", (c.committeeSlots-c.committeeList.length),c.committeeSlots);
                 x++;
             }
         }
@@ -116,7 +116,7 @@ public class CampManager extends CSVReader{
         List<Camp> campList = new LinkedList<>(); 
         for(String line : lines){
             String[] item = line.split(",");
-            campList.add(new Camp(getCommas(item[0]), strToDate(item[1]), strToDate(item[2]), strToDate(item[3]), stringToList(item[4]), toBool(item[5]), getCommas(item[6]), getCommas(item[7]), item[8], stringToList(item[9]), toBool(item[10]), toInt(item[11]), toInt(item[12])));
+            campList.add(new Camp(getCommas(item[0]), strToDate(item[1]), strToDate(item[2]), strToDate(item[3]), stringToList(item[4]), toBool(item[5]), getCommas(item[6]), getCommas(item[7]), item[8], stringToList(item[9]), toBool(item[10]), toInt(item[11]), toInt(item[12]), stringToList(item[13])));
         }
         return campList.toArray(new Camp[campList.size()]);
     }
@@ -170,7 +170,7 @@ public class CampManager extends CSVReader{
         List<Camp> campList = new LinkedList<>(); 
         for(Camp c : getCampDatabase()){
             boolean includeThis = false;
-            for(String attendee : c.commiteeList){
+            for(String attendee : c.committeeList){
                 if(attendee.equals(commiteeID)){
                     includeThis = true;
                     break;
@@ -181,6 +181,17 @@ public class CampManager extends CSVReader{
             }
         }
         return campList.toArray(new Camp[campList.size()]);
+    }
+    
+    public static Camp[] getCampsForStudents(Student s) {
+    	List<Camp> campList = new LinkedList<>();
+    	Camp[] camp = getCampDatabase();
+    	for(Camp c : camp) {
+    		if(c.visible && (!c.onlyFaculty || c.faculty.equals(s.faculty))) {
+    			campList.add(c);
+    		}
+    	}
+    	return campList.toArray(new Camp[campList.size()]);
     }
 
     /**
@@ -244,7 +255,7 @@ public class CampManager extends CSVReader{
 
         String[] emptyArray = new String[0];
 
-        Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.userID, emptyArray, visible, totalSlots, commiteeSlots);
+        Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.userID, emptyArray, visible, totalSlots, commiteeSlots, emptyArray);
         
         addLine("data/camps.csv", campToLine(createdCamp));
     }
@@ -278,6 +289,34 @@ public class CampManager extends CSVReader{
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
         attendeeList.add(attendeeUserID);
         toBeModified.attendees = attendeeList.toArray(new String[0]);
+        editCamp(toBeModified);
+    }
+    
+    public static void addCommittee(Camp toBeModified, String committeeUserID){
+        List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
+        committeeList.add(committeeUserID);
+        toBeModified.committeeList = committeeList.toArray(new String[0]);
+        editCamp(toBeModified);
+    }
+    
+    public static void removeAttendee(Camp toBeModified, String attendeeUserID){
+        List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
+        attendeeList.remove(attendeeUserID);
+        toBeModified.attendees = attendeeList.toArray(new String[0]);
+        editCamp(toBeModified);
+    }
+    
+    public static void removeCommittee(Camp toBeModified, String committeeUserID){
+        List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
+        committeeList.remove(committeeUserID);
+        toBeModified.committeeList = committeeList.toArray(new String[0]);
+        editCamp(toBeModified);
+    }
+    
+    public static void addWithdrawal(Camp toBeModified, String UserID){
+        List<String> withdrawalList = new ArrayList<>(Arrays.asList(toBeModified.withdrawals));
+        withdrawalList.add(UserID);
+        toBeModified.withdrawals = withdrawalList.toArray(new String[0]);
         editCamp(toBeModified);
     }
 }
