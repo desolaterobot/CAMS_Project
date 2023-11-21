@@ -70,4 +70,8 @@ public class SuggestionManager extends CSVReader{
         String line = String.format("%s,%s,%s,%s,None", suggID, committeeMember.userID, camp.campName, removeCommas(message));
         addLine("data/suggestions.csv", line);
     }
+
+    public static void approveSuggestion(Suggestion suggestion, Staff staff) {
+        suggestion.approve(staff);
+    }
 }
