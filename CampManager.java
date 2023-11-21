@@ -347,11 +347,11 @@ public class CampManager extends CSVReader{
 
     //not allowed to edit names, since we index by name to filter camps
     /**
-     * Edits the information of an existing camp.
+     * Commits the information of an existing camp to db.
      *
      * @param updatedCamp The updated Camp object.
      */
-    public static void editCamp(Camp updatedCamp){
+    public static void saveCamp(Camp updatedCamp){
         modifyLine("data/camps.csv", updatedCamp.campName, campToLine(updatedCamp));
     }
 
@@ -374,34 +374,34 @@ public class CampManager extends CSVReader{
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
         attendeeList.add(attendeeUserID);
         toBeModified.attendees = attendeeList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
     
     public static void addCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
         committeeList.add(committeeUserID);
         toBeModified.committeeList = committeeList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
     
     public static void removeAttendee(Camp toBeModified, String attendeeUserID){
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
         attendeeList.remove(attendeeUserID);
         toBeModified.attendees = attendeeList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
     
     public static void removeCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
         committeeList.remove(committeeUserID);
         toBeModified.committeeList = committeeList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
     
     public static void addWithdrawal(Camp toBeModified, String UserID){
         List<String> withdrawalList = new ArrayList<>(Arrays.asList(toBeModified.withdrawals));
         withdrawalList.add(UserID);
         toBeModified.withdrawals = withdrawalList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
 }
