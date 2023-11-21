@@ -1,10 +1,9 @@
+package Test;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Represents a camp with various attributes such as name, dates, location, and attendees.
@@ -44,7 +43,7 @@ public class Camp {
     String staffInCharge;
 
     /** An array of committee names associated with the camp. */
-    String[] commiteeList;
+    String[] committeeList;
 
     /** An array of user IDs representing attendees of the camp. */
     String[] attendees;
@@ -64,6 +63,8 @@ public class Camp {
      * It is automatically derived from the faculty of the staff creating this camp.
      */
     String faculty;
+    
+    String[] withdrawals;
 
     /**
      * Constructs a new Camp object with the specified parameters.
@@ -82,8 +83,8 @@ public class Camp {
      * @param totalSlots         The total number of slots available for the camp.
      * @param committeeSlots     The number of slots reserved for committees (maximum 10).
      */
-    public Camp(String name, Date startDate, Date endDate, Date registrationDeadline, String[] commiteeList, boolean onlyFaculty, String location, 
-                String description, String staffInCharge, String[] attendees, boolean visible, int totalSlots, int committeeSlots){
+    public Camp(String name, Date startDate, Date endDate, Date registrationDeadline, String[] committeeList, boolean onlyFaculty, String location, 
+                String description, String staffInCharge, String[] attendees, boolean visible, int totalSlots, int committeeSlots, String[] withdrawals){
         this.campName = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -95,39 +96,9 @@ public class Camp {
         this.description = description;
         this.staffInCharge = staffInCharge;
         this.visible = visible;
-        this.commiteeList = commiteeList;
+        this.committeeList = committeeList;
         this.attendees = attendees;
         this.faculty = UserManager.getStaff(staffInCharge).faculty;
-    }
-
-    /**
-     * Edits the information of this camp, by passing in a new camp object with the updated details.
-     * For data continuity reasons, do not update the name of the camp as it is used for searching and indexing in multiple instances.
-     *
-     * @param updatedCamp The updated Camp object.
-     */
-    public void edit(Camp updatedCamp){
-        CSVReader.modifyLine("data/camps.csv", this.campName, CampManager.campToLine(updatedCamp));
-    }
-
-    /**
-     * Deletes this camp from the camp database.
-     *
-     */
-    public void delete(){
-        CSVReader.deleteLine("data/camps.csv", this.campName);
-    }
-
-    /**
-     * Adds an attendee to a camp.
-     *
-     * @param toBeModified The Camp object to which the attendee is added.
-     * @param attendeeUserID The user ID of the attendee.
-     */
-    public void addAttendee(User attendee){
-        List<String> attendeeList = new ArrayList<>(Arrays.asList(this.attendees));
-        attendeeList.add(attendee.userID);
-        this.attendees = attendeeList.toArray(new String[0]);
-        edit(this);
+        this.withdrawals = withdrawals;
     }
 }
