@@ -1,4 +1,4 @@
-package Test;
+package Camp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +53,7 @@ public class Student extends User {
 		for(Camp c : camps) {
 			registeredCamps.add(c);
 		}
+	}
 		
 //		camp_db = CampManager.getCampDatabase();
 //		for(Camp c : camp_db) {
@@ -69,7 +70,6 @@ public class Student extends User {
 //				}
 //			}
 //		}
-	}
 	
 	public void registerCamp(Camp camp, boolean committeeMember) {
 		if(!registeredCamps.contains(camp)) {

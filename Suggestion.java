@@ -1,3 +1,5 @@
+package Camp;
+
 /**
  * Represents an Suggestion made by a commitee member, and its data.
  */

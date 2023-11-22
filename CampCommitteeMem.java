@@ -1,3 +1,5 @@
+package Camp;
+
 import java.util.Scanner;
 
 public class CampCommitteeMem extends User {

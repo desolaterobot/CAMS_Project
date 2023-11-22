@@ -1,3 +1,5 @@
+package Camp;
+
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,7 +16,7 @@ class UserManager extends CSVReader{
 
     public static void main(String[] a){
         System.out.println("test");
-        List<User> user = loadUsers();
+        loadUsers();
     }
 
     /**
@@ -37,7 +39,7 @@ class UserManager extends CSVReader{
 //        return userList.toArray(userarray);
 //    }
     
-	public void login() {
+	public User login() {
 		//prompt for userID and pw
 		//authenticate user
 		//if student, showStudentMenu()
@@ -50,18 +52,30 @@ class UserManager extends CSVReader{
 		
 		System.out.println("Password");
 		String password = sc.nextLine();
-		Student student = authStudent(userId,password);
-		if(student !=null) {
-			CampApp.showStudentMenu(student);
-			return;
+//		Student student = authStudent(userId,password);
+//		if(student !=null) {
+//			CampApp.showStudentMenu(student);
+//			return;
+//		}
+//		Staff staff = authSaff(userId,password);
+//		if(staff !=null) {
+//			CampApp.showStaffMenu(staff);
+//			return;
+		User User = authUser(userId,password);
+		
+		return User;
 		}
-		Staff staff = authSaff(userId,password);
-		if(staff !=null) {
-			CampApp.showStaffMenu(staff);
-			return;
-		}
-	}
 	
+	public User authUser(String userId, String password) {
+		User User = getUser(userId);
+		
+		if(User.getUserId().equals(userId) && User.getPassword().equals(hash(password))) {
+			return User;
+		}
+		
+		return null;
+	}
+
 	public Student authStudent(String userId, String password) {
 		List<Student> Students = loadStudents("data/student.csv");
 		
@@ -204,7 +218,7 @@ class UserManager extends CSVReader{
 	
 	public static List<User> loadUsers(){
 		List<User> Users = new ArrayList<>();
-		String[] files = {"data/student.csv","data/staff.csv"};
+		String[] files = {"data/students.csv","data/staff.csv"};
 		
 		for(String file : files) {
 			String[] lines = CSVReader.getLines(file);
@@ -221,10 +235,8 @@ class UserManager extends CSVReader{
 				String whichCampCommittee = null;
 				
 				if(file.toLowerCase().contains("student")) {
-					if(part.length > 4) {
 					isCommitteeMember = Boolean.parseBoolean(part[4]);
 					whichCampCommittee = part[5];
-					}
 					
 					Student student = new Student(userId, email, faculty, password, isCommitteeMember, whichCampCommittee);
 					Users.add(student);
