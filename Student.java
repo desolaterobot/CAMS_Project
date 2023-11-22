@@ -269,7 +269,7 @@ public class Student extends User {
 		System.out.println(enquiry.student.name + ": " + enquiry.message);
 		for(EnquiryReply enqReply : enqr) {
 			System.out.print("\u21B3 ");
-			System.out.println(enqReply.commiteeMember.name + ": " + enqReply.reply);
+			System.out.println(enqReply.user.name + ": " + enqReply.reply);
 		}
 	}
 	
