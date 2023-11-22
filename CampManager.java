@@ -1,3 +1,4 @@
+package Camp;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -122,7 +123,7 @@ public class CampManager extends CSVReader{
     /**
      * Retrieves camps created by a staff member based on their user ID.
      *
-     * @param staffID The user ID of the staff member.
+     * @param staffUserID The user ID of the staff member.
      * @return An array of Camp objects created by the specified staff member.
      */
     public static Camp[] getCampsByStaffID(String staffUserID){
@@ -257,14 +258,101 @@ public class CampManager extends CSVReader{
         
         addLine("data/camps.csv", campToLine(createdCamp));
     }
+    public static void editCamp (Camp campToBeEdited) {
+        /*Things staff can edit:
+         Start Date
+         End Date
+         Registration Deadline
+         Faculty only visibility
+         Location
+         Description
+         Total Slots
+         Committee Slots
+         */
+        //init new camp
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Enter number of what you want to edit:");
+            System.out.println("1. Start Date");
+            System.out.println("2. End Date");
+            System.out.println("3. Registration Deadline");
+            System.out.println("4. Toggle Faculty only visibility");
+            System.out.println("5. Location");
+            System.out.println("6. Total Slots");
+            System.out.println("7. Camp Committee Slots (Max 10)");
+            System.out.println("8. Description");
+            System.out.println("9. View Current Changes");
+            System.out.println("10. Confirm Changes");
+            int choice = Integer.parseInt(sc.nextLine());
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter the start date of the camp, in the format: dd/mm/yyyy");
+                    campToBeEdited.startDate = strToDate(sc.nextLine());
+                    break;
+                case 2:
+                    System.out.println("Enter the end date of the camp, in the format: dd/mm/yyyy");
+                    campToBeEdited.endDate = strToDate(sc.nextLine());
+                    break;
+                case 3:
+                    System.out.println("Enter the registration deadline, in the format: dd/mm/yyyy");
+                    campToBeEdited.registrationDeadline = strToDate(sc.nextLine());
+                    break;
+                case 4:
+                    campToBeEdited.onlyFaculty = !campToBeEdited.onlyFaculty;
+                    System.out.println("Toggling to " + campToBeEdited.onlyFaculty);
+                    break;
+                case 5:
+                    System.out.println("Enter the location of the camp");
+                    campToBeEdited.location = sc.nextLine();
+                    break;
+                case 6:
+                    System.out.println("Enter the total number of attendee slots.");
+                    campToBeEdited.totalSlots = Integer.parseInt(sc.nextLine());
+                    break;
+                case 7:
+                    System.out.println("Enter the total number of committee slots. (Max 10)");
+                    int committeeSlots = Integer.parseInt(sc.nextLine());
+                    if (committeeSlots > 10 || committeeSlots < 0) {
+                        break;
+                    } else {
+                        campToBeEdited.committeeSlots = committeeSlots;
+                    }
+                    break;
+                case 8:
+                    System.out.println("Enter a brief description for this camp.");
+                    campToBeEdited.description = sc.nextLine();
+                    break;
+                case 9:
+                    System.out.println("Camp Name: " + campToBeEdited.campName);
+                    System.out.println("Start Date: "+ campToBeEdited.startDate);
+                    System.out.println("End Date: " + campToBeEdited.endDate);
+                    System.out.println("Registration Deadline: " + campToBeEdited.registrationDeadline);
+                    System.out.println("Faculty only visibility: " + campToBeEdited.onlyFaculty);
+                    System.out.println("Location: " + campToBeEdited.location);
+                    System.out.println("Description: " + campToBeEdited.description);
+                    System.out.println("Total Slots: " + campToBeEdited.totalSlots);
+                    System.out.println("Committee Slots: " + campToBeEdited.committeeSlots );
+                    break;
+                case 10:
+                    modifyLine("data/camps.csv", campToBeEdited.campName, campToLine(campToBeEdited));
+                    return;
+                default:
+                    System.out.println("Invalid input.");
+
+            }
+        }
+
+    }
 
     //not allowed to edit names, since we index by name to filter camps
     /**
-     * Edits the information of an existing camp.
+     * Commits the information of an existing camp to db.
      *
      * @param updatedCamp The updated Camp object.
      */
-    public static void editCamp(Camp updatedCamp){
+    public static void saveCamp(Camp updatedCamp){
         modifyLine("data/camps.csv", updatedCamp.campName, campToLine(updatedCamp));
     }
 
@@ -287,34 +375,34 @@ public class CampManager extends CSVReader{
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
         attendeeList.add(attendeeUserID);
         toBeModified.attendees = attendeeList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
     
     public static void addCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
         committeeList.add(committeeUserID);
         toBeModified.committeeList = committeeList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
     
     public static void removeAttendee(Camp toBeModified, String attendeeUserID){
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
         attendeeList.remove(attendeeUserID);
         toBeModified.attendees = attendeeList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
     
     public static void removeCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
         committeeList.remove(committeeUserID);
         toBeModified.committeeList = committeeList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
     
     public static void addWithdrawal(Camp toBeModified, String UserID){
         List<String> withdrawalList = new ArrayList<>(Arrays.asList(toBeModified.withdrawals));
         withdrawalList.add(UserID);
         toBeModified.withdrawals = withdrawalList.toArray(new String[0]);
-        editCamp(toBeModified);
+        saveCamp(toBeModified);
     }
 }

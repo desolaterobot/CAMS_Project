@@ -48,9 +48,9 @@ public class Student extends User {
 		this.committeeMemberOf = committeeMemberOf;
 		Camp[] camps = isCommitteeMember ? CampManager.getCampsByCommiteeID(userID) : CampManager.getCampsByAttendeeID(userID);
 		this.registeredCamps = new ArrayList<>();
-//		for(Camp c : camps) {
-//			registeredCamps.add(c);
-//		}
+		for(Camp c : camps) {
+			registeredCamps.add(c);
+		}
 	}
 		
 //		camp_db = CampManager.getCampDatabase();
@@ -267,7 +267,7 @@ public class Student extends User {
 		System.out.println(enquiry.student.name + ": " + enquiry.message);
 		for(EnquiryReply enqReply : enqr) {
 			System.out.print("\u21B3 ");
-			System.out.println(enqReply.commiteeMember.name + ": " + enqReply.reply);
+			System.out.println(enqReply.user.name + ": " + enqReply.reply);
 		}
 	}
 	

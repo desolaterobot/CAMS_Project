@@ -130,7 +130,7 @@ class UserManager extends CSVReader{
      * @return The User object if found, otherwise null.
      */
     public static Student getStudent(String userID){
-    	List<Student> Students = loadStudents("data/student.csv");
+    	List<Student> Students = loadStudents("data/students.csv");
     	
         for(Student u : Students){
             if(u.userID.equals(userID)){

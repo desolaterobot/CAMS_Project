@@ -9,6 +9,14 @@ public class CampApp {
 	}	
 	
 	public void run() {
+		System.out.println(
+			" ██████╗ █████╗ ███╗   ███╗███████╗\r\n" +
+			"██╔════╝██╔══██╗████╗ ████║██╔════╝\r\n" +
+			"██║     ███████║██╔████╔██║███████╗\r\n" +
+			"██║     ██╔══██║██║╚██╔╝██║╚════██║\r\n" +
+			"╚██████╗██║  ██║██║ ╚═╝ ██║███████║\r\n" +
+			" ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\r");
+		System.out.println("Camp Application And Management System");
 		UserManager UserManager = new UserManager();
 		while(true) {
 			System.out.println("1.login");
