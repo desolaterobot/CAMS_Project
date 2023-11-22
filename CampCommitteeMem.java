@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class CampCommitteeMem extends User {
@@ -17,7 +18,8 @@ public class CampCommitteeMem extends User {
     	System.out.println("Please input suggestion: ");
 		String suggestion = input.nextLine();
     	SuggestionManager.addSuggestion(this.myCamp, this, suggestion);
-    	//pointsSystem.addPoint()????????
+    	PointsSystem.addPoint(this);
+    	input.close();
     }
 	
 	// Method to reply to enquiries
@@ -34,7 +36,8 @@ public class CampCommitteeMem extends User {
     	System.out.println("Please input the reply to the enquiry: ");
 		String reply = input.nextLine();
 		enquiries[enquiryIndex].reply(this, reply);
-		//pointsSystem.addPoint(); ???????????
+		PointsSystem.addPoint(this); 
+		input.close();
     }
     
     public void viewOwnSuggestions() {
@@ -59,6 +62,7 @@ public class CampCommitteeMem extends User {
 		System.out.println("Please input the new suggestion: ");
 		String newSuggestion = input.nextLine();
 		ownSuggestions[suggestionIndex].edit(newSuggestion);
+		input.close();
     }
 	
     public void deleteOwnSuggestion() {
@@ -72,7 +76,40 @@ public class CampCommitteeMem extends User {
     	System.out.println("Please select the suggestion to delete: ");
 		int suggestionIndex = input.nextInt();
 		ownSuggestions[suggestionIndex].delete();
+		input.close();
 	}
+    
+        public static void main(String[] args) {
+            // Create a test committee member
+            CampCommitteeMem committeeMember = new CampCommitteeMem("BRANDON","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
+
+            // Test submitSuggestion
+            //committeeMember.submitSuggestion();
+            //System.out.println("Suggestion submitted.");
+
+            // Test replyToEnquiry
+            //committeeMember.replyToEnquiry();
+            //System.out.println("Enquiry replied.");
+
+            // Test viewOwnSuggestions
+            //System.out.println("Own Suggestions:");
+            //committeeMember.viewOwnSuggestions();
+
+            // Test editOwnSuggestion
+            committeeMember.editOwnSuggestion();
+            System.out.println("Suggestion edited.");
+            
+            //System.out.println("Own Suggestions:");
+            //committeeMember.viewOwnSuggestions();
+
+            // Test deleteOwnSuggestion
+            committeeMember.deleteOwnSuggestion();
+            System.out.println("Suggestion deleted.");
+            
+            System.out.println("Own Suggestions:");
+            committeeMember.viewOwnSuggestions();
+        }
+    
     
     //prevent quitting
 }
