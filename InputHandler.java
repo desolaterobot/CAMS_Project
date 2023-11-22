@@ -1,7 +1,5 @@
 package Camp;
 
-import java.util.Scanner;
-
 public class InputHandler {
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
 		// TODO Auto-generated method stub
@@ -63,47 +61,52 @@ public class InputHandler {
 	}
 
 
-	public static void handleStaffChoice(Staff Staff,int choice) {
+	public static void handleStaffChoice(Staff staff,int choice) {
 		switch(choice) {
 		case 1:
-			System.out.println("Staff 1");
-			//CreateCamp(staff);
+			System.out.println("Creating Camp...");
+			staff.createCamp();
 			break;
 		case 2:
-			System.out.println("Staff 2");
+			System.out.println("Editing Camp...");
+			staff.editCamp();
 			//EditCamp(staff);
 			break;
 		case 3:
-			System.out.println("Staff 3");
+			System.out.println("Deleting Camp...");
 			//DeleteCamp(staff);
 			break;
 		case 4:
-			System.out.println("Staff 4");
+			System.out.println("Toggling Visibility...");
 			//ToggleVisibility(staff);
 			break;
 		case 5:
-			System.out.println("Staff 5");
+			System.out.println("View All Camps...");
 			//ViewAllCamps(staff);
 			break;
 		case 6:
-			System.out.println("Staff 6");
-			//ViewMyCamps(staff);
+			System.out.println("View My Camps...");
+			staff.viewOwnCamp();
 			break;
 		case 7:
 			System.out.println("Staff 7");
 			//ViewEnquiries(staff);
+			staff.viewEnquiries();
 			break;
 		case 8:
 			System.out.println("Staff 8");
 			//ReplyEnquiry(staff);
+			staff.replyEnquiries();
 			break;
 		case 9:
 			System.out.println("Staff 9");
+			staff.viewSuggestions();
 			//ViewSuggestions(staff);
 			break;
 		case 10:
-			System.out.println("Staff 10");
+			System.out.println("Approve Suggestion...");
 			//ApproveSuggestion(staff);
+			staff.approveSuggestion();
 			break;
 		case 11:
 			System.out.println("Staff 11");

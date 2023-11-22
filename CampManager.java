@@ -1,3 +1,4 @@
+package Camp;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -403,33 +404,5 @@ public class CampManager extends CSVReader{
         withdrawalList.add(UserID);
         toBeModified.withdrawals = withdrawalList.toArray(new String[0]);
         saveCamp(toBeModified);
-    }
-    
-    public static void addCommittee(Camp toBeModified, String committeeUserID){
-        List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
-        committeeList.add(committeeUserID);
-        toBeModified.committeeList = committeeList.toArray(new String[0]);
-        editCamp(toBeModified);
-    }
-    
-    public static void removeAttendee(Camp toBeModified, String attendeeUserID){
-        List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
-        attendeeList.remove(attendeeUserID);
-        toBeModified.attendees = attendeeList.toArray(new String[0]);
-        editCamp(toBeModified);
-    }
-    
-    public static void removeCommittee(Camp toBeModified, String committeeUserID){
-        List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
-        committeeList.remove(committeeUserID);
-        toBeModified.committeeList = committeeList.toArray(new String[0]);
-        editCamp(toBeModified);
-    }
-    
-    public static void addWithdrawal(Camp toBeModified, String UserID){
-        List<String> withdrawalList = new ArrayList<>(Arrays.asList(toBeModified.withdrawals));
-        withdrawalList.add(UserID);
-        toBeModified.withdrawals = withdrawalList.toArray(new String[0]);
-        editCamp(toBeModified);
     }
 }

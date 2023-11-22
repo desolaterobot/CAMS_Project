@@ -25,7 +25,7 @@ public class CampCommitteeMem extends User {
 	// Method to reply to enquiries
     public void replyToEnquiry() {
     	Scanner input = new Scanner(System.in);
-    	Enquiry[] enquiries = EnquiryManager.getEnquiriesForCamp(myCamp);
+    	Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
     	for (int i = 0; i < enquiries.length; i++) {
     		System.out.println("[" + i + "]: " + enquiries[i].message);
     	}

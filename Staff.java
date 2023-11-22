@@ -1,3 +1,4 @@
+package Camp;
 import java.util.*;
 
 
@@ -102,7 +103,7 @@ public class Staff extends User {
     /**
      * Accept the suggestion of the Camps that current staff is in charged of.
      */
-    public void acceptSuggestion() {
+    public void approveSuggestion() {
         System.out.println("Enter Number to accept the suggestion");
         List<Suggestion> allSuggestions = new ArrayList<>();
         int num = 1;
@@ -135,13 +136,13 @@ public class Staff extends User {
      */
     public boolean viewEnquiries() {
         System.out.println("Select Camp to view Enquiries");
-        CampManager.printCamps(getOwnCamps().toArray(Camp[]::new),false);
+        CampManager.printCamps(getOwnCamps().toArray(new Camp[1]),false);
         Scanner sc = new Scanner(System.in);
         System.out.print("Choice: ");
         int choice = Integer.parseInt(sc.nextLine());
 
         for (Enquiry enquiry :
-                EnquiryManager.getCampEnquiries(getOwnCamps().toArray(Camp[]::new)[choice - 1])) {
+                EnquiryManager.getCampEnquiries(getOwnCamps().toArray(new Camp[1])[choice - 1])) {
             System.out.println(enquiry.student.name + ": " +  enquiry.message);
             EnquiryReply[] replies = enquiry.getReplies();
             if (replies.length != 0) {
@@ -226,7 +227,7 @@ public class Staff extends User {
      * @return
      */
     public boolean viewOwnCamp() {
-        CampManager.printCamps(getOwnCamps().toArray(Camp[]::new), false);
+        CampManager.printCamps(getOwnCamps().toArray(new Camp[1]), false);
         return true;
     }
 }
