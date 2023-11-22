@@ -1,5 +1,3 @@
-package Camp;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +91,28 @@ public class CSVReader{
             e.printStackTrace();
         }
     }
+
+    /**
+     * Writes a line to a CSV file. Will overwrite the file in the process!
+     *
+     * @param filepath The path of the CSV file to which the line will be added.
+     * @param line     The line to be written to the CSV file.
+     */
+    public static void writeLine(String filepath, String line, boolean newLine){
+        FileWriter fw = null;
+        try{
+            fw = new FileWriter(filepath, false);
+            if(newLine){
+                fw.write(line + "\n");
+            }else{
+                fw.write(line);
+            }
+            fw.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Deletes a line from the CSV file based on the first entry (usually the name of the item).
      *

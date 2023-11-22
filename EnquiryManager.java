@@ -1,5 +1,3 @@
-package Camp;
-
 import java.util.LinkedList;
 import java.util.List;
 

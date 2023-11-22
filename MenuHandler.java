@@ -1,5 +1,3 @@
-package Camp;
-
 import java.util.*;
 
 
@@ -17,7 +15,6 @@ public class MenuHandler {
 		System.out.println("here");
 		showStaffMenu(staff);
 	}
-	
 	
 	public static void printStudentMenu(Student student) {
 			System.out.println("1. Register Camp");
@@ -52,6 +49,7 @@ public class MenuHandler {
 			System.out.println("12. Exit");
 	
 	}
+	
 	public static void showStudentMenu(Student student) {
 		//student actions:
 		// - view open camps
