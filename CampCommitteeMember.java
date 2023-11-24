@@ -2,12 +2,16 @@ import java.util.Scanner;
 
 public class CampCommitteeMember extends Student {
 	private Camp myCamp;
+	private Suggestion[] ownSuggestions;
+	private int noOfPendingSuggestions;
 	
 	public CampCommitteeMember(String userId, String email, String faculty, String password, Boolean isCommitteeMember,
 			String committeeMemberOf) {
 		super(userId, email, faculty, password, isCommitteeMember, committeeMemberOf);
 		// TODO Auto-generated constructor stub
 		this.myCamp = CampManager.getCampsByCommiteeID(this.userID)[0];
+		this.ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
+		this.noOfPendingSuggestions = 0;
 	}
 	
 	public void submitSuggestion() {
@@ -41,44 +45,49 @@ public class CampCommitteeMember extends Student {
     }
     
     public void viewOwnSuggestions() {
-    	Suggestion[] ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
-    	for (int i = 0; i < ownSuggestions.length; i++) {
-    		if (ownSuggestions[i].approved == false) {
-    			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
-    		}
+    	noOfPendingSuggestions = 0;
+    	if (ownSuggestions.length > 0) {
+    		System.out.println("Your suggestion(s): ");
+    		for (int i = 0; i < ownSuggestions.length; i++) {
+        		if (ownSuggestions[i].approved == false) {
+        			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
+        			noOfPendingSuggestions++;
+        		}
+        	}	
+    	} else {
+    		System.out.println("You have made no suggestions!");
     	}
     }
 	
     public void editOwnSuggestion() {
 		Scanner input = new Scanner(System.in);
-		Suggestion[] ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
-    	for (int i = 0; i < ownSuggestions.length; i++) {
-    		if (ownSuggestions[i].approved == false) {
-    			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
-    		}	
+		viewOwnSuggestions();
+    	if (noOfPendingSuggestions > 0) {
+    		System.out.print("Please select the suggestion to edit: ");
+    		int suggestionIndex = input.nextInt();
+    		input.nextLine();
+    		System.out.print("Please input the new suggestion: ");
+    		String newSuggestion = input.nextLine();
+    		ownSuggestions[suggestionIndex].edit(newSuggestion);
+    		System.out.println("Suggestion edited.");
+    	} else {
+    		System.out.println("No pending suggestion available for editing.");
     	}
-    	System.out.println("Please select the suggestion to edit: ");
-		int suggestionIndex = input.nextInt();
-		input.nextLine();
-		System.out.print("Please input the new suggestion: ");
-		String newSuggestion = input.nextLine();
-		ownSuggestions[suggestionIndex].edit(newSuggestion);
-		System.out.println("Suggestion edited.");
 		input.close();
     }
     
     public void deleteOwnSuggestion() {
     	Scanner input = new Scanner(System.in);
-		Suggestion[] ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
-    	for (int i = 0; i < ownSuggestions.length; i++) {
-    		if (ownSuggestions[i].approved == false) {
-    			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
-    		}	
+		viewOwnSuggestions();
+    	if (noOfPendingSuggestions > 0) {
+			System.out.print("Please select the suggestion to delete: ");
+			int suggestionIndex = input.nextInt();
+			ownSuggestions[suggestionIndex].delete();
+			System.out.println("Suggestion deleted.");
+    	} else {
+    		System.out.println("No suggestion available to delete.");
     	}
-    	System.out.println("Please select the suggestion to delete: ");
-		int suggestionIndex = input.nextInt();
-		ownSuggestions[suggestionIndex].delete();
-		System.out.println("Suggestion deleted.");
+    	
 		input.close();
 	}
     
@@ -98,8 +107,8 @@ public class CampCommitteeMember extends Student {
         //committeeMember.submitSuggestion();
         //System.out.println("Suggestion submitted.");
 
-        // Test replyToEnquiry (not working)
-        committeeMember.replyToEnquiry();
+        // Test replyToEnquiry (working)
+        //committeeMember.replyToEnquiry();
         //System.out.println(PointsSystem.getCurrentPoints(committeeMember));
         //System.out.println("Enquiry replied.");
         
