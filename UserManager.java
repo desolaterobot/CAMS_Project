@@ -161,7 +161,7 @@ class UserManager extends CSVReader{
                 return u;
             }
         }
-        System.out.printf("User %s not found in database.\n", userID);
+        System.out.printf("Staff %s not found in database.\n", userID);
         return null;
     }
     
@@ -224,7 +224,7 @@ class UserManager extends CSVReader{
 			for(String line: lines) {
 				String[] part = line.split(",");
 				
-				String userId = part[0];
+				String name = part[0];
 				String email = part[1];
 				String faculty = part[2];
 				String password = part[3];
@@ -236,17 +236,24 @@ class UserManager extends CSVReader{
 					isCommitteeMember = Boolean.parseBoolean(part[4]);
 					whichCampCommittee = part[5];
 					
-					Student student = new Student(userId, email, faculty, password, isCommitteeMember, whichCampCommittee);
+					Student student = new Student(name, email, faculty, password, isCommitteeMember, whichCampCommittee);
 					Users.add(student);
 				}
 				else if(file.toLowerCase().contains("staff")) {
-					Staff staff = new Staff(userId, email, faculty, password);
+					Staff staff = new Staff(name, email, faculty, password);
 					Users.add(staff);
 				}
 			}
-	}
+		}
 		return Users;		
-}
+	}
+	
+	public static void updateStudentDB(Student student) {
+		String line = String.format("%s,%s,%s,%s,%s,%s", 
+        removeCommas(student.name), removeCommas(student.email), removeCommas(student.faculty), removeCommas(student.passHash), 
+        removeCommas(Boolean.toString(student.isCommitteeMember()).toUpperCase()), removeCommas(student.getCommitteeCamp()));
+		modifyLine("data/students.csv", student.name, line);
+	}
 	
     /**
      * Returns an array of User objects representing staff members.
