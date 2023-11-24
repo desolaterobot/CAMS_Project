@@ -1,4 +1,3 @@
-package Camp;
 import java.util.*;
 
 
@@ -15,9 +14,10 @@ public class Staff extends User {
 //        s.viewOwnCamp();
 //        s.viewAllCamp();
 //        s.viewEnquiries();
-        s.replyEnquiries();
+        // s.replyEnquiries();
 //        s.acceptSuggestion();
 //        s.viewSuggestions();
+        s.editCamp();
     }
 
     public Staff(String name, String email, String faculty, String passHash) {
@@ -61,6 +61,19 @@ public class Staff extends User {
         CampManager.editCamp(camp);
         return true;
     }
+    public boolean editCamp() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number to edit Camp");
+        int campCounter = 1;
+        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.campName);
+            campCounter++;
+        }
+        int choice = Integer.parseInt(sc.nextLine());
+        editCamp(campList[choice-1]);
+        return true;
+    }
 
     /**
      * Delete the given Camp.
@@ -72,6 +85,21 @@ public class Staff extends User {
         return true;
     }
 
+    public boolean deleteCamp() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number to delete Camp");
+        int campCounter = 1;
+        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.campName);
+            campCounter++;
+        }
+        int choice = Integer.parseInt(sc.nextLine());
+        deleteCamp(campList[choice-1]);
+        return true;
+
+    }
+
     /**
      * View the list of Students in the current Camp.
      * @param camp
@@ -81,7 +109,22 @@ public class Staff extends User {
         for (String student : camp.attendees) {
             System.out.println(student);
         }
-        System.out.println("========================");
+        System.out.println("======Camp Commitee=====");
+        for (String campCom : camp.committeeList) {
+            System.out.println(campCom);
+        }
+    }
+    public void viewStudentList() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number to edit Camp");
+        int campCounter = 1;
+        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.campName);
+            campCounter++;
+        }
+        int choice = Integer.parseInt(sc.nextLine());
+        editCamp(campList[choice-1]);
     }
 
     /**
@@ -92,6 +135,10 @@ public class Staff extends User {
         getOwnCamps()) {
             System.out.println("Suggestions for " + camp.campName + ":");
             int num = 1;
+            if (ownCamps.size() == 0) {
+                System.out.println("[No Suggestion]");
+                continue;
+            }
             for (Suggestion suggestion:
             SuggestionManager.getSuggestionsForCamp(camp)) {
                 System.out.println(num + ") " +  suggestion.committeeMember.name +": " + suggestion.message + ". Is Approved: " + suggestion.approved);
@@ -110,6 +157,10 @@ public class Staff extends User {
         for (Camp camp:
                 getOwnCamps()) {
             System.out.println("Suggestions for " + camp.campName + ":");
+            if (ownCamps.size() == 0) {
+                System.out.println("[No Suggestion]");
+                continue;
+            }
             for (Suggestion suggestion:
                     SuggestionManager.getSuggestionsForCamp(camp)) {
                 if (!suggestion.approved) {
@@ -124,11 +175,27 @@ public class Staff extends User {
         System.out.print("Choice: ");
         int choice = Integer.parseInt(sc.nextLine());
         SuggestionManager.approveSuggestion(allSuggestions.get(choice-1),this);
+        System.out.println("Suggestion is approved");
     }
 
-//    public String generateCampReport(Camp camp) {
-//
-//    }
+    public Boolean generateCampReport(Camp camp) {
+        ReportGenerator.staffGenerateReport(camp);
+        return true;
+    }
+
+    public Boolean generateCampReport() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number to generate report of that Camp");
+        int campCounter = 1;
+        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.campName);
+            campCounter++;
+        }
+        int choice = Integer.parseInt(sc.nextLine());
+        generateCampReport(campList[choice-1]);
+        return true;
+    }
 
     /**
      * Display a list of all the Enquiries and their replies.
@@ -211,6 +278,19 @@ public class Staff extends User {
     public boolean toggleVisibility(Camp camp) {
         camp.visible = !camp.visible;
         return camp.visible;
+    }
+
+    public boolean toggleVisibility() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number to toggle visibility of Camp");
+        int campCounter = 1;
+        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.campName);
+        }
+        int choice = Integer.parseInt(sc.nextLine());
+        toggleVisibility(campList[choice-1]);
+        return true;
     }
 
     /**

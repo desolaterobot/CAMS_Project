@@ -1,4 +1,3 @@
-package Camp;
 import java.util.Scanner;
 
 
@@ -72,49 +71,47 @@ public class InputHandler {
 		case 2:
 			System.out.println("Editing Camp...");
 			staff.editCamp();
-			//EditCamp(staff);
 			break;
 		case 3:
 			System.out.println("Deleting Camp...");
-			//DeleteCamp(staff);
+			staff.deleteCamp();
 			break;
 		case 4:
 			System.out.println("Toggling Visibility...");
-			//ToggleVisibility(staff);
+			staff.toggleVisibility();
 			break;
 		case 5:
 			System.out.println("View All Camps...");
-			//ViewAllCamps(staff);
+			staff.viewAllCamp();
 			break;
 		case 6:
 			System.out.println("View My Camps...");
 			staff.viewOwnCamp();
 			break;
 		case 7:
-			System.out.println("Staff 7");
-			//ViewEnquiries(staff);
-			staff.viewEnquiries();
+			//view students in camp
 			break;
 		case 8:
-			System.out.println("Staff 8");
-			//ReplyEnquiry(staff);
-			staff.replyEnquiries();
+			System.out.println("View Enquiries...");
+			staff.viewEnquiries();
 			break;
 		case 9:
-			System.out.println("Staff 9");
-			staff.viewSuggestions();
-			//ViewSuggestions(staff);
+			System.out.println("Reply Enquiries...");
+			staff.replyEnquiries();
 			break;
 		case 10:
-			System.out.println("Approve Suggestion...");
-			//ApproveSuggestion(staff);
-			staff.approveSuggestion();
+			System.out.println("View Suggestion...");
+			staff.viewSuggestions();
 			break;
 		case 11:
-			System.out.println("Staff 11");
-			//GenerateReport(staff);
+			System.out.println("Approve Suggestion...");
+			staff.approveSuggestion();
 			break;
 		case 12:
+			System.out.println("Generate Report...");
+			staff.generateCampReport();
+			break;
+		case 13:
 			return;
 		
 	}
