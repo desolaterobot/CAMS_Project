@@ -183,6 +183,23 @@ public class Staff extends User {
         return true;
     }
 
+    public void generatePerformanceReport() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number to edit Camp");
+        int campCounter = 1;
+        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.campName);
+            campCounter++;
+        }
+        int choice = Integer.parseInt(sc.nextLine());
+        generatePerformanceReport(campList[choice-1]);
+    }
+
+    public void generatePerformanceReport(Camp camp) {
+        ReportGenerator.staffGeneratePerformanceReport(camp);
+    }
+
     public Boolean generateCampReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to generate report of that Camp");

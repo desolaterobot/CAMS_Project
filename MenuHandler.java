@@ -42,13 +42,14 @@ public class MenuHandler {
 			System.out.println("5. View All Camps");
 			System.out.println("6. View My Camps");
 			System.out.println("7. View Students of Camp");
-			System.out.println("7. View Enquiries");
-			System.out.println("8. Reply Enquiry");
-			System.out.println("9. View Suggestions");
-			System.out.println("10. Approve Suggestions");
-			System.out.println("11. Generate Report");
-			System.out.println("12. Change Password");
-			System.out.println("12. Exit");
+			System.out.println("8. View Enquiries");
+			System.out.println("9. Reply Enquiry");
+			System.out.println("10. View Suggestions");
+			System.out.println("11. Approve Suggestions");
+			System.out.println("12. Generate Report");
+			System.out.println("13. Generate Performance Report");
+			System.out.println("14. Change Password");
+			System.out.println("15. Exit");
 	
 	}
 	
@@ -100,7 +101,7 @@ public class MenuHandler {
 			
 			int choice = Integer.parseInt(sc.nextLine());
 
-			if(choice==12) return;
+			if(choice==15) return;
 			
 			InputHandler.handleStaffChoice(staff,choice);
 			}

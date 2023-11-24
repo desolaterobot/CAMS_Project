@@ -54,9 +54,10 @@ public class InputHandler {
 			System.out.println("Student 5");
 			//change password function;
 			break;
-		default 10:
+		case 10:
 			System.out.println("Student 11");
 			return;
+			
 		}
 	}
 
@@ -89,6 +90,7 @@ public class InputHandler {
 			break;
 		case 7:
 			//view students in camp
+			System.out.println("View student list...");
 			staff.viewStudentList();
 			break;
 		case 8:
@@ -112,6 +114,10 @@ public class InputHandler {
 			staff.generateCampReport();
 			break;
 		case 13:
+			System.out.println("Generate Performance Report...");
+			staff.generatePerformanceReport();
+			break;
+		case 14:
 			System.out.println("change password");
 			//change password function
 			break;

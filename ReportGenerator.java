@@ -161,4 +161,28 @@ public class ReportGenerator extends CSVReader{
         input.close();
     }
     
+    public static void staffGeneratePerformanceReport(Camp camp) {
+    	Scanner input = new Scanner(System.in);
+    	System.out.println("Please type your filename: ");
+    	String userFileName = input.nextLine();
+    	String filepath = String.format("reports/%s_%sReport.txt", camp.campName.replace(" ", "_"), userFileName.replace(" ", "_"));
+    	writeLine(filepath, "", false);
+    	
+    	addLine(filepath, String.format("%s Performance Report", camp.campName));
+        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).name));
+        addLine(filepath, String.format("Description: %s", camp.description));
+        addLine(filepath, String.format("Location: %s", camp.location));
+        addLine(filepath, String.format("Faculty: %s", camp.faculty));
+        addLine(filepath, String.format("Start Date: %s, End Date: %s, Registration Deadline: %s", DateStr.dateToStr(camp.startDate), DateStr.dateToStr(camp.endDate),DateStr.dateToStr(camp.registrationDeadline)));
+        	
+        int x = 1;
+        for(String s : camp.committeeList){
+            User u = UserManager.getUser(s);
+            int userPoint = PointsSystem.getCurrentPoints(u);
+            addLine(filepath, String.format("%d. %s - %d pts", x, u.name, userPoint));
+            x++;
+        }
+
+        System.out.printf("Performance report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
+    }
 }
