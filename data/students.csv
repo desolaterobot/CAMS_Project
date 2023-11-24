@@ -1,5 +1,5 @@
 Name,Email,Faculty,PasswordHash,isCommitteeMember,committeeCamp,Points
-CHERN,BR015@e.ntu.edu.sg,EEE,5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8,true,null,2
+CHERN,YCHERN@e.ntu.edu.sg,EEE,5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8,true,null,2
 KOH,KOH1@e.ntu.edu.sg,ADM,5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8,FALSE,null,0
 BRANDON,BR015@e.ntu.edu.sg,EEE,5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8,true,null,25
 CALVIN,CT113@e.ntu.edu.sg,SCSE,5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8,TRUE,lol,0
