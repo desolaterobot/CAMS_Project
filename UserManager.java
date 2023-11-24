@@ -161,7 +161,7 @@ class UserManager extends CSVReader{
                 return u;
             }
         }
-        System.out.printf("Staff %s not found in database.\n", userID);
+        System.out.printf("User %s not found in database.\n", userID);
         return null;
     }
     
