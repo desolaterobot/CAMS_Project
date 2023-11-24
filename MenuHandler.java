@@ -38,9 +38,10 @@ public class MenuHandler {
 			System.out.println("1. Create Camp");
 			System.out.println("2. Edit Camp");
 			System.out.println("3. Delete Camp");
-			System.out.println("4. Toggle Visibility");
+			System.out.println("4. Toggle Visibility of Camp");
 			System.out.println("5. View All Camps");
 			System.out.println("6. View My Camps");
+			System.out.println("7. View Students of Camp");
 			System.out.println("7. View Enquiries");
 			System.out.println("8. Reply Enquiry");
 			System.out.println("9. View Suggestions");
@@ -96,10 +97,8 @@ public class MenuHandler {
 		while(true) {
 			printStaffMenu();
 			
-			int choice = sc.nextInt();
-			
-			sc.nextLine();
-			
+			int choice = Integer.parseInt(sc.nextLine());
+
 			if(choice==12) return;
 			
 			InputHandler.handleStaffChoice(staff,choice);

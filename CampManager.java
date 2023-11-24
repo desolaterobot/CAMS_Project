@@ -1,4 +1,3 @@
-package Camp;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -271,8 +270,8 @@ public class CampManager extends CSVReader{
          */
         //init new camp
         Scanner sc = new Scanner(System.in);
-
-        while (true) {
+        boolean editing = true;
+        while (editing) {
             System.out.println("Enter number of what you want to edit:");
             System.out.println("1. Start Date");
             System.out.println("2. End Date");
@@ -337,7 +336,8 @@ public class CampManager extends CSVReader{
                     break;
                 case 10:
                     modifyLine("data/camps.csv", campToBeEdited.campName, campToLine(campToBeEdited));
-                    return;
+                    editing = false;
+                    break;
                 default:
                     System.out.println("Invalid input.");
 

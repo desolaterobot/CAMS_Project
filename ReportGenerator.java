@@ -105,5 +105,60 @@ public class ReportGenerator extends CSVReader{
         System.out.printf("Report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
         input.close();
     }
+
+    public static void staffGenerateReport(Camp camp) {
+    	Scanner input = new Scanner(System.in);
+    	System.out.println("Please type your filename: ");
+    	String userFileName = input.nextLine();
+    	String filepath = String.format("reports/%s_%sReport.txt", camp.campName.replace(" ", "_"), userFileName.replace(" ", "_"));
+    	writeLine(filepath, "", false);
+    	
+    	addLine(filepath, String.format("%s Performance Report", camp.campName));
+        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).name));
+        addLine(filepath, String.format("Description: %s", camp.description));
+        addLine(filepath, String.format("Location: %s", camp.location));
+        addLine(filepath, String.format("Faculty: %s", camp.faculty));
+        addLine(filepath, String.format("Start Date: %s, End Date: %s, Registration Deadline: %s", DateStr.dateToStr(camp.startDate), DateStr.dateToStr(camp.endDate),DateStr.dateToStr(camp.registrationDeadline)));
+        
+    	
+    	System.out.println("Would you like to include attendees? Y/N: ");
+    	String choice = input.nextLine();
+    	int x = 1;
+    	if (choice.contains("Y")||choice.contains("y")) {
+    		addLine(filepath, String.format("\nAttendees: (%d/%d)", camp.attendees.length, camp.totalSlots));
+    		for(String s : camp.attendees){
+                User u = UserManager.getUser(s);
+                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                x++;
+            }
+    	}
+    	
+    	System.out.println("Would you like to include camp committees? Y/N: ");
+    	choice = input.nextLine();
+    	
+    	if (choice.contains("Y")||choice.contains("y")) {
+    		addLine(filepath, String.format("\nComittee Members: (%d/%d)", camp.committeeList.length, camp.committeeSlots));
+    		x = 1;
+            for(String s : camp.committeeList){
+                User u = UserManager.getUser(s);
+                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                x++;
+            }
+    	}
+    	
+    	System.out.println("Would you like to include withdrawals? Y/N: ");
+    	choice = input.nextLine();
+    	if (choice.contains("Y")||choice.contains("y")) {
+    		addLine(filepath, String.format("\nWithdrawals: (%d)", camp.withdrawals.length));
+    		x = 1;
+            for(String s : camp.withdrawals){
+                User u = UserManager.getUser(s);
+                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                x++;
+            }
+    	}
+        System.out.printf("Report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
+        input.close();
+    }
     
 }
