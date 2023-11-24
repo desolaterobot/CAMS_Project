@@ -1,5 +1,3 @@
-package Camp;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +7,6 @@ import java.util.Date;
  * Utility class for converting between Date and String representations in the "dd/MM/yyyy" format.
  */
 public class DateStr {
-
     /**
      * Converts a string representation of a date to a Date object.
      *

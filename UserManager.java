@@ -1,5 +1,3 @@
-package Camp;
-
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -163,7 +161,7 @@ class UserManager extends CSVReader{
                 return u;
             }
         }
-        System.out.printf("Staff %s not found in database.\n", userID);
+        System.out.printf("User %s not found in database.\n", userID);
         return null;
     }
     

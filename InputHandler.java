@@ -1,4 +1,6 @@
 package Camp;
+import java.util.Scanner;
+
 
 public class InputHandler {
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
