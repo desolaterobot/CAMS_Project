@@ -6,20 +6,20 @@ public class InputHandler {
 		// TODO Auto-generated method stub
 		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
-		case 6:
+		case 10:
 			commMem.replyToEnquiry();
 			
 			break;
-		case 7:
+		case 11:
 			commMem.viewOwnSuggestions();
 			break;
-		case 8:
+		case 12:
 			commMem.editOwnSuggestion();
 			break;
-		case 9:
+		case 13:
 			commMem.submitSuggestion();
 			break;
-		case 10:
+		case 14:
 			commMem.commGenerateReport();
 			break;
 		default:
@@ -29,31 +29,61 @@ public class InputHandler {
 	
 	public static void handleStudentChoice(Student student, int choice) {
 		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
 		switch(choice) {
 		case 1:
-			System.out.println("Student 1");
-			//viewAailableCamps(student);
+			System.out.println("Viewing Available Camps for: " + student.name);
+			System.out.println();
+			student.viewCamps();
 			break;
 		case 2:
-			System.out.println("Student 2");
-			//registerCamp(student);
+			System.out.print("Please Enter the Camp Name that you wish to register for: ");
+			String campName = sc.nextLine();
+			System.out.print("Are you registering for Camp Committee?(Y/N): ");
+			Boolean committee = sc.next().toLowerCase().equals("y");
+			student.registerCamp(campName, committee);
+			System.out.println();
 			break;
 		case 3:
-			System.out.println("Student 3");
-			//withdrawCamp(student);
+			System.out.println("Viewing Camps Registered for UserID: " + student.userID + "...");
+			System.out.println();
+			student.viewRegisteredCamps();
 			break;
 		case 4:
-			System.out.println("Student 4");
-			//submitEnquiry(student);
+			System.out.print("Please Enter the Camp Name that you wish to withraw from: ");
+			String wCampName = sc.nextLine();
+			student.withdrawCamp(wCampName);
 			break;
 		case 5:
-			System.out.println("Student 5");
-			//change password function;
+			System.out.print("To which camp would you like to submit your enquiry to?: ");
+			String enqCamp = sc.nextLine();
+			System.out.print("Please Enter your Enquiry: ");
+			String msg = sc.nextLine();
+			student.submitEnquiry(enqCamp, msg);
 			break;
-		case 10:
-			System.out.println("Student 11");
-			return;
 			
+		case 6:
+			System.out.println("Viewing Enquiries for UserID: " + student.userID);
+			student.viewEnquiries();
+			break;
+			
+		case 7:
+			System.out.println("Enter the Enquiry ID which you wish to view replies for: ");
+			String reEnqID = sc.nextLine();
+			student.viewEnquiryReplies(reEnqID);
+			System.out.println();
+			break;
+			
+		case 8:
+			System.out.print("Enter the Enquiry ID which you wish to edit: ");
+			String editEnqID = sc.nextLine();
+			student.editEnquiry(editEnqID);
+			break;
+			
+		case 9:
+			System.out.print("Enter the Enquiry ID which you wish to delete: ");
+			String deleteEnqID = sc.nextLine();
+			student.deleteEnquiry(deleteEnqID);
 		}
 	}
 

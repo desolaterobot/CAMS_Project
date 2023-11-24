@@ -119,11 +119,35 @@ public class Student extends User {
 					System.out.println("There are no available slots for camp committee for this camp!");
 				}
 			}
-			//need to update committee status in students.csv
 		}
 		else {
-			System.out.println("You are already registered for " + campName + "!");
-			System.out.println();
+			if(committeeMember) {
+				if(isCommitteeMember) {
+					System.out.println("You are already a camp committee member of " + committeeMemberOf);
+				}
+				else if(camp.committeeSlots > 0) {
+					if(isEligible(camp)) {
+						registeredCamps.add(campName);
+						camp.totalSlots--;
+						camp.committeeSlots--;
+						committeeMemberOf = camp.campName;
+						isCommitteeMember = true;
+						CampManager.addCommittee(camp, userID);
+						UserManager.updateStudentDB(this);
+						System.out.println("You have successfully registered as a Camp Committee Member of " + camp.campName);
+					}
+					else {
+						System.out.println("Camp Registration Failed!");
+					}
+				}
+				else if(camp.committeeSlots <= 0){
+					System.out.println("There are no available slots for camp committee for this camp!");
+				}
+			}
+			else {
+				System.out.println("You are already registered for " + campName + "!");
+				System.out.println();
+			}
 		}
 	}
 	
@@ -134,7 +158,7 @@ public class Student extends User {
 //		System.out.println(currentDate);
 //		System.out.println(registrationDeadline);
 		if(currentDate.isAfter(registrationDeadline)) {
-			System.out.println("Registration failed. Registration is closed for this camp.");
+			System.out.println("Registration is closed for this camp.");
 			return false;
 		}
 		
@@ -166,7 +190,7 @@ public class Student extends User {
 	public void withdrawCamp(String campName) {
 		Camp camp = CampManager.getCamp(campName);
 		if(!registeredCamps.contains(campName)) {
-			System.out.println("You are not registered in this camp!");
+			System.out.println("You are not registered for this camp!");
 			return;
 		}
 		
@@ -181,6 +205,7 @@ public class Student extends User {
 		}
 		else {
 			camp.totalSlots++;
+			registeredCamps.remove(campName);
 			CampManager.removeAttendee(camp, userID);
 		}
 		CampManager.addWithdrawal(camp, userID);
@@ -208,7 +233,8 @@ public class Student extends User {
 //		}
 	}
 	
-	public void submitEnquiry(Camp camp, String enquiry) {
+	public void submitEnquiry(String campName, String enquiry) {
+		Camp camp = CampManager.getCamp(campName);
 		EnquiryManager.addEnquiry(this, camp, enquiry);
 		System.out.println("Enquiry Submitted! You may view/edit/delete your enquiry before it is processed!");
 	}
@@ -221,22 +247,29 @@ public class Student extends User {
 	public void viewEnquiries() {
 		//A student can view, edit, and delete their enquiries before it is processed
 		Enquiry[] enqs = EnquiryManager.getStudentEnquiries(this);
-		System.out.println("ENQUIRIES MADE BY YOU:");
+		if(enqs.length <= 0) {
+			System.out.println("No enquries made yet. You can make an enquiry with option 5.");
+			return;
+		}
+		System.out.println("ENQUIRIES MADE BY YOU:\n");
 		for(Enquiry enq : enqs) {
-			if(!isEnquiryProcessed(enq)) {
-				System.out.print("[Unreplied] ");
-				System.out.println("Enquiry for : " + enq.camp.campName);
-				System.out.println(enq.student.name + ": " + enq.message);
-				System.out.println();
-			}
-			else {
-				viewEnquiryReplies(enq);
-				System.out.println("");
-			}
+			System.out.print(isEnquiryProcessed(enq)?"[Replied]":"[Unreplied]");
+			System.out.println(" Enquiry ID: " + enq.enquiryID);
+			System.out.println("------------------------------------------------------------------");
+			System.out.println("Enquiry for : " + enq.camp.campName.toUpperCase());
+			System.out.println();
+			System.out.println(enq.student.name + ": " + enq.message);
+			System.out.println();
+			System.out.println("------------------------------------------------------------------");
+			System.out.println();
 		}
 	}
 	
-	public void editEnquiry(Enquiry enq) {
+	public void editEnquiry(String enqID) {
+		Enquiry enq = EnquiryManager.getEnquiryByID(enqID);
+		
+		if(enq.equals(null)) return;
+		
 		if(isEnquiryProcessed(enq)) {
 			System.out.println("Cannot edit processed enquiry!");
 			return;
@@ -253,7 +286,6 @@ public class Student extends User {
 			System.out.print("Enter New Message: ");
 			String newMsg = sc.nextLine();
 			enq.message = newMsg;
-			sc.close();
 			break;
 			
 		case 2:
@@ -266,13 +298,11 @@ public class Student extends User {
 				enq.camp = nCamp;
 			else {
 				System.out.println("Change camp unsuccessful!");
-				sc.close();
 				return;
 			}
 			break;
 		default:
 			System.out.println("Not a valid choice");
-			sc.close();
 			return;
 		}
 		
@@ -280,7 +310,9 @@ public class Student extends User {
 		System.out.println("You have successfully edited your enquiry!");
 	}
 	
-	public void deleteEnquiry(Enquiry enq) {
+	public void deleteEnquiry(String enqID) {
+		Enquiry enq = EnquiryManager.getEnquiryByID(enqID);
+		if(enq.equals(null));
 		if(isEnquiryProcessed(enq)) {
 			System.out.println("Cannot delete processed enquiry!");
 			return;
@@ -297,8 +329,13 @@ public class Student extends User {
 		System.out.println("Invalid Enquiry ID!");
 	}
 	
-	public void viewEnquiryReplies(Enquiry enquiry) {
+	public void viewEnquiryReplies(String enquiryID) {
+		Enquiry enquiry = EnquiryManager.getEnquiryByID(enquiryID);
+		if(enquiry.equals(null)) return;
 		EnquiryReply[] enqr = enquiry.getReplies();
+		if(enqr.length <= 0) {
+			System.out.println("There are no replies yet for this enquiry.\n");
+		}
 		System.out.print("[Replied] ");
 		System.out.println("Enquiry for: " + enquiry.camp.campName);
 		System.out.println(enquiry.student.name + ": " + enquiry.message);

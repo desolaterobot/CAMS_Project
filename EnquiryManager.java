@@ -82,6 +82,15 @@ public static Enquiry[] getCampEnquiries(Camp camp) {
     return enqlist.toArray(new Enquiry[0]);
 }
 
+public static Enquiry getEnquiryByID(String id) {
+	Enquiry[] enqs = getEnquiryDatabase();
+	for(Enquiry enq : enqs) {
+		if(enq.enquiryID.equals(id))
+			return enq;
+	}
+	return null;
+}
+
     /**
      * Adds a new enquiry to the CSV file.
      *

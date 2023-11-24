@@ -1,24 +1,13 @@
 import java.util.*;
 
-/**
- * The main class for the Camp Application And Management System.
- */
 public class CampApp {
 	Scanner sc = new Scanner(System.in);
-
-	/**
-     * The main entry point for the Camp Application And Management System.
-     *
-     * @param args Command-line arguments (not used).
-     */
+	
 	public static void main(String[] args0) {
 		CampApp app = new CampApp();
 		app.run();
 	}	
 	
-	/**
-     * Runs the Camp Application And Management System.
-     */
 	public void run() {
 		System.out.println(
 			" ██████╗ █████╗ ███╗   ███╗███████╗\r\n" +
@@ -53,11 +42,7 @@ public class CampApp {
 			}
 		}
 	}
-	/**
-     * Handles the user menu based on the user type.
-     *
-     * @param user The authenticated user.
-     */
+
 	private void handleUserMenu(User User) {
 		// TODO Auto-generated method stub
 		if(User instanceof Student) {
@@ -67,4 +52,34 @@ public class CampApp {
 			MenuHandler.showStaffMenu((Staff) User);
 		}
 	}
+	
+//	public List<Camp> loadCamps(String file) {
+//		List<Camp> Camps = new ArrayList<>();
+//		
+//		String[] lines = CSVReader.getLines(file);
+//		
+//		for (String line: lines) {
+//			String[] part = line.split(",");
+//			
+//			String name = part[0];
+//			Date startDate = DateStr.strToDate(part[1]);
+//			Date endDate= DateStr.strToDate(part[2]);
+//			Date registrationDeadline= DateStr.strToDate(part[3]);
+//			String location= part[4];
+//			int totalSlots= Integer.parseInt(part[5]);
+//			int campCommitteeSlot= Integer.parseInt(part[6]);
+//			String description= part[7];
+//			boolean visible = Boolean.parseBoolean(part[9]);
+//			boolean onlyFaculty = Boolean.parseBoolean(part[10]);
+//			String staffInCharge= part[8];
+//			Staff inCharge = findStaffById(staffInCharge);
+//			
+//			Camp camp = new Camp(name,startDate,endDate,registrationDeadline,location,
+//					totalSlots,campCommitteeSlot,description,inCharge,visible,onlyFaculty);
+//			
+//			Camps.add(camp);
+//		}
+//		return Camps;
+//	}
+	
 }

@@ -17,18 +17,22 @@ public class MenuHandler {
 	}
 	
 	public static void printStudentMenu(Student student) {
-			System.out.println("1. Register Camp");
-			System.out.println("2. View Camps");
-			System.out.println("3. Submit Enquiry");
+			System.out.println("0. Logout");
+			System.out.println("1. View Camps");
+			System.out.println("2. Register Camp");
+			System.out.println("3. View Registered Camps");
 			System.out.println("4. Withdraw Camp");
-			System.out.println("5. Change Password");
-			System.out.println("11. Logout");
+			System.out.println("5. Submit Enquiry");
+			System.out.println("6. View Enquiries");
+			System.out.println("7. View Enquiry Replies");
+			System.out.println("8. Edit Enquiry");
+			System.out.println("9. Delete Enquiry");
 			if(student.isCommitteeMember()) {
-				System.out.println("6. Reply Enquiry");
-				System.out.println("7. View Suggestions");
-				System.out.println("8. Edit Suggestions");
-				System.out.println("9. Submit Suggestions");
-				System.out.println("10. View Camp Details");
+				System.out.println("10. Reply Enquiry");
+				System.out.println("11. View Suggestions");
+				System.out.println("12. Edit Suggestions");
+				System.out.println("13. Submit Suggestions");
+				System.out.println("14. View Camp Details");
 				
 			}
 		}
@@ -38,18 +42,15 @@ public class MenuHandler {
 			System.out.println("1. Create Camp");
 			System.out.println("2. Edit Camp");
 			System.out.println("3. Delete Camp");
-			System.out.println("4. Toggle Visibility of Camp");
+			System.out.println("4. Toggle Visibility");
 			System.out.println("5. View All Camps");
 			System.out.println("6. View My Camps");
-			System.out.println("7. View Students of Camp");
-			System.out.println("8. View Enquiries");
-			System.out.println("9. Reply Enquiry");
-			System.out.println("10. View Suggestions");
-			System.out.println("11. Approve Suggestions");
-			System.out.println("12. Generate Report");
-			System.out.println("13. Generate Performance Report");
-			System.out.println("14. Change Password");
-			System.out.println("15. Exit");
+			System.out.println("7. View Enquiries");
+			System.out.println("8. Reply Enquiry");
+			System.out.println("9. View Suggestions");
+			System.out.println("10. Approve Suggestions");
+			System.out.println("11. Generate Report");
+			System.out.println("12. Exit");
 	
 	}
 	
@@ -72,7 +73,7 @@ public class MenuHandler {
 			
 			sc.nextLine();
 			
-			if(choice==11) return;
+			if(choice==0) return;
 			
 			if(student.isCommitteeMember()) {
 				InputHandler.handleCommitteeMemberChoice(student,choice);
@@ -99,9 +100,11 @@ public class MenuHandler {
 		while(true) {
 			printStaffMenu();
 			
-			int choice = Integer.parseInt(sc.nextLine());
-
-			if(choice==15) return;
+			int choice = sc.nextInt();
+			
+			sc.nextLine();
+			
+			if(choice==12) return;
 			
 			InputHandler.handleStaffChoice(staff,choice);
 			}
