@@ -21,8 +21,8 @@ public class CampCommitteeMember extends Student {
 		String suggestion = input.nextLine();
     	SuggestionManager.addSuggestion(this.myCamp, this, suggestion);
     	PointsSystem.addPoint(this);
-    	System.out.println("Suggestion submitted.");
-    	input.close();
+    	System.out.println("Suggestion submitted.\n");
+    	//input.close();
     }
 	
 	// Method to reply to enquiries
@@ -33,15 +33,15 @@ public class CampCommitteeMember extends Student {
     		System.out.println("[" + i + "]: " + enquiries[i].message);
     	}
     	
-    	System.out.println("Please select the enquiry to reply to: ");
+    	System.out.print("Please select the enquiry to reply to: ");
 		int enquiryIndex = input.nextInt();
     	input.nextLine();
-    	System.out.println("Please input the reply to the enquiry: ");
+    	System.out.print("Please input the reply to the enquiry: ");
 		String reply = input.nextLine();
 		enquiries[enquiryIndex].reply(this, reply);
 		PointsSystem.addPoint(this);
-		System.out.println("Enquiry replied.");
-		input.close();
+		System.out.println("Enquiry replied.\n");
+		//input.close();
     }
     
     public void viewOwnSuggestions() {
@@ -54,8 +54,9 @@ public class CampCommitteeMember extends Student {
         			noOfPendingSuggestions++;
         		}
         	}	
+    		System.out.print("\n");
     	} else {
-    		System.out.println("You have made no suggestions!");
+    		System.out.println("You have made no suggestions!\n");
     	}
     }
 	
@@ -69,11 +70,11 @@ public class CampCommitteeMember extends Student {
     		System.out.print("Please input the new suggestion: ");
     		String newSuggestion = input.nextLine();
     		ownSuggestions[suggestionIndex].edit(newSuggestion);
-    		System.out.println("Suggestion edited.");
+    		System.out.println("Suggestion edited.\n");
     	} else {
-    		System.out.println("No pending suggestion available for editing.");
+    		System.out.println("No pending suggestion available for editing.\n");
     	}
-		input.close();
+		//input.close();
     }
     
     public void deleteOwnSuggestion() {
@@ -83,16 +84,16 @@ public class CampCommitteeMember extends Student {
 			System.out.print("Please select the suggestion to delete: ");
 			int suggestionIndex = input.nextInt();
 			ownSuggestions[suggestionIndex].delete();
-			System.out.println("Suggestion deleted.");
+			System.out.println("Suggestion deleted.\n");
     	} else {
-    		System.out.println("No suggestion available to delete.");
+    		System.out.println("No suggestion available to delete.\n");
     	}
     	
-		input.close();
+		//input.close();
 	}
     
     public void withdrawCamp() {
-    	System.out.println("You cannot withdraw from \"" + myCamp.campName + "\" as you are a Committee Member.");
+    	System.out.println("You cannot withdraw from \"" + myCamp.campName + "\" as you are a Committee Member.\n");
     }
     
     public void commGenerateReport() {
