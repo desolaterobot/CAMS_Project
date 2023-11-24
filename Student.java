@@ -7,8 +7,7 @@ import java.util.LinkedList;
 import java.time.LocalDate;
 
 public class Student extends User {
-	private List<Camp> registeredCamps;
-	private List<Enquiry> enquiries;
+	private List<String> registeredCamps;
 	private boolean isCommitteeMember;
 	private String committeeMemberOf;
 //	private Camp[] camp_db;
@@ -16,40 +15,52 @@ public class Student extends User {
 	//FOR TESTING
 	public static void main(String[] args) { 
 		System.out.println("testing Student.java");
-		Student s = new Student("CHAN", "YCN019@e.ntu.edu.sg", "NBS", 
-				"5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-				false, "null");
-		Camp camp = CampManager.getCamp("stupid camp");
-		System.out.println(s.userID);
+		Student s = UserManager.getStudent("BGOH023");
+//		Student s = new Student("BRYAN", "BGOH023@e.ntu.edu.sg", "SCSE", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", false, "null");
+//		System.out.println(s.userID);
 		s.viewCamps();
+//		s.registerCamp("scse camp", false);
+		s.viewRegisteredCamps();
+		s.withdrawCamp("stupid camp");
 		
-		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
-		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
-		s.registerCamp(camp, true);
-		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
-		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
-		s.withdrawCamp(camp);
-		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
-		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
-		
-		
-		s.viewEnquiries();
-		System.out.println("======== " + EnquiryManager.getStudentEnquiries(s)[1].enquiryID);
-		s.editEnquiry(EnquiryManager.getStudentEnquiries(s)[1]);
-//		s.editEnquiry(EnquiryManager.getStudentEnquiries(s)[0]);
-//		s.submitEnquiry(camp, "delete this");
-//		s.submitEnquiry(camp, "don't deleted");
-		s.deleteEnquiry(EnquiryManager.getStudentEnquiries(s)[3]);
+//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
+//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
+//		s.registerCamp(camp, true);
+//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
+//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
+//		s.withdrawCamp(camp);
+//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
+//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
+//		
+//		
+//		s.viewEnquiries();
+//		System.out.println("======== " + EnquiryManager.getStudentEnquiries(s)[1].enquiryID);
+//		s.editEnquiry(EnquiryManager.getStudentEnquiries(s)[1]);
+////		s.editEnquiry(EnquiryManager.getStudentEnquiries(s)[0]);
+////		s.submitEnquiry(camp, "delete this");
+////		s.submitEnquiry(camp, "don't deleted");
+//		s.deleteEnquiry(EnquiryManager.getStudentEnquiries(s)[3]);
 	}
 	
-	public Student(String userId, String email, String faculty, String password, Boolean isCommitteeMember, String committeeMemberOf) {
-		super(userId, email, faculty, password);
+	public Student(String name, String email, String faculty, String password, Boolean isCommitteeMember, String committeeMemberOf) {
+		super(name, email, faculty, password);
 		this.isCommitteeMember = isCommitteeMember;
 		this.committeeMemberOf = committeeMemberOf;
-		Camp[] camps = isCommitteeMember ? CampManager.getCampsByCommiteeID(userID) : CampManager.getCampsByAttendeeID(userID);
+		Camp[] camps = CampManager.getCampsForStudents(this);
 		this.registeredCamps = new ArrayList<>();
 		for(Camp c : camps) {
-			registeredCamps.add(c);
+			for(String s : c.attendees) {
+				if(s.equals(this.userID)) {
+					if(!registeredCamps.contains(c.campName))
+						registeredCamps.add(c.campName);
+				}
+			}
+			for(String s : c.committeeList) {
+				if(s.equals(this.userID)) {
+					if(!registeredCamps.contains(c.campName))
+						registeredCamps.add(c.campName);
+				}
+			}
 		}
 	}
 		
@@ -69,11 +80,14 @@ public class Student extends User {
 //			}
 //		}
 	
-	public void registerCamp(Camp camp, boolean committeeMember) {
-		if(!registeredCamps.contains(camp)) {
+	
+	
+	public void registerCamp(String campName, boolean committeeMember) {
+		Camp camp = CampManager.getCamp(campName);
+		if(!registeredCamps.contains(campName)) {
 			if(!committeeMember) {
 				if(isEligible(camp)) {
-					registeredCamps.add(camp);
+					registeredCamps.add(campName);
 					camp.totalSlots--;
 					CampManager.addAttendee(camp, userID);
 					System.out.println("You have successfully registered to " + camp.campName + " as an attendee!");
@@ -88,24 +102,41 @@ public class Student extends User {
 				}
 				else if(camp.committeeSlots > 0) {
 					if(isEligible(camp)) {
-						registeredCamps.add(camp);
+						registeredCamps.add(campName);
+						camp.totalSlots--;
 						camp.committeeSlots--;
 						committeeMemberOf = camp.campName;
 						isCommitteeMember = true;
 						CampManager.addCommittee(camp, userID);
-						//call CampCommittee class? Relogin?
+						UserManager.updateStudentDB(this);
 						System.out.println("You have successfully registered as a Camp Committee Member of " + camp.campName);
 					}
 					else {
 						System.out.println("Camp Registration Failed!");
 					}
 				}
+				else if(camp.committeeSlots <= 0){
+					System.out.println("There are no available slots for camp committee for this camp!");
+				}
 			}
+			//need to update committee status in students.csv
+		}
+		else {
+			System.out.println("You are already registered for " + campName + "!");
+			System.out.println();
 		}
 	}
 	
 	private boolean isEligible(Camp camp) {
 		//add checker for camps withdrew and registration deadline
+		LocalDate currentDate = LocalDate.now();
+		LocalDate registrationDeadline = camp.registrationDeadline.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+//		System.out.println(currentDate);
+//		System.out.println(registrationDeadline);
+		if(currentDate.isAfter(registrationDeadline)) {
+			System.out.println("Registration failed. Registration is closed for this camp.");
+			return false;
+		}
 		
 		if(camp.totalSlots <= 0) { 
 			System.out.println("No more available slots in " + camp.campName);
@@ -118,7 +149,8 @@ public class Student extends User {
 				return false;
 			}
 		}
-		for(Camp c: registeredCamps) {
+		for(String s: registeredCamps) {
+			Camp c = CampManager.getCamp(s);
 			if(camp.startDate.before(c.startDate) && camp.endDate.after(c.startDate) ||
 					camp.startDate.before(c.endDate) && camp.endDate.after(c.endDate) ||
 					camp.startDate.before(c.startDate) && camp.endDate.after(c.endDate) ||
@@ -131,14 +163,21 @@ public class Student extends User {
 		return true;
 	}
 	
-	public void withdrawCamp(Camp camp) {
-		if(!registeredCamps.contains(camp)) return;
+	public void withdrawCamp(String campName) {
+		Camp camp = CampManager.getCamp(campName);
+		if(!registeredCamps.contains(campName)) {
+			System.out.println("You are not registered in this camp!");
+			return;
+		}
 		
 		if(camp.campName.equals(committeeMemberOf)) {
-			camp.committeeSlots++;
-			isCommitteeMember = false;
-			committeeMemberOf = null;
-			CampManager.removeCommittee(camp, userID);
+//			camp.committeeSlots++;
+//			camp.totalSlots++;
+//			isCommitteeMember = false;
+//			committeeMemberOf = null;
+//			CampManager.removeCommittee(camp, userID);
+			System.out.println("You are a committee member of this camp. You can't withdraw from this camp!");
+			return;
 		}
 		else {
 			camp.totalSlots++;
@@ -149,19 +188,17 @@ public class Student extends User {
 	}
 	
 	public void viewCamps() {
-		int i = 1;
 		System.out.println("CAMPS AVAILABLE TO YOU:");
 		System.out.println("------------------------------------------------------------------");
 		for(Camp c : CampManager.getCampsForStudents(this)) {
-			System.out.println(Integer.toString(i));
 			System.out.println("Camp Name : " + c.campName);
 			System.out.println("Start Date : " + c.startDate);
 			System.out.println("End Date : " + c.endDate);
+			System.out.println("Camp Description : " + c.description);
 			System.out.println("Remaining slots for Attendees : " + Integer.toString(c.totalSlots));
 			System.out.println("Remaining slots for Camp Committee : " + Integer.toString(c.committeeSlots));
 			System.out.println("REGISTRATION CLOSES ON : " + c.registrationDeadline);
 			System.out.println("------------------------------------------------------------------");
-			i++;
 		}
 		System.out.println("\n");
 		//for testing
@@ -271,11 +308,44 @@ public class Student extends User {
 		}
 	}
 	
+	public void viewRegisteredCamps(){
+		if(!registeredCamps.isEmpty()) {
+			System.out.println("YOUR REGISTERED CAMPS:");
+			System.out.println("------------------------------------------------------------------");
+			for(String campName : registeredCamps) {
+//				System.out.println("debug: " + campName);
+				Camp c = CampManager.getCamp(campName);
+				Boolean cc = false;
+				System.out.println("Camp Name : " + c.campName);
+				for(String s : c.committeeList) {
+					if (s.equals(userID)) {
+						cc = true;
+//						System.out.println(Boolean.toString(cc));
+						break;
+					}
+				}
+//				System.out.println(Boolean.toString(cc));
+				System.out.println("Your Role : " + (cc?"Committee Member":"Attendee"));
+				System.out.println("Start Date : " + c.startDate);
+				System.out.println("End Date : " + c.endDate);
+				System.out.println("Camp Description : " + c.description);
+				System.out.println("------------------------------------------------------------------");
+			}
+			System.out.println();
+		}
+		else
+			System.out.println("You are not registered to any camps.");
+	}
+	
 	public boolean isCommitteeMember() {
 		return isCommitteeMember;
 	}
 	
 	public void setCommitteeMember(Boolean b) {
 		isCommitteeMember = b;
+	}
+	
+	public String getCommitteeCamp() {
+		return committeeMemberOf;
 	}
 }
