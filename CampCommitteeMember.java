@@ -17,6 +17,7 @@ public class CampCommitteeMember extends Student {
 		String suggestion = input.nextLine();
     	SuggestionManager.addSuggestion(this.myCamp, this, suggestion);
     	PointsSystem.addPoint(this);
+    	System.out.println("Suggestion submitted.");
     	input.close();
     }
 	
@@ -34,7 +35,8 @@ public class CampCommitteeMember extends Student {
     	System.out.println("Please input the reply to the enquiry: ");
 		String reply = input.nextLine();
 		enquiries[enquiryIndex].reply(this, reply);
-		PointsSystem.addPoint(this); 
+		PointsSystem.addPoint(this);
+		System.out.println("Enquiry replied.");
 		input.close();
     }
     
@@ -60,8 +62,8 @@ public class CampCommitteeMember extends Student {
 		input.nextLine();
 		System.out.print("Please input the new suggestion: ");
 		String newSuggestion = input.nextLine();
-		input.nextLine();
 		ownSuggestions[suggestionIndex].edit(newSuggestion);
+		System.out.println("Suggestion edited.");
 		input.close();
     }
     
@@ -76,38 +78,46 @@ public class CampCommitteeMember extends Student {
     	System.out.println("Please select the suggestion to delete: ");
 		int suggestionIndex = input.nextInt();
 		ownSuggestions[suggestionIndex].delete();
+		System.out.println("Suggestion deleted.");
 		input.close();
 	}
     
+    public void withdrawCamp() {
+    	System.out.println("You cannot withdraw from \"" + myCamp.campName + "\" as you are a Committee Member.");
+    }
+    
+    public void commGenerateReport() {
+    	ReportGenerator.commMemGenerateReport(myCamp);
+    }
+    
     public static void main(String[] args) {
         // Create a test committee member
-    	CampCommitteeMember committeeMember = new CampCommitteeMember("BRANDON","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", true, committeeMemberOf);
+    	CampCommitteeMember committeeMember = new CampCommitteeMember("BRANDON","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", true, "yet another camp");
 
         // Test submitSuggestion (working)
         //committeeMember.submitSuggestion();
         //System.out.println("Suggestion submitted.");
 
-        // Test replyToEnquiry
-        //committeeMember.replyToEnquiry();
+        // Test replyToEnquiry (not working)
+        committeeMember.replyToEnquiry();
+        //System.out.println(PointsSystem.getCurrentPoints(committeeMember));
         //System.out.println("Enquiry replied.");
-
+        
         // Test viewOwnSuggestions (working)
         //System.out.println("Own Suggestions:");
         //committeeMember.viewOwnSuggestions();
 
-        // Test editOwnSuggestion
-        committeeMember.editOwnSuggestion();
-        System.out.println("Suggestion edited.");
-        
-        //System.out.println("Own Suggestions:");
-        //committeeMember.viewOwnSuggestions();
+        // Test editOwnSuggestion (working)
+        //committeeMember.editOwnSuggestion();
+        //System.out.println("Suggestion edited.");
 
         // Test deleteOwnSuggestion (working)
         //committeeMember.deleteOwnSuggestion();
         //System.out.println("Suggestion deleted.");
         
-        //System.out.println("Own Suggestions:");
-        //committeeMember.viewOwnSuggestions();
+        //committeeMember.commGenerateReport();
+        //committeeMember.withdrawCamp();
+        
     }
 
 }
