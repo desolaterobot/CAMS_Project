@@ -4,27 +4,23 @@ import java.util.Scanner;
 public class InputHandler {
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
 		// TODO Auto-generated method stub
+		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
 		case 6:
-			System.out.println("Student 6");
-			//replyEnquiry(student);
+			commMem.replyToEnquiry();
 			
 			break;
 		case 7:
-			System.out.println("Student 7");
-			//viewSuggestion(student);
+			commMem.viewOwnSuggestions();
 			break;
 		case 8:
-			System.out.println("Student 8");
-			//editSuggestion(student);
+			commMem.editOwnSuggestion();
 			break;
 		case 9:
-			System.out.println("Student 9");
-			//submitSuggestion(student);
+			commMem.submitSuggestion();
 			break;
 		case 10:
-			System.out.println("Student 10");
-			//viewCommitteeCampDetails(student);
+			commMem.commGenerateReport();
 			break;
 		default:
 			handleStudentChoice(student,choice);
