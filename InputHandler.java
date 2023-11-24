@@ -25,7 +25,6 @@ public class InputHandler {
 		case 10:
 			System.out.println("Student 10");
 			//viewCommitteeCampDetails(student);
-			
 			break;
 		default:
 			handleStudentChoice(student,choice);
@@ -53,10 +52,10 @@ public class InputHandler {
 			break;
 		case 5:
 			System.out.println("Student 5");
-			//viewegisteredCamp(student);
+			//change password function;
 			break;
-		case 10:
-			System.out.println("Student 10");
+		default 10:
+			System.out.println("Student 11");
 			return;
 		}
 	}
@@ -113,6 +112,10 @@ public class InputHandler {
 			staff.generateCampReport();
 			break;
 		case 13:
+			System.out.println("change password");
+			//change password function
+			break;
+		default:
 			return;
 		
 	}

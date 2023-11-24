@@ -21,7 +21,7 @@ public class MenuHandler {
 			System.out.println("2. View Camps");
 			System.out.println("3. Submit Enquiry");
 			System.out.println("4. Withdraw Camp");
-			System.out.println("5.");
+			System.out.println("5. Change Password");
 			System.out.println("11. Logout");
 			if(student.isCommitteeMember()) {
 				System.out.println("6. Reply Enquiry");
@@ -47,6 +47,7 @@ public class MenuHandler {
 			System.out.println("9. View Suggestions");
 			System.out.println("10. Approve Suggestions");
 			System.out.println("11. Generate Report");
+			System.out.println("12. Change Password");
 			System.out.println("12. Exit");
 	
 	}
