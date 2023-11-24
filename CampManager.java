@@ -186,7 +186,8 @@ public class CampManager extends CSVReader{
     	Camp[] camp = getCampDatabase();
     	for(Camp c : camp) {
     		if(c.visible && (!c.onlyFaculty || c.faculty.equals(s.faculty))) {
-    			campList.add(c);
+    			if(!campList.contains(c))
+    				campList.add(c);
     		}
     	}
     	return campList.toArray(new Camp[campList.size()]);
@@ -270,8 +271,8 @@ public class CampManager extends CSVReader{
          */
         //init new camp
         Scanner sc = new Scanner(System.in);
-        boolean editing = true;
-        while (editing) {
+
+        while (true) {
             System.out.println("Enter number of what you want to edit:");
             System.out.println("1. Start Date");
             System.out.println("2. End Date");
@@ -336,8 +337,7 @@ public class CampManager extends CSVReader{
                     break;
                 case 10:
                     modifyLine("data/camps.csv", campToBeEdited.campName, campToLine(campToBeEdited));
-                    editing = false;
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid input.");
 
@@ -392,6 +392,7 @@ public class CampManager extends CSVReader{
         saveCamp(toBeModified);
     }
     
+    //Staff can use this?
     public static void removeCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
         committeeList.remove(committeeUserID);
