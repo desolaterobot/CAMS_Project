@@ -124,7 +124,7 @@ public class Staff extends User {
             campCounter++;
         }
         int choice = Integer.parseInt(sc.nextLine());
-        editCamp(campList[choice-1]);
+        viewStudentList(campList[choice-1]);
     }
 
     /**

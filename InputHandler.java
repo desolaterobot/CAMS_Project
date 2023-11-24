@@ -90,7 +90,7 @@ public class InputHandler {
 			break;
 		case 7:
 			//view students in camp
-			staff.viewStudentList(null);
+			staff.viewStudentList();
 			break;
 		case 8:
 			System.out.println("View Enquiries...");
