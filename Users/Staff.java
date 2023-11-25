@@ -3,6 +3,7 @@ import java.util.*;
 
 import Camp.Camp;
 import Camp.CampManager;
+import Camp.CampPrinter;
 import Enquiry.Enquiry;
 import Enquiry.EnquiryManager;
 import Enquiry.EnquiryReply;
@@ -74,12 +75,8 @@ public class Staff extends User {
     public boolean editCamp() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
-        int campCounter = 1;
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
-        for (Camp camp : campList) {
-            System.out.printf("%d) %s\n",campCounter,camp.getCampName());
-            campCounter++;
-        }
+        CampPrinter.print(campList,false);
         int choice = Integer.parseInt(sc.nextLine());
         editCamp(campList[choice-1]);
         return true;
@@ -230,7 +227,7 @@ public class Staff extends User {
      */
     public boolean viewEnquiries() {
         System.out.println("Select Camp to view Enquiries");
-        CampManager.printCamps(getOwnCamps().toArray(new Camp[1]),false);
+        CampPrinter.printDetailed(getOwnCamps().toArray(new Camp[1]),false);
         Scanner sc = new Scanner(System.in);
         System.out.print("Choice: ");
         int choice = Integer.parseInt(sc.nextLine());
@@ -325,7 +322,7 @@ public class Staff extends User {
      * @return
      */
     public boolean viewAllCamp() {
-        CampManager.printCamps(CampManager.getCampDatabase(),false);
+        CampPrinter.printDetailed(CampManager.getCampDatabase(),false);
         return true;
     }
 
@@ -334,7 +331,7 @@ public class Staff extends User {
      * @return
      */
     public boolean viewOwnCamp() {
-        CampManager.printCamps(getOwnCamps().toArray(new Camp[1]), false);
+        CampPrinter.printDetailed(getOwnCamps().toArray(new Camp[1]), false);
         return true;
     }
 }
