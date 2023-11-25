@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.time.LocalDate;
 
-public class Student extends User {
+public class Student extends User implements EnquiryInterface{
 	private List<String> registeredCamps;
 	private boolean isCommitteeMember;
 	private String committeeMemberOf;
@@ -274,7 +274,6 @@ public class Student extends User {
 			System.out.println("Cannot edit processed enquiry!");
 			return;
 		}
-		//editCamp Menu (Testing)
 		System.out.println("1. Edit Message");
 		System.out.println("2. Change Camp");
 		Scanner sc = new Scanner(System.in);
@@ -329,7 +328,7 @@ public class Student extends User {
 		System.out.println("Invalid Enquiry ID!");
 	}
 	
-	public void viewEnquiryReplies(String enquiryID) {
+	public void viewEnquiry(String enquiryID) {
 		Enquiry enquiry = EnquiryManager.getEnquiryByID(enquiryID);
 		if(enquiry.equals(null)) return;
 		EnquiryReply[] enqr = enquiry.getReplies();

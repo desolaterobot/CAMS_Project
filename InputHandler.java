@@ -7,19 +7,21 @@ public class InputHandler {
 		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
 		case 10:
-			commMem.replyToEnquiry();
-			
+			commMem.replyToEnquiry();	
 			break;
 		case 11:
 			commMem.viewOwnSuggestions();
 			break;
 		case 12:
-			commMem.editOwnSuggestion();
+			commMem.editSuggestion();
 			break;
 		case 13:
 			commMem.submitSuggestion();
 			break;
 		case 14:
+			commMem.deleteSuggestion();
+			break;
+		case 15:
 			commMem.commGenerateReport();
 			break;
 		default:
@@ -70,7 +72,7 @@ public class InputHandler {
 		case 7:
 			System.out.println("Enter the Enquiry ID which you wish to view replies for: ");
 			String reEnqID = sc.nextLine();
-			student.viewEnquiryReplies(reEnqID);
+			student.viewEnquiry(reEnqID);
 			System.out.println();
 			break;
 			
@@ -121,15 +123,15 @@ public class InputHandler {
 			break;
 		case 8:
 			System.out.println("View Enquiries...");
-			staff.viewEnquiries();
+			staff.viewCampEnquiries();
 			break;
 		case 9:
 			System.out.println("Reply Enquiries...");
-			staff.replyEnquiries();
+			staff.replyToEnquiry();
 			break;
 		case 10:
 			System.out.println("View Suggestion...");
-			staff.viewSuggestions();
+			staff.viewCampSuggestions();
 			break;
 		case 11:
 			System.out.println("Approve Suggestion...");
