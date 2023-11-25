@@ -100,7 +100,7 @@ public class CampManager {
     	List<Camp> campList = new LinkedList<>();
     	Camp[] camp = CampDBManager.getCampDatabase();
     	for(Camp c : camp) {
-    		if(c.visible && (!c.onlyFaculty || c.faculty.equals(s.faculty))) {
+    		if(c.visible && (!c.onlyFaculty || c.faculty.equals(s.getFaculty()))) {
     			if(!campList.contains(c))
     				campList.add(c);
     		}
@@ -169,7 +169,7 @@ public class CampManager {
 
         String[] emptyArray = new String[0];
 
-        Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.userID, emptyArray, visible, totalSlots, commiteeSlots, emptyArray);
+        Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.getUserId(), emptyArray, visible, totalSlots, commiteeSlots, emptyArray);
         
         CampDBManager.createCamp(createdCamp);
     }

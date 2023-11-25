@@ -63,16 +63,21 @@ class UserManager extends CSVReader{
 //			CampApp.showStaffMenu(staff);
 //			return;
 		User User = authUser(userId,password);
-		
 		return User;
 		}
+
 	
 	public User authUser(String userId, String password) {
 		User User = getUser(userId);
 		
 		if(User.getUserId().equals(userId) && User.getPassword().equals(hash(password))) {
+				if(User.getPassword().equals(hash("password"))) {
+					UserManager.changePassword(User);
+				}
+			
 			return User;
 		}
+		
 		
 		return null;
 	}
@@ -136,7 +141,7 @@ class UserManager extends CSVReader{
     	List<Student> Students = loadStudents("data/students.csv");
     	
         for(Student u : Students){
-            if(u.userID.equals(userID)){
+            if(u.getUserId().equals(userID)){
                 return u;
             }
         }
@@ -148,7 +153,7 @@ class UserManager extends CSVReader{
     	List<Staff> Staffs = loadStaff("data/staff.csv");
     	
     	for(Staff u : Staffs){
-            if(u.userID.equals(userID)){
+            if(u.getUserId().equals(userID)){
                 return u;
             }
         }
@@ -160,7 +165,7 @@ class UserManager extends CSVReader{
     	List<User> Users = loadUsers();
     	
     	for(User u : Users){
-            if(u.userID.equals(userID)){
+            if(u.getUserId().equals(userID)){
                 return u;
             }
         }
@@ -252,10 +257,10 @@ class UserManager extends CSVReader{
 	}
 	
 	public static void updateStudentDB(Student student) {
-		String line = String.format("%s,%s,%s,%s,%s,%s,%s", 
-        removeCommas(student.name), removeCommas(student.email), removeCommas(student.faculty), removeCommas(student.passHash), 
-        removeCommas(Boolean.toString(student.isCommitteeMember()).toUpperCase()), removeCommas(student.getCommitteeCamp()),"0");
-		modifyLine("data/students.csv", student.name, line);
+		String line = String.format("%s,%s,%s,%s,%s,%s", 
+        removeCommas(student.getName()), removeCommas(student.getEmail()), removeCommas(student.getFaculty()), removeCommas(student.getPassword()), 
+        removeCommas(Boolean.toString(student.isCommitteeMember()).toUpperCase()), removeCommas(student.getCommitteeCamp()));
+		modifyLine("data/students.csv", student.getName(), line);
 	}
 	
     /**
@@ -346,30 +351,29 @@ class UserManager extends CSVReader{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter your new password.");
 		String newPassword = sc.nextLine();
-		sc.close();
         String newPassHash = hash(newPassword);
         String file = null;
 		String newLine = null;
         if(user instanceof Staff){
 			System.out.println("Changing staff password...");
             file = "data/staff.csv";
-			newLine = String.format("%s,%s,%s,%s", user.name, user.email, user.faculty, newPassHash);
+			newLine = String.format("%s,%s,%s,%s", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
         }else if(user instanceof CampCommitteeMember){
 			System.out.println("Changing committee password.");
 			CampCommitteeMember commitee = (CampCommitteeMember)user; //downcast!!
 			file = "data/students.csv";
-			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.name, user.email, user.faculty, newPassHash, commitee.getCommitteeCamp(), PointsSystem.getCurrentPoints(commitee));
+			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.getName(), user.getEmail(), user.getFaculty(), newPassHash, commitee.getCommitteeCamp(), PointsSystem.getCurrentPoints(commitee));
         }else if(user instanceof Student){
 			file = "data/students.csv";
 			System.out.println("Changing student password...");
-			newLine = String.format("%s,%s,%s,%s,false,null,0", user.name, user.email, user.faculty, newPassHash);
+			newLine = String.format("%s,%s,%s,%s,false,null,0", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
 		}else{
 			System.out.println("You did not pass in an inherited User object.");
 			System.out.println("Unable to change password.");
 			return;
 		}
-        modifyLine(file, user.name, newLine);
-		System.out.printf("Successfully changed password to %s for %s.\n", newPassword, user.name);
+        modifyLine(file, user.getName(), newLine);
+		System.out.printf("Successfully changed password to %s for %s.\n", newPassword, user.getName());
     }
 
 

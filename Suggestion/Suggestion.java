@@ -9,17 +9,17 @@ import Utility.CSVReader;
  */
 public class Suggestion {
     /** The unique identifier for the suggestion. */
-    public String suggestionID;
+    private String suggestionID;
     /** The commitee member, in the form of User class, who made the suggestion. */
-    public User committeeMember; 
+    private User committeeMember; 
     /** The camp that this suggestion belongs to. */
-    public Camp camp;
+    private Camp camp;
     /** Content of suggestion. */
-    public String message;
+    private String message;
     /** Indicator of approval. */
-    public boolean approved;
+    private boolean approved;
     /** The Staff member, in the form of User class, who approved this suggestion. */
-    public User approvedBy;
+    private User approvedBy;
 
     /**
      * Constructs an Suggestion object with the specified parameters.
@@ -53,12 +53,12 @@ public class Suggestion {
      */
     public boolean approve(User staff){
         if(this.approved){
-            System.out.printf("This suggestion has already been approved by %s\n", approvedBy.name);
+            System.out.printf("This suggestion has already been approved by %s\n", approvedBy.getName());
             return false;
         }
         this.approved = true;
         this.approvedBy = staff;
-        String modifiedLine = String.format("%s,%s,%s,%s,%s", this.suggestionID, this.committeeMember.userID, this.camp.getCampName(), CSVReader.removeCommas(this.message), staff.userID);
+        String modifiedLine = String.format("%s,%s,%s,%s,%s", this.suggestionID, this.committeeMember.getUserId(), this.camp.getCampName(), CSVReader.removeCommas(this.message), staff.getUserId());
         CSVReader.modifyLine("data/suggestions.csv", suggestionID, modifiedLine);
         return true;
     }
@@ -75,7 +75,7 @@ public class Suggestion {
             return false;
         }
         this.message = newMessage;
-        String modifiedLine = String.format("%s,%s,%s,%s,None", this.suggestionID, this.committeeMember.userID, this.camp.getCampName(), CSVReader.removeCommas(newMessage));
+        String modifiedLine = String.format("%s,%s,%s,%s,None", this.suggestionID, this.committeeMember.getUserId(), this.camp.getCampName(), CSVReader.removeCommas(newMessage));
         CSVReader.modifyLine("data/suggestions.csv", suggestionID, modifiedLine);
         return true;
     }
@@ -92,5 +92,41 @@ public class Suggestion {
         }
         CSVReader.deleteLine("data/suggestions.csv", suggestionID);
         return true;
+    }
+    
+    //Getters and Setters
+    public String getSuggestionID() {
+    	return suggestionID;
+    }
+    
+    public void setSuggestionID(String suggestionID) {
+    	this.suggestionID = suggestionID;
+    }
+    
+    public User getCommitteeMember() {
+    	return committeeMember;
+    }
+    
+    public Camp getCamp() {
+    	return camp;
+    }
+    
+    public String getMessage() {
+    	return message;
+    }
+    public void setMessage(String message) {
+    	this.message = message;
+    }
+    
+    public Boolean getApprovedStatus() {
+    	return approved;
+    }
+    
+    public void setApprovedStatus(Boolean approved) {
+    	this.approved = approved;
+    }
+    
+    public User getApprovedBy() {
+    	return approvedBy;
     }
 }

@@ -8,19 +8,19 @@ enum accountType{Staff, Student}
  */
 public class User {
     /** The user ID generated from the email address (characters before '@'). */
-    public String userID; 
+    private String userID; 
 
     /** The name of the user. */
-    public String name;
+    private String name;
 
     /** The email address of the user. */
-    public String email;
+    private String email;
 
     /** The hashed password of the user. */
-    public String passHash;
+    private String passHash;
 
     /** The faculty to which the user belongs. */
-    public String faculty;
+    private String faculty;
     
     /**
      * Constructs a new User with the given parameters.
@@ -48,6 +48,14 @@ public class User {
 		// TODO Auto-generated method stub
 		return this.userID;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
 
 	/**
      * Retrieves the user's password hash.
@@ -57,6 +65,10 @@ public class User {
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return this.passHash;
+	}
+	
+	public String getFaculty() {
+		return faculty;
 	}
     
 }

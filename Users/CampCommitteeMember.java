@@ -2,13 +2,11 @@ package Users;
 import java.util.Scanner;
 
 import Camp.*;
-import Suggestion.Suggestion;
-import Suggestion.SuggestionManager;
+import Suggestion.*;
 import Enquiry.*;
 import Utility.ReportGenerator;
 
-
-public class CampCommitteeMember extends Student {
+public class CampCommitteeMember extends Student implements EnquiryReplyInterface, SuggestionInterface{
 	private Camp myCamp;
 	private Suggestion[] ownSuggestions;
 	private int noOfPendingSuggestions;
@@ -17,13 +15,9 @@ public class CampCommitteeMember extends Student {
 			String committeeMemberOf) {
 		super(userId, email, faculty, password, isCommitteeMember, committeeMemberOf);
 		// TODO Auto-generated constructor stub
-		this.myCamp = CampManager.getCampsByCommiteeID(this.userID)[0];
+		this.myCamp = CampManager.getCampsByCommiteeID(this.getUserId())[0];
 		this.ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
 		this.noOfPendingSuggestions = 0;
-	}
-
-	public Camp getMyCamp() {
-		return myCamp;
 	}
 	
 	public void submitSuggestion() {
@@ -37,12 +31,12 @@ public class CampCommitteeMember extends Student {
     	//input.close();
     }
 	
-	public void viewCampEnquiries(Camp camp) {
+	public void viewCampEnquiries() {
 		Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
 		if (enquiries.length > 0) {
-			System.out.printf("Enquiries of %s: \n", myCamp.getCampName());
+			System.out.printf("Enquiries of %s: \n", myCamp.campName);
 			for (int i = 0; i < enquiries.length; i++) {
-	    		System.out.println("[" + i + "]: " + enquiries[i].getMessage());
+	    		System.out.println("[" + i + "]: " + enquiries[i].message);
 	    	}
 		} else {
 			System.out.println("There is no enquiry!");
@@ -52,7 +46,7 @@ public class CampCommitteeMember extends Student {
     public void replyToEnquiry() {
     	Scanner input = new Scanner(System.in);
     	Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
-    	this.viewCampEnquiries(myCamp);
+    	this.viewCampEnquiries();
     	if (enquiries.length > 0) {	
         	System.out.print("Please select the enquiry to reply to: ");
     		int enquiryIndex = input.nextInt();
@@ -70,8 +64,8 @@ public class CampCommitteeMember extends Student {
     	if (ownSuggestions.length > 0) {
     		System.out.println("Your suggestion(s): ");
     		for (int i = 0; i < ownSuggestions.length; i++) {
-        		if (ownSuggestions[i].approved == false) {
-        			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
+        		if (ownSuggestions[i].getApprovedStatus() == false) {
+        			System.out.println("[" + i + "]: " + ownSuggestions[i].getMessage());
         			noOfPendingSuggestions++;
         		}
         	}	
@@ -81,7 +75,7 @@ public class CampCommitteeMember extends Student {
     	}
     }
 	
-    public void editOwnSuggestion() {
+    public void editSuggestion() {
 		Scanner input = new Scanner(System.in);
 		viewOwnSuggestions();
     	if (noOfPendingSuggestions > 0) {
@@ -98,7 +92,7 @@ public class CampCommitteeMember extends Student {
 		//input.close();
     }
     
-    public void deleteOwnSuggestion() {
+    public void deleteSuggestion() {
     	Scanner input = new Scanner(System.in);
 		viewOwnSuggestions();
     	if (noOfPendingSuggestions > 0) {

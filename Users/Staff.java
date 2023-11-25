@@ -4,16 +4,12 @@ import java.util.*;
 import Camp.Camp;
 import Camp.CampManager;
 import Camp.CampPrinter;
-import Enquiry.Enquiry;
-import Enquiry.EnquiryManager;
-import Enquiry.EnquiryReply;
-import Suggestion.Suggestion;
-import Suggestion.SuggestionManager;
-import Suggestion.ApproveSuggestionInterface;
+import Enquiry.*;
+import Suggestion.*;
 import Utility.ReportGenerator;
 
 
-public class Staff extends User implements ApproveSuggestionInterface{
+public class Staff extends User implements EnquiryReplyInterface, ApproveSuggestionInterface {
     /**
      * A list of camps current Staff is in-charged of. To prevent circular referencing
      * ownCamps is only loaded when getOwnCamps is called.
@@ -52,7 +48,7 @@ public class Staff extends User implements ApproveSuggestionInterface{
      * Load Camp from CampManger into current stuff's ownCamps attribute.
      */
     private void loadOwnCamp() {
-        ownCamps.addAll(List.of(CampManager.getCampsByStaffID(this.userID)));
+        ownCamps.addAll(List.of(CampManager.getCampsByStaffID(this.getUserId())));
     }
 
     /**
@@ -151,7 +147,7 @@ public class Staff extends User implements ApproveSuggestionInterface{
             }
             for (Suggestion suggestion:
             SuggestionManager.getSuggestionsForCamp(camp)) {
-                System.out.println(num + ") " +  suggestion.committeeMember.name +": " + suggestion.message + ". Is Approved: " + suggestion.approved);
+                System.out.println(num + ") " +  suggestion.getCommitteeMember().getName() +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                 num++;
             }
         }
@@ -173,8 +169,8 @@ public class Staff extends User implements ApproveSuggestionInterface{
             }
             for (Suggestion suggestion:
                     SuggestionManager.getSuggestionsForCamp(camp)) {
-                if (!suggestion.approved) {
-                    System.out.println(num + ") " +  suggestion.committeeMember.name +": " + suggestion.message + ". Is Approved: " + suggestion.approved);
+                if (!suggestion.getApprovedStatus()) {
+                    System.out.println(num + ") " +  suggestion.getCommitteeMember().getName() +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                     allSuggestions.add(suggestion);
                     num++;
                 }
@@ -248,12 +244,12 @@ public class Staff extends User implements ApproveSuggestionInterface{
 
         for (Enquiry enquiry :
                 EnquiryManager.getCampEnquiries(getOwnCamps().toArray(new Camp[1])[choice - 1])) {
-            System.out.println(enquiry.getStudent().name + ": " +  enquiry.getMessage());
+            System.out.println(enquiry.getStudent().getName() + ": " +  enquiry.getMessage());
             EnquiryReply[] replies = enquiry.getReplies();
             if (replies.length != 0) {
                 for (EnquiryReply reply :
                         replies) {
-                    System.out.println("\u21B3 " + reply.getUser().name + ": " + reply.getReply());
+                    System.out.println("\u21B3 " + reply.getUser().getName() + ": " + reply.getReplyMessage());
                 }
             } else {
                 System.out.println("[No Replies]");
@@ -292,7 +288,7 @@ public class Staff extends User implements ApproveSuggestionInterface{
             }
             for (Enquiry enquiry :
                     enquiries) {
-                System.out.println(enquiryChoiceCounter + ")" + enquiry.getStudent().name + ": " +  enquiry.getMessage());
+                System.out.println(enquiryChoiceCounter + ")" + enquiry.getStudent().getName() + ": " +  enquiry.getMessage());
                 allEnquiries.add(enquiry);
                 enquiryChoiceCounter++;
             }

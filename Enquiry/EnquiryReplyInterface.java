@@ -1,8 +1,5 @@
-package Enquiry;
-
-import Camp.Camp;
 
 public interface EnquiryReplyInterface{
-	public void viewCampEnquiries(Camp camp);
+	public void viewCampEnquiries();
 	public void replyToEnquiry();
 }

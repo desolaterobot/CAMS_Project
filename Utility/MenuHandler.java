@@ -32,16 +32,16 @@ public class MenuHandler {
      */
 	public static void printStudentMenu(Student student) {
 			System.out.println("0. Logout");
-			System.out.println("1. View Camps");
-			System.out.println("2. Register Camp");
-			System.out.println("3. View Registered Camps");
-			System.out.println("4. Withdraw Camp");
-			System.out.println("5. Submit Enquiry");
-			System.out.println("6. View Enquiries");
-			System.out.println("7. View Enquiry Replies");
-			System.out.println("8. Edit Enquiry");
-			System.out.println("9. Delete Enquiry");
-			System.out.println("10. Change password");
+			System.out.println("1. Change Password");
+			System.out.println("2. View Camps");
+			System.out.println("3. Register Camp");
+			System.out.println("4. View Registered Camps");
+			System.out.println("5. Withdraw Camp");
+			System.out.println("6. Submit Enquiry");
+			System.out.println("7. View Enquiries");
+			System.out.println("8. View Enquiry Replies");
+			System.out.println("9. Edit Enquiry");
+			System.out.println("10. Delete Enquiry");
 			if(student.isCommitteeMember()) {
 				System.out.println("11. Reply Enquiry");
 				System.out.println("12. View Suggestions");
@@ -56,6 +56,7 @@ public class MenuHandler {
      * Prints the menu options for a Staff member.
      */
 	public static void printStaffMenu() {
+			System.out.println("0. Logout");
 			System.out.println("1. Create Camp");
 			System.out.println("2. Edit Camp");
 			System.out.println("3. Delete Camp");
@@ -116,7 +117,7 @@ public class MenuHandler {
 			
 			sc.nextLine();
 			
-			if(choice==12) return;
+			if(choice==0) return;
 			
 			InputHandler.handleStaffChoice(staff,choice);
 			}
