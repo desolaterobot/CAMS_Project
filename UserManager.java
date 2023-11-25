@@ -60,16 +60,21 @@ class UserManager extends CSVReader{
 //			CampApp.showStaffMenu(staff);
 //			return;
 		User User = authUser(userId,password);
-		
 		return User;
 		}
+
 	
 	public User authUser(String userId, String password) {
 		User User = getUser(userId);
 		
 		if(User.getUserId().equals(userId) && User.getPassword().equals(hash(password))) {
+				if(User.getPassword().equals(hash("password"))) {
+					UserManager.changePassword(User);
+				}
+			
 			return User;
 		}
+		
 		
 		return null;
 	}

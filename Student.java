@@ -321,6 +321,8 @@ public class Student extends User implements EnquiryInterface{
 				System.out.println("Start Date : " + c.startDate);
 				System.out.println("End Date : " + c.endDate);
 				System.out.println("Camp Description : " + c.description);
+				System.out.println("location : " + c.location);
+				
 				System.out.println("------------------------------------------------------------------");
 			}
 			System.out.println();
