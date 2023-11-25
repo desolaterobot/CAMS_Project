@@ -1,4 +1,3 @@
-package Camp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -42,7 +41,7 @@ public class CampFilter{
                 campList.sort( (c1, c2) -> Integer.compare(c1.attendees.length, c2.attendees.length));
                 break;
             case 5:
-                campList.sort( (c1, c2) -> Integer.compare(c1.attendees.length, c2.attendees.length));
+                campList.sort( (c1, c2) -> Integer.compare(c1.committeeList.length, c2.committeeList.length));
                 break;
             case 6:
                 campList.sort( (c1, c2) -> c1.startDate.compareTo(c2.startDate));
