@@ -131,7 +131,7 @@ public class Enquiry{
         return message;
     }
 
-    public User getStudent() {
+    public User UserDBManager.getStudent() {
         return student;
     }
 }
