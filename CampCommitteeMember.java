@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class CampCommitteeMember extends Student implements EnquiryReplyInterface, SuggestionInterface{
+public class CampCommitteeMember extends Student {
 	private Camp myCamp;
 	private Suggestion[] ownSuggestions;
 	private int noOfPendingSuggestions;

@@ -20,7 +20,7 @@ public class PointsSystem extends CSVReader {
      * @param user The user for whom to retrieve points.
      * @return The current points for the user, or -1 if the user is not found or does not have points.
      */
-	public static int getCurrentPoints(Student user) {
+	public static int getCurrentPoints(User user) {
 		String file = "data/students.csv";
         
 		String[] lines = CSVReader.getLinesWithHeader(file);
