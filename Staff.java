@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class Staff extends User {
+public class Staff extends User implements ApproveSuggestionInterface{
     /**
      * A list of camps current Staff is in-charged of. To prevent circular referencing
      * ownCamps is only loaded when getOwnCamps is called.
@@ -124,7 +124,7 @@ public class Staff extends User {
     /**
      * View All suggestion form the camps current staff is in charged of.
      */
-    public void viewSuggestions() {
+    public void viewCampSuggestions() {
         for (Camp camp:
         getOwnCamps()) {
             System.out.println("Suggestions for " + camp.campName + ":");
