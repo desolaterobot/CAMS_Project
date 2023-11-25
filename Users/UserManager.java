@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Utility.CSVReader;
+
 /**
  * The UserManager class manages user-related operations in the Camp Application and Management System.
  * It includes methods for reading user data from CSV files, hashing passwords, and modifying user information.

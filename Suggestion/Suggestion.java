@@ -1,8 +1,8 @@
 package Suggestion;
 import Camp.Camp;
-import Users.CSVReader;
 import Users.User;
 import Users.UserManager;
+import Utility.CSVReader;
 
 /**
  * Represents an Suggestion made by a commitee member, and its data.

@@ -4,10 +4,10 @@ import java.util.List;
 
 import Camp.Camp;
 import Camp.CampManager;
-import Users.CSVReader;
 import Users.Staff;
 import Users.User;
 import Users.UserManager;
+import Utility.CSVReader;
 
 /**
  * The SuggestionManager class manages suggestions from commitee members, interacting with CSV data.

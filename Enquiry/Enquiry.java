@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import Camp.Camp;
-import Users.CSVReader;
 import Users.User;
+import Utility.CSVReader;
 
 /**
  * Represents an enquiry made by a student for a specific camp, along with the associated replies.

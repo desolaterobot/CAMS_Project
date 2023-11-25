@@ -2,6 +2,8 @@ package Users;
 import java.util.ArrayList;
 import java.util.List;
 
+import Utility.CSVReader;
+
 
 /**
  * The PointsSystem class provides methods for managing and retrieving points for users in the system.

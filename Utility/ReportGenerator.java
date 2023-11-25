@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 import Camp.Camp;
 import Camp.CampManager;
-import Users.CSVReader;
 import Users.PointsSystem;
 import Users.User;
 import Users.UserManager;
