@@ -123,11 +123,11 @@ public class InputHandler {
 			break;
 		case 8:
 			System.out.println("View Enquiries...");
-			staff.viewEnquiries();
+			staff.viewCampEnquiries();
 			break;
 		case 9:
 			System.out.println("Reply Enquiries...");
-			staff.replyEnquiries();
+			staff.replyToEnquiry();
 			break;
 		case 10:
 			System.out.println("View Suggestion...");
