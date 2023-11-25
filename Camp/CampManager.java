@@ -142,14 +142,11 @@ public class CampManager {
         System.out.println("Enter the name of the camp.");
         String name = sc.nextLine();
 
-        System.out.println("Enter the start date of the camp, in the format: dd/mm/yyyy");
-        Date startDate = DateStr.strToDate(sc.nextLine());
+        Date startDate = getDateInput(sc, "Enter the start date of the camp, in the format: dd/mm/yyyy");
 
-        System.out.println("Enter the end date of the camp, in the format: dd/mm/yyyy");
-        Date endDate = DateStr.strToDate(sc.nextLine());
+        Date endDate = getDateInput(sc, "Enter the end date of the camp, in the format: dd/mm/yyyy");
 
-        System.out.println("Enter the registration deadline, in the format: dd/mm/yyyy");
-        Date registrationDeadline = DateStr.strToDate(sc.nextLine());
+        Date registrationDeadline = getDateInput(sc, "Enter the registration deadline, in the format: dd/mm/yyyy");
 
         System.out.println("Enter the location of the camp");
         String location = sc.nextLine();
@@ -179,6 +176,20 @@ public class CampManager {
         CampDBManager.createCamp(createdCamp);
     }
 
+    // method to repeatedly ask for a valid date
+    private static Date getDateInput(Scanner sc, String prompt) {
+        String inputDate;
+        while (true) {
+            System.out.println(prompt);
+            inputDate = sc.nextLine();
+            if (DateStr.isValidDate(inputDate)) {
+                return DateStr.strToDate(inputDate);
+            } else {
+                System.out.println("Invalid date format. Please use dd/mm/yyyy format.");
+            }
+        }
+    }
+    
    /**
      * Edits an existing camp based on user input and updates it in the camp database.
      *
