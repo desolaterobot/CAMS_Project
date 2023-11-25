@@ -10,7 +10,7 @@ import java.util.Scanner;
  * It includes methods for reading user data from CSV files, hashing passwords, and modifying user information.
  */
 //this user manager class converts CSV data to User objects
-class UserManager extends CSVReader implements CampUserInterface{
+class UserManager extends CSVReader{
 
     public static void main(String[] a){
         System.out.println("test");
@@ -85,7 +85,7 @@ class UserManager extends CSVReader implements CampUserInterface{
 		return null;
 	}
 	
-	public Staff authStaff(String userId, String password) {
+	public Staff authSaff(String userId, String password) {
 		List<Staff> Staffs = loadStaff("data/staff.csv");
 		
 		for(Staff s : Staffs) {
@@ -355,7 +355,7 @@ class UserManager extends CSVReader implements CampUserInterface{
 			System.out.println("Changing committee password.");
 			CampCommitteeMember commitee = (CampCommitteeMember)user; //downcast!!
 			file = "data/students.csv";
-			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.name, user.email, user.faculty, newPassHash, commitee.committeeCamp, PointsSystem.getCurrentPoints(commitee));
+			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.name, user.email, user.faculty, newPassHash, commitee.getCommitteeCamp(), PointsSystem.getCurrentPoints(commitee));
         }else if(user instanceof Student){
 			file = "data/students.csv";
 			System.out.println("Changing student password...");
