@@ -6,22 +6,22 @@ public class InputHandler {
 		// TODO Auto-generated method stub
 		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
-		case 11:
+		case 10:
 			commMem.replyToEnquiry();	
 			break;
-		case 12:
+		case 11:
 			commMem.viewOwnSuggestions();
 			break;
-		case 13:
-			commMem.editOwnSuggestion();
+		case 12:
+			commMem.editSuggestion();
 			break;
-		case 14:
+		case 13:
 			commMem.submitSuggestion();
 			break;
-		case 15:
-			commMem.deleteOwnSuggestion();
+		case 14:
+			commMem.deleteSuggestion();
 			break;
-		case 16:
+		case 15:
 			commMem.commGenerateReport();
 			break;
 		default:
@@ -36,7 +36,7 @@ public class InputHandler {
 		case 1:
 			System.out.println("Viewing Available Camps for: " + student.name);
 			System.out.println();
-			CampFilter.filterAndPrintCamps(CampManager.getCampsForStudents(student));
+			student.viewCamps();
 			break;
 		case 2:
 			System.out.print("Please Enter the Camp Name that you wish to register for: ");
@@ -72,7 +72,7 @@ public class InputHandler {
 		case 7:
 			System.out.println("Enter the Enquiry ID which you wish to view replies for: ");
 			String reEnqID = sc.nextLine();
-			student.viewEnquiryReplies(reEnqID);
+			student.viewEnquiry(reEnqID);
 			System.out.println();
 			break;
 			
@@ -86,8 +86,6 @@ public class InputHandler {
 			System.out.print("Enter the Enquiry ID which you wish to delete: ");
 			String deleteEnqID = sc.nextLine();
 			student.deleteEnquiry(deleteEnqID);
-		case 10:
-			UserManager.changePassword(student);
 		}
 	}
 
@@ -112,7 +110,7 @@ public class InputHandler {
 			break;
 		case 5:
 			System.out.println("View All Camps...");
-			CampFilter.filterAndPrintVisibleCamps();
+			staff.viewAllCamp();
 			break;
 		case 6:
 			System.out.println("View My Camps...");
@@ -133,7 +131,7 @@ public class InputHandler {
 			break;
 		case 10:
 			System.out.println("View Suggestion...");
-			staff.viewSuggestions();
+			staff.viewCampSuggestions();
 			break;
 		case 11:
 			System.out.println("Approve Suggestion...");
@@ -148,7 +146,8 @@ public class InputHandler {
 			staff.generatePerformanceReport();
 			break;
 		case 14:
-			UserManager.changePassword(staff);
+			System.out.println("change password");
+			//change password function
 			break;
 		default:
 			return;

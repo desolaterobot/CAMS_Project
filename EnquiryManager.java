@@ -11,7 +11,6 @@ public class EnquiryManager extends CSVReader{
      *
      * @param args Command-line arguments (not used).
      */
-    //I put incase u keeping this
     public static void main(String[] a){
         Enquiry[] allEnquiries = getEnquiryDatabase();
         for(Enquiry e : allEnquiries){
@@ -53,7 +52,13 @@ public class EnquiryManager extends CSVReader{
         }
         return enqlist.toArray(new Enquiry[enqlist.size()]);
     }
-    
+
+	/**
+     * Retrieves enquiries associated with a specific student.
+     *
+     * @param s The Student object for which enquiries are retrieved.
+     * @return An array of Enquiry objects associated with the specified student.
+     */
     public static Enquiry[] getStudentEnquiries(Student s) {
     	Enquiry[] enqs = getEnquiryDatabase();
     	List<Enquiry> enqlist = new LinkedList<>();
@@ -62,17 +67,13 @@ public class EnquiryManager extends CSVReader{
     			enqlist.add(enq);
     	return enqlist.toArray(new Enquiry[enqlist.size()]);
     }
-    
-//    public static Enquiry[] getStudentEnquiries(Student s) {
-//    	String[] enqs = getLines("data/enquiry.csv");
-//    	List<Enquiry> enqlist = new LinkedList<>();
-//    	for(String str: enqs) {
-//    		String[] items = str.split(",");
-//    		if(items[0].equals(s.userID))
-//    			enqlist.add(new Enquiry(items[0], UserManager.getStudent(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), stringToList(items[4])));
-//    	}
-//    	return enqlist.toArray(new Enquiry[enqlist.size()]);
-//    }
+	
+	/**
+     * Retrieves enquiries associated with a specific camp.
+     *
+     * @param camp The Camp object for which enquiries are retrieved.
+     * @return An array of Enquiry objects associated with the specified camp.
+     */
 public static Enquiry[] getCampEnquiries(Camp camp) {
     Enquiry[] enqs = getEnquiryDatabase();
     List<Enquiry> enqlist = new LinkedList<>();
@@ -82,6 +83,12 @@ public static Enquiry[] getCampEnquiries(Camp camp) {
     return enqlist.toArray(new Enquiry[0]);
 }
 
+	/**
+     * Retrieves an enquiry based on its ID.
+     *
+     * @param id The ID of the enquiry.
+     * @return The Enquiry object with the specified ID, or null if not found.
+     */
 public static Enquiry getEnquiryByID(String id) {
 	Enquiry[] enqs = getEnquiryDatabase();
 	for(Enquiry enq : enqs) {
@@ -104,7 +111,11 @@ public static Enquiry getEnquiryByID(String id) {
         addLine("data/enquiry.csv", line);
     }
     
-    
+    /**
+     * Edits an existing enquiry in the CSV file.
+     *
+     * @param toBeUpdated The Enquiry object to be updated.
+     */
     public static void editEnquiry(Enquiry toBeUpdated) {
     	EnquiryReply[] enqrs = toBeUpdated.getReplies();
     	String[] strEnquiryReplyIDs = new String[enqrs.length];
@@ -114,7 +125,12 @@ public static Enquiry getEnquiryByID(String id) {
 		String line =  String.format("%s,%s,%s,%s,%s", toBeUpdated.enquiryID, toBeUpdated.student.userID, removeCommas(toBeUpdated.camp.campName), removeCommas(toBeUpdated.message), listToString(strEnquiryReplyIDs));
 		modifyLine("data/enquiry.csv", toBeUpdated.enquiryID, line);
     }
-    
+
+	/**
+     * Deletes an enquiry from the CSV file.
+     *
+     * @param toBeDeleted The Enquiry object to be deleted.
+     */
     public static void deleteEnquiry(Enquiry toBeDeleted) {
     	deleteLine("data/enquiry.csv", toBeDeleted.enquiryID);
     }
