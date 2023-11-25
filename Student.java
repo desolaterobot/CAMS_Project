@@ -11,37 +11,7 @@ public class Student extends User implements EnquiryInterface{
 	private boolean isCommitteeMember;
 	private String committeeMemberOf;
 //	private Camp[] camp_db;
-	
-	//FOR TESTING
-	public static void main(String[] args) { 
-		System.out.println("testing Student.java");
-		Student s = UserManager.getStudent("BGOH023");
-//		Student s = new Student("BRYAN", "BGOH023@e.ntu.edu.sg", "SCSE", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", false, "null");
-//		System.out.println(s.userID);
-		s.viewCamps();
-//		s.registerCamp("scse camp", false);
-		s.viewRegisteredCamps();
-		s.withdrawCamp("stupid camp");
 		
-//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
-//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
-//		s.registerCamp(camp, true);
-//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
-//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
-//		s.withdrawCamp(camp);
-//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
-//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
-//		
-//		
-//		s.viewEnquiries();
-//		System.out.println("======== " + EnquiryManager.getStudentEnquiries(s)[1].enquiryID);
-//		s.editEnquiry(EnquiryManager.getStudentEnquiries(s)[1]);
-////		s.editEnquiry(EnquiryManager.getStudentEnquiries(s)[0]);
-////		s.submitEnquiry(camp, "delete this");
-////		s.submitEnquiry(camp, "don't deleted");
-//		s.deleteEnquiry(EnquiryManager.getStudentEnquiries(s)[3]);
-	}
-	
 	public Student(String name, String email, String faculty, String password, Boolean isCommitteeMember, String committeeMemberOf) {
 		super(name, email, faculty, password);
 		this.isCommitteeMember = isCommitteeMember;
@@ -63,25 +33,52 @@ public class Student extends User implements EnquiryInterface{
 			}
 		}
 	}
+	
+	//Private Methods
+	private boolean isEligible(Camp camp) {
+		//add checker for camps withdrew and registration deadline
+		LocalDate currentDate = LocalDate.now();
+		LocalDate registrationDeadline = camp.registrationDeadline.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+//		System.out.println(currentDate);
+//		System.out.println(registrationDeadline);
+		if(currentDate.isAfter(registrationDeadline)) {
+			System.out.println("Registration is closed for this camp.");
+			return false;
+		}
 		
-//		camp_db = CampManager.getCampDatabase();
-//		for(Camp c : camp_db) {
-//			if(c.visible && (!c.onlyFaculty || c.faculty.equals(faculty))) {
-//				for(int i=0; i<c.attendees.length; i++) {
-//					if(c.attendees[i].equals(userId)) registeredCamps.add(c);
-//				}
-//				for(int i=0; i<c.commiteeList.length; i++) {
-//					if(userId.equals(c.commiteeList[i])) {
-//						registeredCamps.add(c);
-//						this.isCommitteeMember = true;
-//						this.committeeMemberOf = c;
-//					}
-//				}
-//			}
-//		}
+		if(camp.totalSlots <= 0) { 
+			System.out.println("No more available slots in " + camp.campName);
+			return false;
+		}
+		
+		for(String userId : camp.withdrawals) {
+			if(userId.equals(userID)) {
+				System.out.println("You cannot register for a Camp which you withdrew from!");
+				return false;
+			}
+		}
+		for(String s: registeredCamps) {
+			Camp c = CampManager.getCamp(s);
+			if(camp.startDate.before(c.startDate) && camp.endDate.after(c.startDate) ||
+					camp.startDate.before(c.endDate) && camp.endDate.after(c.endDate) ||
+					camp.startDate.before(c.startDate) && camp.endDate.after(c.endDate) ||
+					camp.startDate.after(c.endDate) && camp.endDate.before(c.endDate)) {
+				System.out.println("Dates clashed with " + c.campName + "!");
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	
+	private boolean isEnquiryProcessed(Enquiry enq) {
+		EnquiryReply[] enqr = enq.getReplies();
+		return enqr.length>0;
+	}
+
+	//Public Methods
 	
-	
+	//Camp Methods
 	public void registerCamp(String campName, boolean committeeMember) {
 		Camp camp = CampManager.getCamp(campName);
 		if(!registeredCamps.contains(campName)) {
@@ -151,41 +148,6 @@ public class Student extends User implements EnquiryInterface{
 		}
 	}
 	
-	private boolean isEligible(Camp camp) {
-		//add checker for camps withdrew and registration deadline
-		LocalDate currentDate = LocalDate.now();
-		LocalDate registrationDeadline = camp.registrationDeadline.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-//		System.out.println(currentDate);
-//		System.out.println(registrationDeadline);
-		if(currentDate.isAfter(registrationDeadline)) {
-			System.out.println("Registration is closed for this camp.");
-			return false;
-		}
-		
-		if(camp.totalSlots <= 0) { 
-			System.out.println("No more available slots in " + camp.campName);
-			return false;
-		}
-		
-		for(String userId : camp.withdrawals) {
-			if(userId.equals(userID)) {
-				System.out.println("You cannot register for a Camp which you withdrew from!");
-				return false;
-			}
-		}
-		for(String s: registeredCamps) {
-			Camp c = CampManager.getCamp(s);
-			if(camp.startDate.before(c.startDate) && camp.endDate.after(c.startDate) ||
-					camp.startDate.before(c.endDate) && camp.endDate.after(c.endDate) ||
-					camp.startDate.before(c.startDate) && camp.endDate.after(c.endDate) ||
-					camp.startDate.after(c.endDate) && camp.endDate.before(c.endDate)) {
-				System.out.println("Dates clashed with " + c.campName + "!");
-				return false;
-			}
-		}
-		
-		return true;
-	}
 	
 	public void withdrawCamp(String campName) {
 		Camp camp = CampManager.getCamp(campName);
@@ -233,16 +195,14 @@ public class Student extends User implements EnquiryInterface{
 //		}
 	}
 	
+	
+	//Enquiry Methods
 	public void submitEnquiry(String campName, String enquiry) {
 		Camp camp = CampManager.getCamp(campName);
 		EnquiryManager.addEnquiry(this, camp, enquiry);
 		System.out.println("Enquiry Submitted! You may view/edit/delete your enquiry before it is processed!");
 	}
 	
-	private boolean isEnquiryProcessed(Enquiry enq) {
-		EnquiryReply[] enqr = enq.getReplies();
-		return enqr.length>0;
-	}
 	
 	public void viewEnquiries() {
 		//A student can view, edit, and delete their enquiries before it is processed
@@ -354,11 +314,9 @@ public class Student extends User implements EnquiryInterface{
 				for(String s : c.committeeList) {
 					if (s.equals(userID)) {
 						cc = true;
-//						System.out.println(Boolean.toString(cc));
 						break;
 					}
 				}
-//				System.out.println(Boolean.toString(cc));
 				System.out.println("Your Role : " + (cc?"Committee Member":"Attendee"));
 				System.out.println("Start Date : " + c.startDate);
 				System.out.println("End Date : " + c.endDate);
@@ -371,6 +329,8 @@ public class Student extends User implements EnquiryInterface{
 			System.out.println("You are not registered to any camps.");
 	}
 	
+	
+	//Getters Setters
 	public boolean isCommitteeMember() {
 		return isCommitteeMember;
 	}
@@ -382,4 +342,35 @@ public class Student extends User implements EnquiryInterface{
 	public String getCommitteeCamp() {
 		return committeeMemberOf;
 	}
+	
+	//FOR TESTING
+	public static void main(String[] args) { 
+		System.out.println("testing Student.java");
+		Student s = UserManager.getStudent("BGOH023");
+//		Student s = new Student("BRYAN", "BGOH023@e.ntu.edu.sg", "SCSE", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", false, "null");
+//		System.out.println(s.userID);
+		s.viewCamps();
+//		s.registerCamp("scse camp", false);
+		s.viewRegisteredCamps();
+		s.withdrawCamp("stupid camp");
+		
+//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
+//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
+//		s.registerCamp(camp, true);
+//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
+//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
+//		s.withdrawCamp(camp);
+//		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
+//		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
+//		
+//		
+//		s.viewEnquiries();
+//		System.out.println("======== " + EnquiryManager.getStudentEnquiries(s)[1].enquiryID);
+//		s.editEnquiry(EnquiryManager.getStudentEnquiries(s)[1]);
+////		s.editEnquiry(EnquiryManager.getStudentEnquiries(s)[0]);
+////		s.submitEnquiry(camp, "delete this");
+////		s.submitEnquiry(camp, "don't deleted");
+//		s.deleteEnquiry(EnquiryManager.getStudentEnquiries(s)[3]);
+	}
+
 }

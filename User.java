@@ -7,12 +7,9 @@ enum accountType{Staff, Student}
 
 /**
  * The User class represents a user in the Camp Application and Management System.
- * It contains information about the user's account type, user ID, name, email, password hash, and faculty.
+ * It contains information about the user ID, name, email, password hash, and faculty.
  */
 public class User {
-    /** The account type of the user (Staff or Student or Committee). */
-    public accountType Status;
-
     /** The user ID generated from the email address (characters before '@'). */
     public String userID; 
 
@@ -27,12 +24,6 @@ public class User {
 
     /** The faculty to which the user belongs. */
     public String faculty;
-
-    /** Indicates whether the user is a camp committee member. */
-    public boolean isCommitteeMember;
-
-    /** The camp for which the user is a committee member (if applicable). */
-    public String committeeCamp;
     
     /**
      * Constructs a new User with the given parameters.
@@ -41,9 +32,6 @@ public class User {
      * @param email           The email address of the user.
      * @param faculty         The faculty to which the user belongs.
      * @param passHash        The hashed password of the user.
-     * @param status          The account type of the user (Staff or Student).
-     * @param isCommitteeMember Indicates whether the user is a camp committee member.
-     * @param committeeCamp   The camp for which the user is a committee member (if applicable).
      */
      
     public User(String name, String email, String faculty, String passHash) {
@@ -53,13 +41,22 @@ public class User {
 		this.passHash = passHash;
 		this.userID = email.split("@")[0]; //userID is the characters before the '@' in the email address.
 	}
-    
+
+	/**
+     * Retrieves the user's ID.
+     *
+     * @return The user's ID.
+     */
 	public String getUserId() {
 		// TODO Auto-generated method stub
 		return this.userID;
 	}
 
-
+	/**
+     * Retrieves the user's password hash.
+     *
+     * @return The user's password hash.
+     */
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return this.passHash;

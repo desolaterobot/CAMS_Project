@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class Staff extends User implements ApproveSuggestionInterface{
+public class Staff extends User implements EnquiryReplyInterface, ApproveSuggestionInterface {
     /**
      * A list of camps current Staff is in-charged of. To prevent circular referencing
      * ownCamps is only loaded when getOwnCamps is called.
@@ -45,7 +45,6 @@ public class Staff extends User implements ApproveSuggestionInterface{
 
     /**
      * Create a New Camp and assign current staff as staff-in-charged.
-     * @return
      */
     public void createCamp() {
         CampManager.createCamp(this);
@@ -58,6 +57,9 @@ public class Staff extends User implements ApproveSuggestionInterface{
     public void editCamp(Camp camp) {
         CampManager.editCamp(camp);
     }
+    /**
+     * Display list to edit Camps.
+     */
     public void editCamp() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
@@ -74,12 +76,14 @@ public class Staff extends User implements ApproveSuggestionInterface{
     /**
      * Delete the given Camp.
      * @param camp
-     * @return
      */
     public void deleteCamp(Camp camp) {
         CampManager.deleteCamp(camp);
     }
 
+    /**
+     * Display List to delete Camps.
+     */
     public void deleteCamp() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to delete Camp");
@@ -108,6 +112,10 @@ public class Staff extends User implements ApproveSuggestionInterface{
             System.out.println(campCom);
         }
     }
+
+    /**
+     * Display list of camp to view students
+     */
     public void viewStudentList() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
@@ -135,7 +143,7 @@ public class Staff extends User implements ApproveSuggestionInterface{
             }
             for (Suggestion suggestion:
             SuggestionManager.getSuggestionsForCamp(camp)) {
-                System.out.println(num + ") " +  suggestion.committeeMember.name +": " + suggestion.message + ". Is Approved: " + suggestion.approved);
+                System.out.println(num + ") " +  suggestion.getCommitteeMember().name +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                 num++;
             }
         }
@@ -157,8 +165,8 @@ public class Staff extends User implements ApproveSuggestionInterface{
             }
             for (Suggestion suggestion:
                     SuggestionManager.getSuggestionsForCamp(camp)) {
-                if (!suggestion.approved) {
-                    System.out.println(num + ") " +  suggestion.committeeMember.name +": " + suggestion.message + ". Is Approved: " + suggestion.approved);
+                if (!suggestion.getApprovedStatus()) {
+                    System.out.println(num + ") " +  suggestion.getCommitteeMember().name +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                     allSuggestions.add(suggestion);
                     num++;
                 }
@@ -172,10 +180,17 @@ public class Staff extends User implements ApproveSuggestionInterface{
         System.out.println("Suggestion is approved");
     }
 
+    /**
+     * Generate Camp Report
+     * @param camp
+     */
     public void generateCampReport(Camp camp) {
         ReportGenerator.staffGenerateReport(camp);
     }
 
+    /**
+     * Display list of camps to generate camp report
+     */
     public void generatePerformanceReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
@@ -189,10 +204,17 @@ public class Staff extends User implements ApproveSuggestionInterface{
         generatePerformanceReport(campList[choice-1]);
     }
 
+    /**
+     * Generate Performance Report given camp
+     * @param camp
+     */
     public void generatePerformanceReport(Camp camp) {
         ReportGenerator.staffGeneratePerformanceReport(camp);
     }
 
+    /**
+     * Display List of camps to generate performance report
+     */
     public void generateCampReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to generate report of that Camp");
@@ -211,7 +233,7 @@ public class Staff extends User implements ApproveSuggestionInterface{
      */
     public void viewCampEnquiries() {
         System.out.println("Select Camp to view Enquiries");
-        CampManager.printCamps(getOwnCamps().toArray(new Camp[1]),false);
+        CampPrinter.printCamps(getOwnCamps().toArray(new Camp[1]),false);
         Scanner sc = new Scanner(System.in);
         System.out.print("Choice: ");
         int choice = Integer.parseInt(sc.nextLine());
@@ -284,7 +306,7 @@ public class Staff extends User implements ApproveSuggestionInterface{
     }
 
     /**
-     * View List to toggle visibility of Camp
+     * View List to toggle visibility of Camp.
      */
     public void toggleVisibility() {
         Scanner sc = new Scanner(System.in);
@@ -302,13 +324,13 @@ public class Staff extends User implements ApproveSuggestionInterface{
      * View All Camps created in the database.
      */
     public void viewAllCamp() {
-        CampManager.printCamps(CampManager.getCampDatabase(),false);
+        CampPrinter.printCamps(CampManager.getAllCamps(),false);
     }
 
     /**
      * View Camps created by current staff.
      */
     public void viewOwnCamp() {
-        CampManager.printCamps(getOwnCamps().toArray(new Camp[1]), false);
+        CampPrinter.printCamps(getOwnCamps().toArray(new Camp[1]), false);
     }
 }

@@ -1,12 +1,25 @@
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * The PointsSystem class provides methods for managing and retrieving points for users in the system.
+ */
 public class PointsSystem extends CSVReader {
 
+	/**
+     * Default constructor for the PointsSystem class.
+     */
 	public PointsSystem() {
-		// TODO Auto-generated constructor stub
+		
 	}
-	
+
+	/**
+     * Retrieves the current points for a given user.
+     *
+     * @param user The user for whom to retrieve points.
+     * @return The current points for the user, or -1 if the user is not found or does not have points.
+     */
 	public static int getCurrentPoints(User user) {
 		String file = "data/students.csv";
         
@@ -36,22 +49,31 @@ public class PointsSystem extends CSVReader {
         }
 		return -1;
 	}
-        
-	public static void addPoint(User user) {
+
+	/**
+     * Adds a point to the current points of the user.
+     *
+     * @param user The user for whom to add a point.
+     */
+	public static void addPoint(Student user) {
 		String file = "data/students.csv";
 		if (getCurrentPoints(user) != -1) {
 			String newPoint = Integer.toString(getCurrentPoints(user) + 1);
-	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.name, user.email, user.faculty, user.passHash, true, user.committeeCamp, newPoint);
+	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.name, user.email, user.faculty, user.passHash, true, user.getCommitteeCamp(), newPoint);
 	        modifyLine(file, user.name, newLine);
 	        //System.out.println(user.isCommitteeMember);
 		}
 	}
 	
 	//////////////////////FOR TESTING////////////////////
-	/*
+	/**
+     * Main method for testing and demonstrating the functionality of the PointsSystem class.
+     *
+     * @param args Command-line arguments (not used).
+     */
 	 public static void main(String[] args) {
 	        // Create a test user
-	        User testUser = new User("DENISE","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
+	        Student testUser = new Student("BRANDON","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",true, "yet anthoner camp");
 	
 	        // Test getCurrentPoints
 	        int currentPoints = PointsSystem.getCurrentPoints(testUser);
@@ -64,7 +86,5 @@ public class PointsSystem extends CSVReader {
 	        // Verify the updated points
 	        int updatedPoints = PointsSystem.getCurrentPoints(testUser);
 	        System.out.println("Updated Points: " + updatedPoints);
-	    }
-	 */  
-		
+	    }		
 }

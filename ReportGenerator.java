@@ -1,8 +1,15 @@
 import java.util.Scanner;
 
+/**
+ * The ReportGenerator class provides methods for generating performance reports for camps.
+ */
 public class ReportGenerator extends CSVReader{
 
-    //example usage
+    /**
+     * Main method for testing and demonstrating the functionality of the ReportGenerator class.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
     	commMemGenerateReport(CampManager.getCamp("hyper camp"));
         //generateCampReport(CampManager.getCamp("stupid camp"));
@@ -50,7 +57,13 @@ public class ReportGenerator extends CSVReader{
         }
         System.out.printf("Report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
     }
-    
+
+    /**
+     * Generates a .txt file with customized details for a camp committee member.
+     * The report includes camp details, attendees, committee members, and withdrawals.
+     *
+     * @param camp The selected camp object for report generation.
+     */
     public static void commMemGenerateReport(Camp camp) {
     	Scanner input = new Scanner(System.in);
 
@@ -109,6 +122,12 @@ public class ReportGenerator extends CSVReader{
         System.out.printf("Report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
     }
 
+    /**
+     * Generates a .txt file with selected details for a staff member.
+     * The report includes camp details, attendees, committee members, and withdrawals.
+     *
+     * @param camp The selected camp object for report generation.
+     */
     public static void staffGenerateReport(Camp camp) {
     	Scanner input = new Scanner(System.in);
     	System.out.println("Please type your filename: ");
@@ -163,7 +182,13 @@ public class ReportGenerator extends CSVReader{
         System.out.printf("Report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
         input.close();
     }
-    
+
+    /**
+     * Generates a performance report for a staff member.
+     * The report includes camp details and points earned by committee members.
+     *
+     * @param camp The selected camp object for report generation.
+     */
     public static void staffGeneratePerformanceReport(Camp camp) {
     	Scanner input = new Scanner(System.in);
     	System.out.println("Please type your filename: ");
