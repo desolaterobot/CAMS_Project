@@ -4,9 +4,7 @@ import java.util.List;
 
 import Camp.Camp;
 import Camp.CampManager;
-import Users.Staff;
-import Users.User;
-import Users.UserManager;
+import Users.*;
 import Utility.CSVReader;
 
 /**
@@ -80,5 +78,6 @@ public class SuggestionManager extends CSVReader{
 
     public static void approveSuggestion(Suggestion suggestion, Staff staff) {
         suggestion.approve(staff);
+        PointsSystem.addPoint((Student) suggestion.getCommitteeMember());
     }
 }
