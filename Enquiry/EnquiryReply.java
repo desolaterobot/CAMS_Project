@@ -13,7 +13,7 @@ public class EnquiryReply {
     private String reply;
 
     /** The committee member and staff who provided the reply. */
-    User user;
+    private User user;
 
     /**
      * Constructs a new EnquiryReply with the given parameters.
