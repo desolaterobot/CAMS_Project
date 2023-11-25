@@ -44,55 +44,6 @@ public class Suggestion {
             this.approved = true;
         }
     }
-
-    /**
-     * Approves the suggestion in database, only works if it is not approved.
-     *
-     * @param staff the User object representing the staff who approved this suggestion.
-     * @return status of success
-     */
-    public boolean approve(User staff){
-        if(this.approved){
-            System.out.printf("This suggestion has already been approved by %s\n", approvedBy.getName());
-            return false;
-        }
-        this.approved = true;
-        this.approvedBy = staff;
-        String modifiedLine = String.format("%s,%s,%s,%s,%s", this.suggestionID, this.committeeMember.getUserId(), this.camp.getCampName(), CSVReader.removeCommas(this.message), staff.getUserId());
-        CSVReader.modifyLine("data/suggestions.csv", suggestionID, modifiedLine);
-        return true;
-    }
-
-    /**
-     * Edits a suggestion in database, only works if it is not approved.
-     *
-     * @param newMessage The new suggestion message
-     * @return status of success
-     */
-    public boolean edit(String newMessage){
-        if(this.approved){
-            System.out.println("Cannot edit suggestions that are already approved.");
-            return false;
-        }
-        this.message = newMessage;
-        String modifiedLine = String.format("%s,%s,%s,%s,None", this.suggestionID, this.committeeMember.getUserId(), this.camp.getCampName(), CSVReader.removeCommas(newMessage));
-        CSVReader.modifyLine("data/suggestions.csv", suggestionID, modifiedLine);
-        return true;
-    }
-
-    /**
-     * Deletes a suggestion in database, only works if it is not approved.
-     *
-     * @return status of success
-     */
-    public boolean delete(){
-        if(this.approved){
-            System.out.println("Cannot delete approved suggestions.");
-            return false;
-        }
-        CSVReader.deleteLine("data/suggestions.csv", suggestionID);
-        return true;
-    }
     
     //Getters and Setters
     public String getSuggestionID() {
@@ -124,6 +75,10 @@ public class Suggestion {
     
     public void setApprovedStatus(Boolean approved) {
     	this.approved = approved;
+    }
+
+    public void setApprovedBy(Staff approvedBy){
+        this.approvedBy = approvedBy;
     }
     
     public User getApprovedBy() {

@@ -84,7 +84,7 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     		input.nextLine();
     		System.out.print("Please input the new suggestion: ");
     		String newSuggestion = input.nextLine();
-    		ownSuggestions[suggestionIndex].edit(newSuggestion);
+			SuggestionManager.editSuggestion(ownSuggestions[suggestionIndex], newSuggestion); //edited by dimas
     		System.out.println("Suggestion edited.\n");
     	} else {
     		System.out.println("No pending suggestion available for editing.\n");
@@ -98,7 +98,7 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     	if (noOfPendingSuggestions > 0) {
 			System.out.print("Please select the suggestion to delete: ");
 			int suggestionIndex = input.nextInt();
-			ownSuggestions[suggestionIndex].delete();
+			SuggestionManager.deleteSuggestion(ownSuggestions[suggestionIndex]); //edited by dimas
 			System.out.println("Suggestion deleted.\n");
     	} else {
     		System.out.println("No suggestion available to delete.\n");

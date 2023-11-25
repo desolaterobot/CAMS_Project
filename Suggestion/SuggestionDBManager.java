@@ -1,0 +1,61 @@
+import java.util.LinkedList;
+import java.util.List;
+
+import Camp.CampManager;
+import Suggestion.Suggestion;
+import Users.UserManager;
+import Utility.CSVReader;
+
+public class SuggestionDBManager extends CSVReader{
+
+    /**
+     * Retrieves the array of all suggestions from the CSV file.
+     *
+     * @return An array of Suggestion objects containing suggestion data.
+     */
+    public static Suggestion[] getSuggestionDatabase(){
+        List<Suggestion> suggList = new LinkedList<>();
+        for(String s : getLines("data/suggestions.csv")){
+            String[] items = s.split(",");
+            suggList.add(new Suggestion(items[0], UserManager.getUser(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), items[4]));
+        }
+        return suggList.toArray(new Suggestion[suggList.size()]); 
+    }
+
+    /**
+     * Converts a suggestion object into String format.
+     *
+     * @return An String of CSV-formatted information about a suggestion.
+     */
+    private static String suggToLine(Suggestion s){
+        return String.format("%s,%s,%s,%s,%s", s.getSuggestionID(), s.getCommitteeMember().getUserId(), s.getCamp().getCampName(), removeCommas(s.getMessage()), s.getApprovedBy().getUserId());
+    }
+
+    /**
+     * Adds a line onto the Suggestion CSV file.
+     *
+     * @param s The suggestion object to be added into the CSV file.
+     */
+    public static void addSuggDB(Suggestion s){
+        addLine("data/suggestions.csv", suggToLine(s));
+    }
+
+     /**
+     * Updates a line onto the Suggestion CSV file.
+     *
+     * @param s The suggestion object to be modified into the CSV file.
+     */
+    public static void updateSuggDB(Suggestion s){
+        modifyLine("data/suggestions.csv", s.getSuggestionID(), suggToLine(s));
+    }
+
+     /**
+     * Deletes a line from the Suggestion CSV file.
+     *
+     * @param s The suggestion object to be deleted from the CSV file.
+     */
+    public static void deleteSuggDB(Suggestion s){
+        deleteLine("data/suggestions.csv", s.getSuggestionID());
+    }
+    
+}
