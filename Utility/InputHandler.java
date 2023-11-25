@@ -157,8 +157,8 @@ public class InputHandler {
 			staff.generatePerformanceReport();
 			break;
 		case 14:
-			System.out.println("change password");
 			//change password function
+			UserManager.changePassword(staff);
 			break;
 		default:
 			return;
