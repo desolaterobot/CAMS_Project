@@ -11,58 +11,58 @@ public class Camp {
     //i want them to be accessible without the user of accessors for simplicity
     
     /** The name of the camp. */
-    String campName;
+    protected String campName;
     
     //all of these are Date objects, not strings!
     /** The start date of the camp. */
-    Date startDate; 
+    protected Date startDate; 
 
     /** The end date of the camp. */
-    Date endDate;
+    protected Date endDate;
 
     /** The registration deadline for the camp. */
-    Date registrationDeadline;
+    protected Date registrationDeadline;
     
     /**
      * A boolean indicating whether the camp is available only to faculty.
      * If true, the camp is available only to faculty; otherwise, it is available to the entire NTU.
      */
-    boolean onlyFaculty;
+    protected boolean onlyFaculty;
 
     /** The location of the camp. */
-    String location;
+    protected String location;
 
     /** A description of the camp. */
-    String description;
+    protected String description;
 
     
     //as of now, the staff in charge, commitees and atendees are stored as STRINGS OF THEIR USERID'S because Staff or Student classes are not created yet.
     /** The staff member in charge of the camp (stored as a string of their user ID). */
-    String staffInCharge;
+    protected String staffInCharge;
 
     /** An array of committee names associated with the camp. */
-    String[] committeeList;
+    protected String[] committeeList;
 
     /** An array of user IDs representing attendees of the camp. */
-    String[] attendees;
+    protected String[] attendees;
 
     /** A boolean indicating whether the camp is visible. */
-    boolean visible;
+    protected boolean visible;
 
     /** The total number of slots available for the camp. */
-    int totalSlots;
+    protected int totalSlots;
 
     /** The number of slots reserved for committees (maximum 10). */
-    int committeeSlots;
+    protected int committeeSlots;
     
     //faculty is automatically derived from the faculty of the staff creating this camp, see line 97.
     /**
      * The faculty of the staff member in charge of the camp.
      * It is automatically derived from the faculty of the staff creating this camp.
      */
-    String faculty;
+    protected String faculty;
     
-    String[] withdrawals;
+    protected String[] withdrawals;
 
     /**
      * Constructs a new Camp object with the specified parameters.

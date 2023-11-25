@@ -13,16 +13,16 @@ import Utility.CSVReader;
  */
 public class Enquiry{
     /** The unique identifier for the enquiry. */
-    String enquiryID;
+    protected String enquiryID;
 
     /** The user (student) making the enquiry. */
-    User student;
+    protected User student;
 
     /** The camp associated with the enquiry. */
-    Camp camp;
+    protected Camp camp;
 
     /** The content of the enquiry message. */
-    String message;
+    protected String message;
 
     /** An array of reply IDs associated with the enquiry. */
     private int[] replies;
