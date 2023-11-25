@@ -78,6 +78,14 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     }
 
     /**
+     * Delete the given Camp.
+     * @param camp
+     */
+    public void deleteCamp(Camp camp) {
+        CampManager.deleteCamp(camp);
+    }
+
+    /**
      * Display List to delete Camps.
      */
     public void deleteCamp() {
@@ -90,7 +98,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
             campCounter++;
         }
         int choice = Integer.parseInt(sc.nextLine());
-        CampManager.deleteCamp(campList[choice-1]);
+        deleteCamp(campList[choice-1]);
+
     }
 
     /**
