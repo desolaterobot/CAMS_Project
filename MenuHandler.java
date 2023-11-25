@@ -52,6 +52,7 @@ public class MenuHandler {
      * Prints the menu options for a Staff member.
      */
 	public static void printStaffMenu() {
+			System.out.println("0. Logout");
 			System.out.println("1. Create Camp");
 			System.out.println("2. Edit Camp");
 			System.out.println("3. Delete Camp");
@@ -112,7 +113,7 @@ public class MenuHandler {
 			
 			sc.nextLine();
 			
-			if(choice==12) return;
+			if(choice==0) return;
 			
 			InputHandler.handleStaffChoice(staff,choice);
 			}
