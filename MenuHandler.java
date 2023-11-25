@@ -1,10 +1,15 @@
 import java.util.*;
 
-
-
-
+/**
+ * The MenuHandler class provides methods for displaying and handling user menus based on their roles (Student, Staff).
+ */
 public class MenuHandler {
-	
+
+	/**
+     * Main method for testing and demonstrating the functionality of the MenuHandler class.
+     *
+     * @param args Command-line arguments (not used).
+     */
 	public static void main(String[] args) { 
 		String a = "hello";
 		String b = "f@e";
@@ -15,7 +20,12 @@ public class MenuHandler {
 		System.out.println("here");
 		showStaffMenu(staff);
 	}
-	
+
+	 /**
+     * Prints the menu options for a Student.
+     *
+     * @param student The Student user.
+     */
 	public static void printStudentMenu(Student student) {
 			System.out.println("0. Logout");
 			System.out.println("1. View Camps");
@@ -38,6 +48,9 @@ public class MenuHandler {
 			}
 		}
 
+	/**
+     * Prints the menu options for a Staff member.
+     */
 	public static void printStaffMenu() {
 			System.out.println("1. Create Camp");
 			System.out.println("2. Edit Camp");
@@ -54,16 +67,13 @@ public class MenuHandler {
 			System.out.println("13. Generate Performance Report");
 			System.out.println("14. Change Password");
 	}
-	
+
+	/**
+     * Displays the Student menu and handles user input based on their choices.
+     *
+     * @param student The Student user.
+     */
 	public static void showStudentMenu(Student student) {
-		//student actions:
-		// - view open camps
-		// - register/withdraw from camp
-		// - submit enquiry for the camp they registered
-		// - view registered camp
-		
-		//if they are committee member actions:
-			//
 
 		Scanner sc = new Scanner(System.in);
 		
@@ -87,16 +97,13 @@ public class MenuHandler {
 				
 			}
 		}
-		
+	
+	/**
+     * Displays the Staff menu and handles user input based on their choices.
+     *
+     * @param staff The Staff user.
+     */
 	public static void showStaffMenu(Staff staff) {
-		//staff actions:
-		// - create/edit/delete camp
-		// - toggle camp visibility
-		// - view all camps
-		// - view camps created
-		// - view/reply to enquiries
-		// - approve suggestions
-		// - generate reports
 		Scanner sc = new Scanner(System.in);
 		while(true) {
 			printStaffMenu();
