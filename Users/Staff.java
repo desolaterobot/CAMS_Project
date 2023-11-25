@@ -8,14 +8,17 @@ import Enquiry.*;
 import Suggestion.*;
 import Utility.ReportGenerator;
 
-
+/**
+ * Represents a staff member with various functionalities related to camp management.
+ */
 public class Staff extends User implements EnquiryReplyInterface, ApproveSuggestionInterface {
     /**
-     * A list of camps current Staff is in-charged of. To prevent circular referencing
+     * A list of camps current Staff is in-charged of. To prevent circular referencing,
      * ownCamps is only loaded when getOwnCamps is called.
      */
     private List<Camp> ownCamps = new ArrayList<>();
 
+    
     public static void main(String[] args) {
         System.out.println("Testing...");
         Staff s = new Staff("Alexei","OURIN@ntu.edu.sg","ADM","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
@@ -28,13 +31,22 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     //    s.editCamp();
     }
 
+    /**
+     * Constructs a Staff object with the specified attributes.
+     *
+     * @param name      The name of the staff member.
+     * @param email     The email of the staff member.
+     * @param faculty   The faculty of the staff member.
+     * @param passHash  The password hash of the staff member.
+     */
     public Staff(String name, String email, String faculty, String passHash) {
         super(name, email, faculty, passHash);
     }
 
     /**
-     * Returns the list of camps that current staff is in charged of. To prevent circular referencing
+     * Returns the list of camps that current staff is in charged of. To prevent circular referencing,
      * ownCamps is only loaded when getOwnCamps is called.
+     *
      * @return List<Camp> Lists of camps that current staff is in charged of.
      */
     public List<Camp> getOwnCamps() {
@@ -60,8 +72,10 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
 
     /**
      * Given Camp, edit the particulars of this camp.
-     * @param camp
+     *
+     * @param camp The camp to be edited.
      */
+
     public void editCamp(Camp camp) {
         CampManager.editCamp(camp);
     }
@@ -79,7 +93,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
 
     /**
      * Delete the given Camp.
-     * @param camp
+     *
+     * @param camp The camp to be deleted.
      */
     public void deleteCamp(Camp camp) {
         CampManager.deleteCamp(camp);
@@ -104,7 +119,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
 
     /**
      * View the list of Students in the current Camp.
-     * @param camp
+     *
+     * @param camp The camp for which the student list is to be viewed.
      */
     public void viewStudentList(Camp camp) {
         System.out.println("======Student List======");
@@ -185,15 +201,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     }
 
     /**
-     * Generate Camp Report
-     * @param camp
-     */
-    public void generateCampReport(Camp camp) {
-        ReportGenerator.staffGenerateReport(camp);
-    }
-
-    /**
-     * Display list of camps to generate camp report
+     * Display list of camps to generate camp report.
      */
     public void generatePerformanceReport() {
         Scanner sc = new Scanner(System.in);
@@ -209,15 +217,25 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     }
 
     /**
-     * Generate Performance Report given camp
-     * @param camp
+     * Generate Camp Report for the given camp.
+     *
+     * @param camp The camp for which the report is to be generated.
      */
     public void generatePerformanceReport(Camp camp) {
         ReportGenerator.staffGeneratePerformanceReport(camp);
     }
 
     /**
-     * Display List of camps to generate performance report
+     * Generate Camp Report for the given camp.
+     *
+     * @param camp The camp for which the report is to be generated.
+     */
+    public void generateCampReport(Camp camp) {
+        ReportGenerator.staffGenerateReport(camp);
+    }
+    
+    /**
+     * Display list of camps to generate performance report.
      */
     public void generateCampReport() {
         Scanner sc = new Scanner(System.in);
@@ -260,8 +278,9 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     }
 
     /**
-     * Given Enquiry reply to that enquiry.
-     * @param enquiry Enquiry that is replying to.
+     * Given Enquiry, reply to that enquiry.
+     *
+     * @param enquiry The Enquiry to reply to.
      */
     public void replyToEnquiry(Enquiry enquiry) {
         Scanner sc = new Scanner(System.in);
@@ -300,9 +319,10 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         replyToEnquiry(allEnquiries.get(enquiryChoice-1));
     }
     /**
-     * Toggle the visibility of given Camp.
-     * @param camp camp object of visibility to change
-     * @return result of the change
+     * Toggle the visibility of the given Camp.
+     *
+     * @param camp The camp object of visibility to change.
+     * @return The result of the change.
      */
     public boolean toggleVisibility(Camp camp) {
         camp.toggleVisibility();
