@@ -48,11 +48,21 @@ public class User {
 		// TODO Auto-generated method stub
 		return this.userID;
 	}
-	
+
+	/**
+     * Retrieves the user's Name.
+     *
+     * @return The user's Name.
+     */
 	public String getName() {
 		return name;
 	}
-	
+
+	/**
+     * Retrieves the user's Email.
+     *
+     * @return The user's Email.
+     */
 	public String getEmail() {
 		return email;
 	}
@@ -66,7 +76,12 @@ public class User {
 		// TODO Auto-generated method stub
 		return this.passHash;
 	}
-	
+
+	/**
+     * Retrieves The user's faculty.
+     *
+     * @return The user's user faculty.
+     */
 	public String getFaculty() {
 		return faculty;
 	}
