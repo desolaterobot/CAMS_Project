@@ -1,7 +1,16 @@
 import java.util.Scanner;
 
-
+/**
+ * The InputHandler class provides methods for handling user input based on their roles (Student, Committee Member, Staff).
+ */
 public class InputHandler {
+
+	/**
+     * Handles the user input for a Committee Member based on the specified choice.
+     *
+     * @param student The Committee Member user.
+     * @param choice  The user's input choice.
+     */
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
 		// TODO Auto-generated method stub
 		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
@@ -28,7 +37,13 @@ public class InputHandler {
 			handleStudentChoice(student,choice);
 		}
 	}
-	
+
+	/**
+     * Handles the user input for a Student based on the specified choice.
+     *
+     * @param student The Student user.
+     * @param choice  The user's input choice.
+     */
 	public static void handleStudentChoice(Student student, int choice) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
@@ -91,7 +106,12 @@ public class InputHandler {
 		}
 	}
 
-
+	/**
+     * Handles the user input for a Staff member based on the specified choice.
+     *
+     * @param staff  The Staff user.
+     * @param choice The user's input choice.
+     */
 	public static void handleStaffChoice(Staff staff,int choice) {
 		switch(choice) {
 		case 1:
