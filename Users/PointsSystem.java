@@ -60,7 +60,7 @@ public class PointsSystem extends CSVReader {
 		String file = "data/students.csv";
 		if (getCurrentPoints(user) != -1) {
 			String newPoint = Integer.toString(getCurrentPoints(user) + 1);
-	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.name, user.email, user.faculty, user.passHash, true, user.committeeCamp, newPoint);
+	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.name, user.email, user.faculty, user.passHash, true, CSVReader.removeCommas(user.getMyCamp().getCampName()), newPoint);
 	        modifyLine(file, user.name, newLine);
 	        //System.out.println(user.isCommitteeMember);
 		}
@@ -81,7 +81,7 @@ public class PointsSystem extends CSVReader {
 	        System.out.println("Current Points: " + currentPoints);
 	
 	        // Test addPoint
-	        PointsSystem.addPoint(testUser);
+	        //PointsSystem.addPoint(testUser);
 	        System.out.println("Points added.");
 	
 	        // Verify the updated points

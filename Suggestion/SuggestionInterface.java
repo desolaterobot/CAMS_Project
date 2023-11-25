@@ -1,3 +1,4 @@
+package Suggestion;
 /**
  * The SuggestionInterface interface defines methods for managing suggestions.
  */

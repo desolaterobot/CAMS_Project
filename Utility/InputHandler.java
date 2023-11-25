@@ -1,7 +1,10 @@
 package Utility;
 
+import java.util.Scanner;
+
 import Users.Staff;
 import Users.Student;
+import Users.CampCommitteeMember;
 
 public class InputHandler {
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
@@ -32,7 +35,6 @@ public class InputHandler {
 	}
 	
 	public static void handleStudentChoice(Student student, int choice) {
-		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		switch(choice) {
 		case 1:

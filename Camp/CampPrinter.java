@@ -3,17 +3,17 @@ package Camp;
 import Utility.DateStr;
 
 public class CampPrinter {
-     /**
+    /**
      * Prints information about camps, including their names, descriptions, locations, dates, and availability.
      *
      * @param campArray    The array of Camp objects to be printed.
      * @param onlyVisible  If true, only visible camps will be printed; if false, all camps will be printed.
      */
-    public static void printDetailed(Camp[] campArray, boolean onlyVisible){
+    public static void printCamps(Camp[] campArray, boolean onlyVisible){
         if(campArray.length == 0){
             System.out.println("No camps to show.");
             return;
-        } 
+        }
         int x = 1;
         if(!onlyVisible){
             for(Camp c : campArray){
@@ -35,7 +35,7 @@ public class CampPrinter {
         }
         System.out.println("---------------------------------------------------------------------------");
     }
-
+    
     public static void print(Camp[] campArray, boolean onlyVisible) {
         if(campArray.length == 0){
             System.out.println("No camps to show.");
@@ -54,4 +54,5 @@ public class CampPrinter {
             }
         }
     }
+
 }

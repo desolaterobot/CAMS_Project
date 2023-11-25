@@ -250,9 +250,9 @@ class UserManager extends CSVReader{
 	}
 	
 	public static void updateStudentDB(Student student) {
-		String line = String.format("%s,%s,%s,%s,%s,%s", 
+		String line = String.format("%s,%s,%s,%s,%s,%s,%s", 
         removeCommas(student.name), removeCommas(student.email), removeCommas(student.faculty), removeCommas(student.passHash), 
-        removeCommas(Boolean.toString(student.isCommitteeMember()).toUpperCase()), removeCommas(student.getCommitteeCamp()));
+        removeCommas(Boolean.toString(student.isCommitteeMember()).toUpperCase()), removeCommas(student.getCommitteeCamp()),"0");
 		modifyLine("data/students.csv", student.name, line);
 	}
 	
@@ -356,7 +356,7 @@ class UserManager extends CSVReader{
 			System.out.println("Changing committee password.");
 			CampCommitteeMember commitee = (CampCommitteeMember)user; //downcast!!
 			file = "data/students.csv";
-			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.name, user.email, user.faculty, newPassHash, commitee.committeeCamp, PointsSystem.getCurrentPoints(commitee));
+			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.name, user.email, user.faculty, newPassHash, commitee.getCommitteeCamp(), PointsSystem.getCurrentPoints(commitee));
         }else if(user instanceof Student){
 			file = "data/students.csv";
 			System.out.println("Changing student password...");

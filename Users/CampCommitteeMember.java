@@ -21,6 +21,10 @@ public class CampCommitteeMember extends Student {
 		this.ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
 		this.noOfPendingSuggestions = 0;
 	}
+
+	public Camp getMyCamp() {
+		return myCamp;
+	}
 	
 	public void submitSuggestion() {
     	//get camp and suggestion
