@@ -39,8 +39,14 @@ public class CampApp {
 		while(true) {
 			System.out.println("1.login");
 			System.out.println("2.exit");
+			int choice = -1;
 			
-			int choice = sc.nextInt();
+			try {
+				choice = Integer.parseInt(sc.nextLine());
+			} catch (Exception e) {
+				//let switch case handle error
+			}
+			
 			switch(choice) {
 				case 1:
 					User authenticatedUser = UserManager.login();
@@ -48,7 +54,7 @@ public class CampApp {
 						handleUserMenu(authenticatedUser);
 					}
 					else {
-						System.out.println("Incorrect authn");
+						System.out.println("Incorrect Username or Password");
 					}
 					break;
 				case 2:

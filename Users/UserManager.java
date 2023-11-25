@@ -1,5 +1,4 @@
 package Users;
-import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -53,29 +52,23 @@ class UserManager extends CSVReader{
 		
 		System.out.println("Password");
 		String password = sc.nextLine();
-//		Student student = authStudent(userId,password);
-//		if(student !=null) {
-//			CampApp.showStudentMenu(student);
-//			return;
-//		}
-//		Staff staff = authSaff(userId,password);
-//		if(staff !=null) {
-//			CampApp.showStaffMenu(staff);
-//			return;
 		User User = authUser(userId,password);
 		return User;
 		}
 
 	
 	public User authUser(String userId, String password) {
-		User User = getUser(userId);
+		User user = getUser(userId);
 		
-		if(User.getUserId().equals(userId) && User.getPassword().equals(hash(password))) {
-				if(User.getPassword().equals(hash("password"))) {
-					UserManager.changePassword(User);
+		if (user ==  null) {
+			return null;
+		}
+
+		if(user.getUserId().equals(userId) && user.getPassword().equals(hash(password))) {
+				if(user.getPassword().equals(hash("password"))) {
+					UserManager.changePassword(user);
 				}
-			
-			return User;
+			return user;
 		}
 		
 		
@@ -169,7 +162,7 @@ class UserManager extends CSVReader{
                 return u;
             }
         }
-        System.out.printf("Staff %s not found in database.\n", userID);
+        System.out.printf("User %s not found in database.\n", userID);
         return null;
     }
     

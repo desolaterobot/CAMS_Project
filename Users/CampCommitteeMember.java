@@ -1,4 +1,4 @@
--package Users;
+package Users;
 import java.util.Scanner;
 
 import Camp.*;
