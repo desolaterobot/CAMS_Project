@@ -39,6 +39,7 @@ public class InputHandler {
 			student.viewCamps();
 			break;
 		case 2:
+			student.viewCamps();
 			System.out.print("Please Enter the Camp Name that you wish to register for: ");
 			String campName = sc.nextLine();
 			System.out.print("Are you registering for Camp Committee?(Y/N): ");
@@ -52,6 +53,7 @@ public class InputHandler {
 			student.viewRegisteredCamps();
 			break;
 		case 4:
+			student.viewRegisteredCamps();
 			System.out.print("Please Enter the Camp Name that you wish to withraw from: ");
 			String wCampName = sc.nextLine();
 			student.withdrawCamp(wCampName);
@@ -70,6 +72,7 @@ public class InputHandler {
 			break;
 			
 		case 7:
+			student.viewEnquiries();
 			System.out.println("Enter the Enquiry ID which you wish to view replies for: ");
 			String reEnqID = sc.nextLine();
 			student.viewEnquiry(reEnqID);
@@ -77,12 +80,14 @@ public class InputHandler {
 			break;
 			
 		case 8:
+			student.viewEnquiries();
 			System.out.print("Enter the Enquiry ID which you wish to edit: ");
 			String editEnqID = sc.nextLine();
 			student.editEnquiry(editEnqID);
 			break;
 			
 		case 9:
+			student.viewEnquiries();
 			System.out.print("Enter the Enquiry ID which you wish to delete: ");
 			String deleteEnqID = sc.nextLine();
 			student.deleteEnquiry(deleteEnqID);

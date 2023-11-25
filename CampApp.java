@@ -49,7 +49,7 @@ public class CampApp {
 					sc.close();
 					return;
 				default:
-					System.out.println("Invalud choice. Please try again");
+					System.out.println("Invalid choice. Please try again");
 					break;
 			}
 		}
