@@ -1,49 +1,34 @@
 import java.util.Scanner;
 
-/**
- * The InputHandler class provides methods for handling user input based on their roles (Student, Committee Member, Staff).
- */
-public class InputHandler {
 
-	/**
-     * Handles the user input for a Committee Member based on the specified choice.
-     *
-     * @param student The Committee Member user.
-     * @param choice  The user's input choice.
-     */
+public class InputHandler {
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
 		// TODO Auto-generated method stub
 		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
-		case 11:
+		case 10:
 			commMem.replyToEnquiry();	
 			break;
-		case 12:
+		case 11:
 			commMem.viewOwnSuggestions();
 			break;
-		case 13:
-			commMem.editOwnSuggestion();
+		case 12:
+			commMem.editSuggestion();
 			break;
-		case 14:
+		case 13:
 			commMem.submitSuggestion();
 			break;
-		case 15:
-			commMem.deleteOwnSuggestion();
+		case 14:
+			commMem.deleteSuggestion();
 			break;
-		case 16:
+		case 15:
 			commMem.commGenerateReport();
 			break;
 		default:
 			handleStudentChoice(student,choice);
 		}
 	}
-
-	/**
-     * Handles the user input for a Student based on the specified choice.
-     *
-     * @param student The Student user.
-     * @param choice  The user's input choice.
-     */
+	
 	public static void handleStudentChoice(Student student, int choice) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
@@ -51,7 +36,7 @@ public class InputHandler {
 		case 1:
 			System.out.println("Viewing Available Camps for: " + student.name);
 			System.out.println();
-			CampFilter.filterAndPrintCamps(CampManager.getCampsForStudents(student));
+			student.viewCamps();
 			break;
 		case 2:
 			System.out.print("Please Enter the Camp Name that you wish to register for: ");
@@ -87,7 +72,7 @@ public class InputHandler {
 		case 7:
 			System.out.println("Enter the Enquiry ID which you wish to view replies for: ");
 			String reEnqID = sc.nextLine();
-			student.viewEnquiryReplies(reEnqID);
+			student.viewEnquiry(reEnqID);
 			System.out.println();
 			break;
 			
@@ -101,17 +86,10 @@ public class InputHandler {
 			System.out.print("Enter the Enquiry ID which you wish to delete: ");
 			String deleteEnqID = sc.nextLine();
 			student.deleteEnquiry(deleteEnqID);
-		case 10:
-			UserManager.changePassword(student);
 		}
 	}
 
-	/**
-     * Handles the user input for a Staff member based on the specified choice.
-     *
-     * @param staff  The Staff user.
-     * @param choice The user's input choice.
-     */
+
 	public static void handleStaffChoice(Staff staff,int choice) {
 		switch(choice) {
 		case 1:
@@ -132,7 +110,7 @@ public class InputHandler {
 			break;
 		case 5:
 			System.out.println("View All Camps...");
-			CampFilter.filterAndPrintVisibleCamps();
+			staff.viewAllCamp();
 			break;
 		case 6:
 			System.out.println("View My Camps...");
@@ -153,7 +131,7 @@ public class InputHandler {
 			break;
 		case 10:
 			System.out.println("View Suggestion...");
-			staff.viewSuggestions();
+			staff.viewCampSuggestions();
 			break;
 		case 11:
 			System.out.println("Approve Suggestion...");
@@ -168,7 +146,8 @@ public class InputHandler {
 			staff.generatePerformanceReport();
 			break;
 		case 14:
-			UserManager.changePassword(staff);
+			System.out.println("change password");
+			//change password function
 			break;
 		default:
 			return;
