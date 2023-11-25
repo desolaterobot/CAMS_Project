@@ -73,11 +73,15 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
         	System.out.print("Please select the enquiry to reply to: ");
     		int enquiryIndex = input.nextInt();
         	input.nextLine();
-        	System.out.print("Please input the reply to the enquiry: ");
-    		String reply = input.nextLine();
-    		enquiries[enquiryIndex].reply(this, reply);
-    		PointsSystem.addPoint(this);
-    		System.out.println("Enquiry replied.\n");
+        	if (!enquiries[enquiryIndex].getStudent().getName().equals(this.getName())) {
+        		System.out.print("Please input the reply to the enquiry: ");
+        		String reply = input.nextLine();
+        		enquiries[enquiryIndex].reply(this, reply);
+        		PointsSystem.addPoint(this);
+        		System.out.println("Enquiry replied.\n");
+        	} else {
+        		System.out.println("You cannot reply to your own enquiry!");
+        	}
     	} 
     }
 
