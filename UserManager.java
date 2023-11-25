@@ -45,10 +45,10 @@ class UserManager extends CSVReader implements CampUserInterface{
 		//else return to login menu for incorrect auth
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("User ID");
+		System.out.print("User ID: ");
 		String userId = sc.nextLine();
 		
-		System.out.println("Password");
+		System.out.print("Password: ");
 		String password = sc.nextLine();
 //		Student student = authStudent(userId,password);
 //		if(student !=null) {
