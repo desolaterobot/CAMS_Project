@@ -1,7 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Comparator;
 
 public class CampFilter{
 
@@ -65,7 +64,7 @@ public class CampFilter{
     public static void filterAndPrintVisibleCamps(){
         Scanner sc = new Scanner(System.in);
         List<Camp> campList = new LinkedList<>();
-        for(Camp c : CampManager.getCampDatabase()){
+        for(Camp c : CampManager.getAllCamps()){
             if(c.visible){
                 campList.add(c);
             }   
@@ -91,7 +90,7 @@ public class CampFilter{
         sc.close();
 
         CampFilter.sort(campList, choice);
-        CampManager.printCamps(campList.toArray(new Camp[campList.size()]), true);
+        CampPrinter.printCamps(campList.toArray(new Camp[campList.size()]), true);
     }
 
     /**
@@ -127,6 +126,6 @@ public class CampFilter{
         sc.close();
 
         CampFilter.sort(campList, choice);
-        CampManager.printCamps(campList.toArray(new Camp[campList.size()]), true);
+        CampPrinter.printCamps(campList.toArray(new Camp[campList.size()]), true);
     }
 }
