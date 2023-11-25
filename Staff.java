@@ -45,7 +45,6 @@ public class Staff extends User {
 
     /**
      * Create a New Camp and assign current staff as staff-in-charged.
-     * @return
      */
     public void createCamp() {
         CampManager.createCamp(this);
@@ -58,6 +57,9 @@ public class Staff extends User {
     public void editCamp(Camp camp) {
         CampManager.editCamp(camp);
     }
+    /**
+     * Display list to edit Camps.
+     */
     public void editCamp() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
@@ -74,12 +76,14 @@ public class Staff extends User {
     /**
      * Delete the given Camp.
      * @param camp
-     * @return
      */
     public void deleteCamp(Camp camp) {
         CampManager.deleteCamp(camp);
     }
 
+    /**
+     * Display List to delete Camps.
+     */
     public void deleteCamp() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to delete Camp");
@@ -108,6 +112,10 @@ public class Staff extends User {
             System.out.println(campCom);
         }
     }
+
+    /**
+     * Display list of camp to view students
+     */
     public void viewStudentList() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
@@ -172,10 +180,17 @@ public class Staff extends User {
         System.out.println("Suggestion is approved");
     }
 
+    /**
+     * Generate Camp Report
+     * @param camp
+     */
     public void generateCampReport(Camp camp) {
         ReportGenerator.staffGenerateReport(camp);
     }
 
+    /**
+     * Display list of camps to generate camp report
+     */
     public void generatePerformanceReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
@@ -189,10 +204,17 @@ public class Staff extends User {
         generatePerformanceReport(campList[choice-1]);
     }
 
+    /**
+     * Generate Performance Report given camp
+     * @param camp
+     */
     public void generatePerformanceReport(Camp camp) {
         ReportGenerator.staffGeneratePerformanceReport(camp);
     }
 
+    /**
+     * Display List of camps to generate performance report
+     */
     public void generateCampReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to generate report of that Camp");
@@ -284,7 +306,7 @@ public class Staff extends User {
     }
 
     /**
-     * View List to toggle visibility of Camp
+     * View List to toggle visibility of Camp.
      */
     public void toggleVisibility() {
         Scanner sc = new Scanner(System.in);
