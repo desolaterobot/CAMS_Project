@@ -68,35 +68,5 @@ public class CampApp {
 		else if(User instanceof Staff) {
 			MenuHandler.showStaffMenu((Staff) User);
 		}
-	}
-	
-//	public List<Camp> loadCamps(String file) {
-//		List<Camp> Camps = new ArrayList<>();
-//		
-//		String[] lines = CSVReader.getLines(file);
-//		
-//		for (String line: lines) {
-//			String[] part = line.split(",");
-//			
-//			String name = part[0];
-//			Date startDate = DateStr.strToDate(part[1]);
-//			Date endDate= DateStr.strToDate(part[2]);
-//			Date registrationDeadline= DateStr.strToDate(part[3]);
-//			String location= part[4];
-//			int totalSlots= Integer.parseInt(part[5]);
-//			int campCommitteeSlot= Integer.parseInt(part[6]);
-//			String description= part[7];
-//			boolean visible = Boolean.parseBoolean(part[9]);
-//			boolean onlyFaculty = Boolean.parseBoolean(part[10]);
-//			String staffInCharge= part[8];
-//			Staff inCharge = findStaffById(staffInCharge);
-//			
-//			Camp camp = new Camp(name,startDate,endDate,registrationDeadline,location,
-//					totalSlots,campCommitteeSlot,description,inCharge,visible,onlyFaculty);
-//			
-//			Camps.add(camp);
-//		}
-//		return Camps;
-//	}
-	
+	}	
 }
