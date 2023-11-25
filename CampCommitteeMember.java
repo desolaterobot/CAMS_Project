@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class CampCommitteeMember extends Student implements SuggestionInterface {
+public class CampCommitteeMember extends Student {
 	private Camp myCamp;
 	private Suggestion[] ownSuggestions;
 	private int noOfPendingSuggestions;
@@ -25,23 +25,32 @@ public class CampCommitteeMember extends Student implements SuggestionInterface 
     	//input.close();
     }
 	
-	// Method to reply to enquiries
+	public void viewCampEnquiries(Camp camp) {
+		Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
+		if (enquiries.length > 0) {
+			System.out.printf("Enquiries of %s: \n", myCamp.campName);
+			for (int i = 0; i < enquiries.length; i++) {
+	    		System.out.println("[" + i + "]: " + enquiries[i].message);
+	    	}
+		} else {
+			System.out.println("There is no enquiry!");
+		} 	
+	}
+    
     public void replyToEnquiry() {
     	Scanner input = new Scanner(System.in);
     	Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
-    	for (int i = 0; i < enquiries.length; i++) {
-    		System.out.println("[" + i + "]: " + enquiries[i].message);
-    	}
-    	
-    	System.out.print("Please select the enquiry to reply to: ");
-		int enquiryIndex = input.nextInt();
-    	input.nextLine();
-    	System.out.print("Please input the reply to the enquiry: ");
-		String reply = input.nextLine();
-		enquiries[enquiryIndex].reply(this, reply);
-		PointsSystem.addPoint(this);
-		System.out.println("Enquiry replied.\n");
-		//input.close();
+    	this.viewCampEnquiries(myCamp);
+    	if (enquiries.length > 0) {	
+        	System.out.print("Please select the enquiry to reply to: ");
+    		int enquiryIndex = input.nextInt();
+        	input.nextLine();
+        	System.out.print("Please input the reply to the enquiry: ");
+    		String reply = input.nextLine();
+    		enquiries[enquiryIndex].reply(this, reply);
+    		PointsSystem.addPoint(this);
+    		System.out.println("Enquiry replied.\n");
+    	} 
     }
     
     public void viewOwnSuggestions() {
@@ -60,7 +69,7 @@ public class CampCommitteeMember extends Student implements SuggestionInterface 
     	}
     }
 	
-    public void editSuggestion() {
+    public void editOwnSuggestion() {
 		Scanner input = new Scanner(System.in);
 		viewOwnSuggestions();
     	if (noOfPendingSuggestions > 0) {
@@ -77,7 +86,7 @@ public class CampCommitteeMember extends Student implements SuggestionInterface 
 		//input.close();
     }
     
-    public void deleteSuggestion() {
+    public void deleteOwnSuggestion() {
     	Scanner input = new Scanner(System.in);
 		viewOwnSuggestions();
     	if (noOfPendingSuggestions > 0) {
@@ -117,6 +126,8 @@ public class CampCommitteeMember extends Student implements SuggestionInterface 
         //System.out.println("Own Suggestions:");
         //committeeMember.viewOwnSuggestions();
 
+        //committeeMember.viewCampEnquiries(committeeMember.myCamp);
+        
         // Test editOwnSuggestion (working)
         //committeeMember.editOwnSuggestion();
         //System.out.println("Suggestion edited.");
