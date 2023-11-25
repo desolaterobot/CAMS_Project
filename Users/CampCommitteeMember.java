@@ -1,22 +1,25 @@
 package Users;
 import java.util.Scanner;
 
-import Camp.Camp;
-import Camp.CampManager;
-import Enquiry.Enquiry;
-import Enquiry.EnquiryManager;
+import Camp.*;
 import Suggestion.Suggestion;
 import Suggestion.SuggestionManager;
+import Enquiry.*;
 import Utility.ReportGenerator;
+
 
 public class CampCommitteeMember extends Student {
 	private Camp myCamp;
+	private Suggestion[] ownSuggestions;
+	private int noOfPendingSuggestions;
 	
 	public CampCommitteeMember(String userId, String email, String faculty, String password, Boolean isCommitteeMember,
 			String committeeMemberOf) {
 		super(userId, email, faculty, password, isCommitteeMember, committeeMemberOf);
 		// TODO Auto-generated constructor stub
 		this.myCamp = CampManager.getCampsByCommiteeID(this.userID)[0];
+		this.ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
+		this.noOfPendingSuggestions = 0;
 	}
 	
 	public void submitSuggestion() {
@@ -26,73 +29,88 @@ public class CampCommitteeMember extends Student {
 		String suggestion = input.nextLine();
     	SuggestionManager.addSuggestion(this.myCamp, this, suggestion);
     	PointsSystem.addPoint(this);
-    	System.out.println("Suggestion submitted.");
-    	input.close();
+    	System.out.println("Suggestion submitted.\n");
+    	//input.close();
     }
 	
-	// Method to reply to enquiries
+	public void viewCampEnquiries(Camp camp) {
+		Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
+		if (enquiries.length > 0) {
+			System.out.printf("Enquiries of %s: \n", myCamp.getCampName());
+			for (int i = 0; i < enquiries.length; i++) {
+	    		System.out.println("[" + i + "]: " + enquiries[i].getMessage());
+	    	}
+		} else {
+			System.out.println("There is no enquiry!");
+		} 	
+	}
+    
     public void replyToEnquiry() {
     	Scanner input = new Scanner(System.in);
     	Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
-    	for (int i = 0; i < enquiries.length; i++) {
-    		System.out.println("[" + i + "]: " + enquiries[i].getMessage());
-    	}
-    	
-    	System.out.println("Please select the enquiry to reply to: ");
-		int enquiryIndex = input.nextInt();
-    	input.nextLine();
-    	System.out.println("Please input the reply to the enquiry: ");
-		String reply = input.nextLine();
-		enquiries[enquiryIndex].reply(this, reply);
-		PointsSystem.addPoint(this);
-		System.out.println("Enquiry replied.");
-		input.close();
+    	this.viewCampEnquiries(myCamp);
+    	if (enquiries.length > 0) {	
+        	System.out.print("Please select the enquiry to reply to: ");
+    		int enquiryIndex = input.nextInt();
+        	input.nextLine();
+        	System.out.print("Please input the reply to the enquiry: ");
+    		String reply = input.nextLine();
+    		enquiries[enquiryIndex].reply(this, reply);
+    		PointsSystem.addPoint(this);
+    		System.out.println("Enquiry replied.\n");
+    	} 
     }
     
     public void viewOwnSuggestions() {
-    	Suggestion[] ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
-    	for (int i = 0; i < ownSuggestions.length; i++) {
-    		if (ownSuggestions[i].approved == false) {
-    			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
-    		}
+    	noOfPendingSuggestions = 0;
+    	if (ownSuggestions.length > 0) {
+    		System.out.println("Your suggestion(s): ");
+    		for (int i = 0; i < ownSuggestions.length; i++) {
+        		if (ownSuggestions[i].approved == false) {
+        			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
+        			noOfPendingSuggestions++;
+        		}
+        	}	
+    		System.out.print("\n");
+    	} else {
+    		System.out.println("You have made no suggestions!\n");
     	}
     }
 	
     public void editOwnSuggestion() {
 		Scanner input = new Scanner(System.in);
-		Suggestion[] ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
-    	for (int i = 0; i < ownSuggestions.length; i++) {
-    		if (ownSuggestions[i].approved == false) {
-    			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
-    		}	
+		viewOwnSuggestions();
+    	if (noOfPendingSuggestions > 0) {
+    		System.out.print("Please select the suggestion to edit: ");
+    		int suggestionIndex = input.nextInt();
+    		input.nextLine();
+    		System.out.print("Please input the new suggestion: ");
+    		String newSuggestion = input.nextLine();
+    		ownSuggestions[suggestionIndex].edit(newSuggestion);
+    		System.out.println("Suggestion edited.\n");
+    	} else {
+    		System.out.println("No pending suggestion available for editing.\n");
     	}
-    	System.out.println("Please select the suggestion to edit: ");
-		int suggestionIndex = input.nextInt();
-		input.nextLine();
-		System.out.print("Please input the new suggestion: ");
-		String newSuggestion = input.nextLine();
-		ownSuggestions[suggestionIndex].edit(newSuggestion);
-		System.out.println("Suggestion edited.");
-		input.close();
+		//input.close();
     }
     
     public void deleteOwnSuggestion() {
     	Scanner input = new Scanner(System.in);
-		Suggestion[] ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
-    	for (int i = 0; i < ownSuggestions.length; i++) {
-    		if (ownSuggestions[i].approved == false) {
-    			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
-    		}	
+		viewOwnSuggestions();
+    	if (noOfPendingSuggestions > 0) {
+			System.out.print("Please select the suggestion to delete: ");
+			int suggestionIndex = input.nextInt();
+			ownSuggestions[suggestionIndex].delete();
+			System.out.println("Suggestion deleted.\n");
+    	} else {
+    		System.out.println("No suggestion available to delete.\n");
     	}
-    	System.out.println("Please select the suggestion to delete: ");
-		int suggestionIndex = input.nextInt();
-		ownSuggestions[suggestionIndex].delete();
-		System.out.println("Suggestion deleted.");
-		input.close();
+    	
+		//input.close();
 	}
     
     public void withdrawCamp() {
-    	System.out.println("You cannot withdraw from \"" + myCamp.getCampName() + "\" as you are a Committee Member.");
+    	System.out.println("You cannot withdraw from \"" + myCamp.getCampName() + "\" as you are a Committee Member.\n");
     }
     
     public void commGenerateReport() {
@@ -107,8 +125,8 @@ public class CampCommitteeMember extends Student {
         //committeeMember.submitSuggestion();
         //System.out.println("Suggestion submitted.");
 
-        // Test replyToEnquiry (not working)
-        committeeMember.replyToEnquiry();
+        // Test replyToEnquiry (working)
+        //committeeMember.replyToEnquiry();
         //System.out.println(PointsSystem.getCurrentPoints(committeeMember));
         //System.out.println("Enquiry replied.");
         
@@ -116,6 +134,8 @@ public class CampCommitteeMember extends Student {
         //System.out.println("Own Suggestions:");
         //committeeMember.viewOwnSuggestions();
 
+        //committeeMember.viewCampEnquiries(committeeMember.myCamp);
+        
         // Test editOwnSuggestion (working)
         //committeeMember.editOwnSuggestion();
         //System.out.println("Suggestion edited.");
