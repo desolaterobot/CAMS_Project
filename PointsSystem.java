@@ -55,11 +55,11 @@ public class PointsSystem extends CSVReader {
      *
      * @param user The user for whom to add a point.
      */
-	public static void addPoint(User user) {
+	public static void addPoint(Student user) {
 		String file = "data/students.csv";
 		if (getCurrentPoints(user) != -1) {
 			String newPoint = Integer.toString(getCurrentPoints(user) + 1);
-	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.name, user.email, user.faculty, user.passHash, true, user.committeeCamp, newPoint);
+	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.name, user.email, user.faculty, user.passHash, true, user.getCommitteeCamp(), newPoint);
 	        modifyLine(file, user.name, newLine);
 	        //System.out.println(user.isCommitteeMember);
 		}
@@ -73,7 +73,7 @@ public class PointsSystem extends CSVReader {
      */
 	 public static void main(String[] args) {
 	        // Create a test user
-	        User testUser = new User("DENISE","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
+	        Student testUser = new Student("BRANDON","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",true, "yet anthoner camp");
 	
 	        // Test getCurrentPoints
 	        int currentPoints = PointsSystem.getCurrentPoints(testUser);
