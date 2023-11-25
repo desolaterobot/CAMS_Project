@@ -80,6 +80,7 @@ public class Camp {
      * @param visible            A boolean indicating whether the camp is visible.
      * @param totalSlots         The total number of slots available for the camp.
      * @param committeeSlots     The number of slots reserved for committees (maximum 10).
+     * @param withdrawals        An array of user IDs representing withdrawls from the camp.
      */
     public Camp(String name, Date startDate, Date endDate, Date registrationDeadline, String[] committeeList, boolean onlyFaculty, String location, 
                 String description, String staffInCharge, String[] attendees, boolean visible, int totalSlots, int committeeSlots, String[] withdrawals){
