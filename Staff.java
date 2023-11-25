@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class Staff extends User implements ApproveSuggestionInterface{
+public class Staff extends User implements EnquiryReplyInterface, ApproveSuggestionInterface {
     /**
      * A list of camps current Staff is in-charged of. To prevent circular referencing
      * ownCamps is only loaded when getOwnCamps is called.
@@ -143,7 +143,7 @@ public class Staff extends User implements ApproveSuggestionInterface{
             }
             for (Suggestion suggestion:
             SuggestionManager.getSuggestionsForCamp(camp)) {
-                System.out.println(num + ") " +  suggestion.committeeMember.name +": " + suggestion.message + ". Is Approved: " + suggestion.approved);
+                System.out.println(num + ") " +  suggestion.getCommitteeMember().name +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                 num++;
             }
         }
@@ -165,8 +165,8 @@ public class Staff extends User implements ApproveSuggestionInterface{
             }
             for (Suggestion suggestion:
                     SuggestionManager.getSuggestionsForCamp(camp)) {
-                if (!suggestion.approved) {
-                    System.out.println(num + ") " +  suggestion.committeeMember.name +": " + suggestion.message + ". Is Approved: " + suggestion.approved);
+                if (!suggestion.getApprovedStatus()) {
+                    System.out.println(num + ") " +  suggestion.getCommitteeMember().name +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                     allSuggestions.add(suggestion);
                     num++;
                 }

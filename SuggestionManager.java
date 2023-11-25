@@ -34,7 +34,7 @@ public class SuggestionManager extends CSVReader{
     public static Suggestion[] getSuggestionsForCamp(Camp camp){
         List<Suggestion> suggList = new LinkedList<>();
         for(Suggestion s : getSuggestionDatabase()){
-            if(s.camp.campName.equals(camp.campName)){
+            if(s.getCamp().campName.equals(camp.campName)){
                 suggList.add(s);
             }
         }
@@ -50,7 +50,7 @@ public class SuggestionManager extends CSVReader{
     public static Suggestion[] getSuggestionsByUser(User user){
         List<Suggestion> suggList = new LinkedList<>();
         for(Suggestion s : getSuggestionDatabase()){
-            if(s.committeeMember.userID.equals(user.userID)){
+            if(s.getCommitteeMember().userID.equals(user.userID)){
                 suggList.add(s);
             }
         }
@@ -66,7 +66,7 @@ public class SuggestionManager extends CSVReader{
      */
     public static void addSuggestion(Camp camp, User committeeMember, String message){
         Suggestion[] suggDB = getSuggestionDatabase();
-        int suggID = CSVReader.toInt(suggDB[suggDB.length-1].suggestionID)+1;
+        int suggID = CSVReader.toInt(suggDB[suggDB.length-1].getSuggestionID())+1;
         String line = String.format("%s,%s,%s,%s,None", suggID, committeeMember.userID, camp.campName, removeCommas(message));
         addLine("data/suggestions.csv", line);
     }

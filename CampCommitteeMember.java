@@ -58,8 +58,8 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     	if (ownSuggestions.length > 0) {
     		System.out.println("Your suggestion(s): ");
     		for (int i = 0; i < ownSuggestions.length; i++) {
-        		if (ownSuggestions[i].approved == false) {
-        			System.out.println("[" + i + "]: " + ownSuggestions[i].message);
+        		if (ownSuggestions[i].getApprovedStatus() == false) {
+        			System.out.println("[" + i + "]: " + ownSuggestions[i].getMessage());
         			noOfPendingSuggestions++;
         		}
         	}	
