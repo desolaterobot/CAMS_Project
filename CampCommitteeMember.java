@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class CampCommitteeMember extends Student {
+public class CampCommitteeMember extends Student implements EnquiryReplyInterface, SuggestionInterface{
 	private Camp myCamp;
 	private Suggestion[] ownSuggestions;
 	private int noOfPendingSuggestions;
@@ -25,7 +25,7 @@ public class CampCommitteeMember extends Student {
     	//input.close();
     }
 	
-	public void viewCampEnquiries(Camp camp) {
+	public void viewCampEnquiries() {
 		Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
 		if (enquiries.length > 0) {
 			System.out.printf("Enquiries of %s: \n", myCamp.campName);
@@ -40,7 +40,7 @@ public class CampCommitteeMember extends Student {
     public void replyToEnquiry() {
     	Scanner input = new Scanner(System.in);
     	Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
-    	this.viewCampEnquiries(myCamp);
+    	this.viewCampEnquiries();
     	if (enquiries.length > 0) {	
         	System.out.print("Please select the enquiry to reply to: ");
     		int enquiryIndex = input.nextInt();
