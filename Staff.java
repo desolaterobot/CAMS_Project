@@ -233,7 +233,7 @@ public class Staff extends User implements ApproveSuggestionInterface{
      */
     public void viewCampEnquiries() {
         System.out.println("Select Camp to view Enquiries");
-        CampManager.printCamps(getOwnCamps().toArray(new Camp[1]),false);
+        CampPrinter.printCamps(getOwnCamps().toArray(new Camp[1]),false);
         Scanner sc = new Scanner(System.in);
         System.out.print("Choice: ");
         int choice = Integer.parseInt(sc.nextLine());
@@ -324,13 +324,13 @@ public class Staff extends User implements ApproveSuggestionInterface{
      * View All Camps created in the database.
      */
     public void viewAllCamp() {
-        CampManager.printCamps(CampManager.getCampDatabase(),false);
+        CampPrinter.printCamps(CampManager.getAllCamps(),false);
     }
 
     /**
      * View Camps created by current staff.
      */
     public void viewOwnCamp() {
-        CampManager.printCamps(getOwnCamps().toArray(new Camp[1]), false);
+        CampPrinter.printCamps(getOwnCamps().toArray(new Camp[1]), false);
     }
 }

@@ -19,6 +19,10 @@ public class CampManager {
         System.out.println("test");
     }
 
+    public static Camp[] getAllCamps() {
+        return CampDBManager.getCampDatabase();
+    }
+
     /**
      * Retrieves camps created by a staff member based on their user ID.
      *
@@ -256,6 +260,10 @@ public class CampManager {
             }
         }
 
+    }
+
+    public static void deleteCamp(Camp campToBeDeleted) {
+        CampDBManager.deleteCamp(campToBeDeleted);
     }
 
     /**
