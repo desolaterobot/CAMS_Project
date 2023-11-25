@@ -1,13 +1,25 @@
 import java.util.*;
 
+/**
+ * The main class for the Camp Application And Management System.
+ */
 public class CampApp {
+	/** Scanner for user input. */
 	Scanner sc = new Scanner(System.in);
-	
+
+	/**
+     * The main entry point for the Camp Application And Management System.
+     *
+     * @param args Command-line arguments (not used).
+     */
 	public static void main(String[] args0) {
 		CampApp app = new CampApp();
 		app.run();
 	}	
-	
+
+	/**
+     * Runs the Camp Application And Management System.
+     */
 	public void run() {
 		System.out.println(
 			" ██████╗ █████╗ ███╗   ███╗███████╗\r\n" +
@@ -43,6 +55,11 @@ public class CampApp {
 		}
 	}
 
+	/**
+     * Handles the user menu based on the user type.
+     *
+     * @param user The authenticated user.
+     */
 	private void handleUserMenu(User User) {
 		// TODO Auto-generated method stub
 		if(User instanceof Student) {
