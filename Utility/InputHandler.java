@@ -4,10 +4,18 @@ import java.util.Scanner;
 
 import Users.*;
 
-
+/**
+ * Utility class for handling user input and directing choices based on user roles.
+ */
 public class InputHandler {
+	
+	/**
+     * Handle choices for a committee member, directing to relevant methods based on the choice.
+     *
+     * @param student The Student object representing the committee member.
+     * @param choice  The user's choice.
+     */
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
-		// TODO Auto-generated method stub
 		CampCommitteeMember commMem = new CampCommitteeMember(student.getName(), student.getEmail(), student.getFaculty(), student.getPassword(), student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
 		case 11:
@@ -32,7 +40,13 @@ public class InputHandler {
 			handleStudentChoice(student,choice);
 		}
 	}
-	
+
+	/**
+     * Handle choices for a regular student, directing to relevant methods based on the choice.
+     *
+     * @param student The Student object representing the regular student.
+     * @param choice  The user's choice.
+     */
 	public static void handleStudentChoice(Student student, int choice) {
 		Scanner sc = new Scanner(System.in);
 		switch(choice) {
@@ -100,7 +114,12 @@ public class InputHandler {
 		}
 	}
 
-
+	/**
+     * Handle choices for a staff member, directing to relevant methods based on the choice.
+     *
+     * @param staff  The Staff object representing the staff member.
+     * @param choice The user's choice.
+     */
 	public static void handleStaffChoice(Staff staff,int choice) {
 		switch(choice) {
 		case 1:
