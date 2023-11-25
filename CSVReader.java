@@ -3,16 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//class for a basic CSV file reader.
-//this CSV reader assumes that the first line of every .csv file are the headings, so they will not be treated as data
-//since this is a very basic CSV reader, in order to create objects from CSV data, we will need to extend this class to more specialized classes.
-
 /**
  * This class provides basic functionality for reading and manipulating CSV files.
  * It includes methods to read, print, add, delete, and modify lines in a CSV file.
  * Additionally, it handles the conversion of data types such as lists, sentences, booleans, and integers.
  */
-
 public class CSVReader{
     public static void main(String[] a){
         System.out.println("test");
