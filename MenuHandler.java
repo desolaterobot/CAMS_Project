@@ -27,17 +27,17 @@ public class MenuHandler {
 			System.out.println("7. View Enquiry Replies");
 			System.out.println("8. Edit Enquiry");
 			System.out.println("9. Delete Enquiry");
+			System.out.println("10. Change password");
 			if(student.isCommitteeMember()) {
-				System.out.println("10. Reply Enquiry");
-				System.out.println("11. View Suggestions");
-				System.out.println("12. Edit Suggestions");
-				System.out.println("13. Submit Suggestions");
-				System.out.println("14. Delete Suggestions");
-				System.out.println("15. View Camp Details");	
+				System.out.println("11. Reply Enquiry");
+				System.out.println("12. View Suggestions");
+				System.out.println("13. Edit Suggestions");
+				System.out.println("14. Submit Suggestions");
+				System.out.println("15. Delete Suggestions");
+				System.out.println("16. View Camp Details");	
 			}
 		}
 
-	
 	public static void printStaffMenu() {
 			System.out.println("1. Create Camp");
 			System.out.println("2. Edit Camp");
@@ -45,13 +45,14 @@ public class MenuHandler {
 			System.out.println("4. Toggle Visibility");
 			System.out.println("5. View All Camps");
 			System.out.println("6. View My Camps");
-			System.out.println("7. View Enquiries");
-			System.out.println("8. Reply Enquiry");
-			System.out.println("9. View Suggestions");
-			System.out.println("10. Approve Suggestions");
-			System.out.println("11. Generate Report");
-			System.out.println("12. Exit");
-	
+			System.out.println("7. View Student List");
+			System.out.println("8. View Enquieries");
+			System.out.println("9. Reply Enquiries");
+			System.out.println("10. View Suggestions");
+			System.out.println("11. Approve Suggestion");
+			System.out.println("12. Generate Camp Report");
+			System.out.println("13. Generate Performance Report");
+			System.out.println("14. Change Password");
 	}
 	
 	public static void showStudentMenu(Student student) {

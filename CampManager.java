@@ -14,7 +14,11 @@ import java.util.Scanner;
  */
 public class CampManager extends CSVReader{
 
-    
+    /**
+     * Main method for testing the functionality of the CampManager class.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] a){
         System.out.println("test");
     }
@@ -180,7 +184,13 @@ public class CampManager extends CSVReader{
         }
         return campList.toArray(new Camp[campList.size()]);
     }
-    
+
+    /**
+     * Retrieves camps visible to students, optionally filtered by faculty.
+     *
+     * @param s The Student object for filtering by faculty.
+     * @return An array of Camp objects visible to students, considering faculty criteria.
+     */
     public static Camp[] getCampsForStudents(Student s) {
     	List<Camp> campList = new LinkedList<>();
     	Camp[] camp = getCampDatabase();
@@ -258,6 +268,12 @@ public class CampManager extends CSVReader{
         
         addLine("data/camps.csv", campToLine(createdCamp));
     }
+
+    /**
+ * Edits an existing camp based on user input and updates it in the camp database.
+ *
+ * @param campToBeEdited The Camp object to be edited.
+ */
     public static void editCamp (Camp campToBeEdited) {
         /*Things staff can edit:
          Start Date
@@ -346,7 +362,6 @@ public class CampManager extends CSVReader{
 
     }
 
-    //not allowed to edit names, since we index by name to filter camps
     /**
      * Commits the information of an existing camp to db.
      *
@@ -377,14 +392,26 @@ public class CampManager extends CSVReader{
         toBeModified.attendees = attendeeList.toArray(new String[0]);
         saveCamp(toBeModified);
     }
-    
+
+    /**
+     * Adds a committee member to a camp.
+     *
+     * @param toBeModified        The Camp object to which the committee member is added.
+     * @param committeeUserID    The user ID of the committee member.
+     */
     public static void addCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
         committeeList.add(committeeUserID);
         toBeModified.committeeList = committeeList.toArray(new String[0]);
         saveCamp(toBeModified);
     }
-    
+
+    /**
+     * Removes an attendee from a camp.
+     *
+     * @param toBeModified      The Camp object from which the attendee is removed.
+     * @param attendeeUserID    The user ID of the attendee to be removed.
+     */
     public static void removeAttendee(Camp toBeModified, String attendeeUserID){
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
         attendeeList.remove(attendeeUserID);
@@ -392,14 +419,25 @@ public class CampManager extends CSVReader{
         saveCamp(toBeModified);
     }
     
-    //Staff can use this?
+    /**
+     * Removes a committee member from a camp.
+     *
+     * @param toBeModified        The Camp object from which the committee member is removed.
+     * @param committeeUserID    The user ID of the committee member to be removed.
+     */
     public static void removeCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
         committeeList.remove(committeeUserID);
         toBeModified.committeeList = committeeList.toArray(new String[0]);
         saveCamp(toBeModified);
     }
-    
+
+    /**
+     * Adds a withdrawal record for a user in a camp.
+     *
+     * @param toBeModified The Camp object to which the withdrawal is added.
+     * @param userID       The user ID for the withdrawal.
+     */
     public static void addWithdrawal(Camp toBeModified, String UserID){
         List<String> withdrawalList = new ArrayList<>(Arrays.asList(toBeModified.withdrawals));
         withdrawalList.add(UserID);
