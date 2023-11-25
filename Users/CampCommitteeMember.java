@@ -1,4 +1,4 @@
-package Users;
+-package Users;
 import java.util.Scanner;
 
 import Camp.*;
@@ -6,11 +6,24 @@ import Suggestion.*;
 import Enquiry.*;
 import Utility.ReportGenerator;
 
+/**
+ * Represents a committee member extending the Student class with additional committee-related functionalities.
+ */
 public class CampCommitteeMember extends Student implements EnquiryReplyInterface, SuggestionInterface{
 	private Camp myCamp;
 	private Suggestion[] ownSuggestions;
 	private int noOfPendingSuggestions;
-	
+
+	/**
+     * Constructor for the CampCommitteeMember class.
+     *
+     * @param userId           The user ID of the committee member.
+     * @param email            The email of the committee member.
+     * @param faculty          The faculty of the committee member.
+     * @param password         The password of the committee member.
+     * @param isCommitteeMember A boolean indicating if the user is a committee member.
+     * @param committeeMemberOf The camp the committee member is part of.
+     */
 	public CampCommitteeMember(String userId, String email, String faculty, String password, Boolean isCommitteeMember,
 			String committeeMemberOf) {
 		super(userId, email, faculty, password, isCommitteeMember, committeeMemberOf);
@@ -19,7 +32,10 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
 		this.ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
 		this.noOfPendingSuggestions = 0;
 	}
-	
+
+	/**
+     * Submits a suggestion for the camp committee member.
+     */
 	public void submitSuggestion() {
     	//get camp and suggestion
     	Scanner input = new Scanner(System.in);
@@ -30,7 +46,10 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     	System.out.println("Suggestion submitted.\n");
     	//input.close();
     }
-	
+
+	/**
+     * Views the enquiries for the camp committee member.
+     */
 	public void viewCampEnquiries() {
 		Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
 		if (enquiries.length > 0) {
@@ -42,7 +61,10 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
 			System.out.println("There is no enquiry!");
 		} 	
 	}
-    
+
+	/**
+     * Replies to an enquiry for the camp committee member.
+     */
     public void replyToEnquiry() {
     	Scanner input = new Scanner(System.in);
     	Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
@@ -58,7 +80,10 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     		System.out.println("Enquiry replied.\n");
     	} 
     }
-    
+
+	/**
+     * Views the committee member's own suggestions.
+     */
     public void viewOwnSuggestions() {
     	noOfPendingSuggestions = 0;
     	if (ownSuggestions.length > 0) {
@@ -74,7 +99,10 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     		System.out.println("You have made no suggestions!\n");
     	}
     }
-	
+
+	/**
+     * Edits the committee member's own suggestion.
+     */
     public void editSuggestion() {
 		Scanner input = new Scanner(System.in);
 		viewOwnSuggestions();
@@ -91,7 +119,10 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     	}
 		//input.close();
     }
-    
+
+	/**
+     * Deletes the committee member's own suggestion.
+     */
     public void deleteSuggestion() {
     	Scanner input = new Scanner(System.in);
 		viewOwnSuggestions();
@@ -106,15 +137,26 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     	
 		//input.close();
 	}
-    
+
+	/**
+     * Withdraws the committee member from the camp.
+     */
     public void withdrawCamp() {
     	System.out.println("You cannot withdraw from \"" + myCamp.getCampName() + "\" as you are a Committee Member.\n");
     }
-    
+
+	/**
+     * Generates a report for the committee member.
+     */
     public void commGenerateReport() {
     	ReportGenerator.commMemGenerateReport(myCamp);
     }
-    
+
+	/**
+     * Main method for testing the committee member functionalities.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         // Create a test committee member
     	CampCommitteeMember committeeMember = new CampCommitteeMember("BRANDON","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", true, "yet another camp");
