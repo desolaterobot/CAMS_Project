@@ -241,7 +241,7 @@ public class Student extends User implements EnquiryInterface{
 	
 	private boolean isEnquiryProcessed(Enquiry enq) {
 		EnquiryReply[] enqr = enq.getReplies();
-		return enqr.length > 0;
+		return enqr.length>0;
 	}
 	
 	public void viewEnquiries() {
@@ -251,18 +251,16 @@ public class Student extends User implements EnquiryInterface{
 			System.out.println("No enquries made yet. You can make an enquiry with option 5.");
 			return;
 		}
-		System.out.println("ENQUIRIES MADE BY YOU:\n");
-		for(Enquiry enq : enqs) {
+		System.out.println("ENQUIRIES MADE BY YOU:");
+		System.out.println("-----------------------------------------------------------------------");
+		for (Enquiry enq : enqs) {
+			System.out.print("EnquiryID[" + enq.enquiryID + "]. ");
 			System.out.print(isEnquiryProcessed(enq)?"[Replied]":"[Unreplied]");
-			System.out.println(" Enquiry ID: " + enq.enquiryID);
-			System.out.println("------------------------------------------------------------------");
-			System.out.println("Enquiry for : " + enq.camp.campName.toUpperCase());
-			System.out.println();
-			System.out.println(enq.student.name + ": " + enq.message);
-			System.out.println();
-			System.out.println("------------------------------------------------------------------");
+			System.out.print(" Enquiry for " + enq.camp.campName.toUpperCase() + ": ");
+			System.out.print((enq.message.length()>=20?(enq.message.substring(0,20)+"..."):enq.message));
 			System.out.println();
 		}
+		System.out.println("-----------------------------------------------------------------------");
 	}
 	
 	public void editEnquiry(String enqID) {
