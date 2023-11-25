@@ -2,9 +2,6 @@ package Camp;
 
 import Utility.DateStr;
 
-/**
- * Provides methods for printing information about camps, including their names, descriptions, locations, dates, and availability.
- */
 public class CampPrinter {
     /**
      * Prints information about camps, including their names, descriptions, locations, dates, and availability.
@@ -38,13 +35,7 @@ public class CampPrinter {
         }
         System.out.println("---------------------------------------------------------------------------");
     }
-
-    /**
-     * Prints a simple list of camp names.
-     *
-     * @param campArray    The array of Camp objects to be printed.
-     * @param onlyVisible  If true, only visible camps will be printed; if false, all camps will be printed.
-     */
+    
     public static void print(Camp[] campArray, boolean onlyVisible) {
         if(campArray.length == 0){
             System.out.println("No camps to show.");

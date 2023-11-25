@@ -1,4 +1,5 @@
 package Users;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -52,23 +53,29 @@ class UserManager extends CSVReader{
 		
 		System.out.println("Password");
 		String password = sc.nextLine();
+//		Student student = authStudent(userId,password);
+//		if(student !=null) {
+//			CampApp.showStudentMenu(student);
+//			return;
+//		}
+//		Staff staff = authSaff(userId,password);
+//		if(staff !=null) {
+//			CampApp.showStaffMenu(staff);
+//			return;
 		User User = authUser(userId,password);
 		return User;
 		}
 
 	
 	public User authUser(String userId, String password) {
-		User user = getUser(userId);
+		User User = getUser(userId);
 		
-		if (user ==  null) {
-			return null;
-		}
-
-		if(user.getUserId().equals(userId) && user.getPassword().equals(hash(password))) {
-				if (user.getPassword().equals(hash("password"))) {
-					UserManager.changePassword(user);
+		if(User.getUserId().equals(userId) && User.getPassword().equals(hash(password))) {
+				if(User.getPassword().equals(hash("password"))) {
+					UserManager.changePassword(User);
 				}
-			return user;
+			
+			return User;
 		}
 		
 		
@@ -162,7 +169,7 @@ class UserManager extends CSVReader{
                 return u;
             }
         }
-        System.out.printf("User %s not found in database.\n", userID);
+        System.out.printf("Staff %s not found in database.\n", userID);
         return null;
     }
     
@@ -342,15 +349,8 @@ class UserManager extends CSVReader{
     //changes the password hash entry of a user in the database
     public static void changePassword(User user){
 		Scanner sc = new Scanner(System.in);
-		String newPassword;
-		do {
-			System.out.println("Please enter your new password.");
-			newPassword = sc.nextLine();
-			if (newPassword.equals("password")) {
-				System.out.println("Please change your password to something that is not the default password! -- Password change failed!");
-			}
-		} while (newPassword.equals("password"));
- 
+		System.out.println("Please enter your new password.");
+		String newPassword = sc.nextLine();
         String newPassHash = hash(newPassword);
         String file = null;
 		String newLine = null;
@@ -374,5 +374,7 @@ class UserManager extends CSVReader{
 		}
         modifyLine(file, user.getName(), newLine);
 		System.out.printf("Successfully changed password to %s for %s.\n", newPassword, user.getName());
-	}
+    }
+
+
 }

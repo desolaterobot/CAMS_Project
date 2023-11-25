@@ -5,9 +5,6 @@ import java.util.List;
 import Utility.CSVReader;
 import Utility.DateStr;
 
-/**
- * Manages the database operations for Camp objects, including conversion to/from CSV format.
- */
 public class CampDBManager extends CSVReader {
     /**
      * Converts a Camp object to a CSV-formatted string.
@@ -42,7 +39,7 @@ public class CampDBManager extends CSVReader {
     /**
      * Create a camp into the camp database.
      *
-     * @param newCamp The Camp object to be added to the database.
+     * @param toBeDeleted The Camp object to be deleted.
      */
     public static void createCamp(Camp newCamp) {
         addLine("data/camps.csv", campToLine(newCamp));
@@ -58,7 +55,7 @@ public class CampDBManager extends CSVReader {
     }
 
     /**
-     * Commits the information of an existing camp to the database.
+     * Commits the information of an existing camp to db.
      *
      * @param updatedCamp The updated Camp object.
      */

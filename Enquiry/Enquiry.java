@@ -28,80 +28,6 @@ public class Enquiry{
     private int[] replies;
 
     /**
-     * Gets an array of EnquiryReply objects corresponding to the replies associated with this enquiry.
-     *
-     * @return An array of EnquiryReply objects.
-     */
-    public EnquiryReply[] getReplies(){
-        List<EnquiryReply> replyList = new LinkedList<>();
-        EnquiryReply[] database = EnquiryManager.getEnquiryReplyDatabase();
-        for(int x : replies){
-            replyList.add(database[x]);
-        }
-        return replyList.toArray(new EnquiryReply[replyList.size()]);
-    }
-
-    /**
-     * Adds a reply to the enquiry.
-     *
-     * @param replier The user providing the reply.
-     * @param reply   The content of the reply.
-     */
-    public void reply(User replier, String reply){
-        EnquiryReply[] enqRDB = EnquiryManager.getEnquiryReplyDatabase();
-        int replyID = CSVReader.toInt(enqRDB[enqRDB.length-1].getEnquiryReplyID())+1;
-        String line = String.format("%d,%s,%s", replyID, CSVReader.removeCommas(reply), replier.getUserId());
-        CSVReader.addLine("data/replies.csv", line); //done with appending a new reply into database
-        //but still need to update the enquiry database as well:
-        List<Integer> intList = Arrays.stream(replies).boxed().collect(Collectors.toList());
-        intList.add(replyID);
-        String[] newIDStrings = intList.stream().map(Object::toString).toArray(String[]::new);
-        String enqLine = String.format("%s,%s,%s,%s,%s", enquiryID, student.getUserId(), CSVReader.removeCommas(camp.getCampName()), CSVReader.removeCommas(message), CSVReader.listToString(newIDStrings));
-        CSVReader.modifyLine("data/enquiry.csv", enquiryID, enqLine);
-    }
-
-    /**
-     * Edits an enquiry in database, only works if it has not been replied to.
-     *
-     * @param newEnquiryMessage The new enquiry message
-     * @return status of success
-     */
-    public boolean edit(String newMessage){
-        if(replies.length > 0){
-            System.out.println("Cannot edit replied enquiries.");
-            return false;
-        }
-        this.message = newMessage;
-        String enqLine = String.format("%s,%s,%s,%s,[]", enquiryID, student.getUserId(), CSVReader.removeCommas(camp.getCampName()), CSVReader.removeCommas(newMessage));
-        CSVReader.modifyLine("data/enquiry.csv", newMessage, enqLine);
-        return true;
-    }
-    public boolean edit(Camp newCamp){
-        if(replies.length > 0){
-            System.out.println("Cannot edit replied enquiries.");
-            return false;
-        }
-        this.camp = newCamp;
-        String enqLine = String.format("%s,%s,%s,%s,[]", enquiryID, student.getUserId(), CSVReader.removeCommas(camp.getCampName()), CSVReader.removeCommas(message));
-        CSVReader.modifyLine("data/enquiry.csv", enquiryID, enqLine);
-        return true;
-    }
-
-    /**
-     * Deletes an enquiry from database, only works if it has not been replied to.
-     *
-     * @return status of success
-     */
-    public boolean delete(){
-        if(replies.length > 0){
-            System.out.println("Cannot delete replied enquiries.");
-            return false;
-        }
-        CSVReader.deleteLine("data/enquiry.csv", enquiryID);
-        return true;
-    }
-
-    /**
      * Constructs an Enquiry object with the specified parameters.
      *
      * @param enquiryID The unique identifier for the enquiry.
@@ -130,8 +56,20 @@ public class Enquiry{
     public String getMessage() {
         return message;
     }
+    
+    public int[] getReplies() {
+    	return replies;
+    }
+    
+    public void setMessage(String message) {
+    	this.message = message;
+    }
 
     public User getStudent() {
         return student;
+    }
+    
+    public void setCamp(Camp camp) {
+    	this.camp = camp;
     }
 }

@@ -42,16 +42,4 @@ public class DateStr {
         }
         return str;
     }
-
-     // method to validate the date format
-    public static boolean isValidDate(String str) {
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        format.setLenient(false); // Set to false to strictly validate dates
-        try {
-            format.parse(str);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
-    }
 }

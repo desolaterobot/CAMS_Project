@@ -24,11 +24,6 @@ public class CampManager {
         System.out.println("test");
     }
 
-    /**
-     * Retrieves all camps from the camp database.
-     *
-     * @return An array of Camp objects representing all camps in the database.
-     */
     public static Camp[] getAllCamps() {
         return CampDBManager.getCampDatabase();
     }
@@ -75,7 +70,7 @@ public class CampManager {
     /**
      * Retrieves camps associated with a committee based on its ID.
      *
-     * @param committeeID The ID of the committee.
+     * @param commiteeID The ID of the committee.
      * @return An array of Camp objects associated with the specified committee.
      */
     public static Camp[] getCampsByCommiteeID(String commiteeID){
@@ -142,11 +137,14 @@ public class CampManager {
         System.out.println("Enter the name of the camp.");
         String name = sc.nextLine();
 
-        Date startDate = getDateInput(sc, "Enter the start date of the camp, in the format: dd/mm/yyyy");
+        System.out.println("Enter the start date of the camp, in the format: dd/mm/yyyy");
+        Date startDate = DateStr.strToDate(sc.nextLine());
 
-        Date endDate = getDateInput(sc, "Enter the end date of the camp, in the format: dd/mm/yyyy");
+        System.out.println("Enter the end date of the camp, in the format: dd/mm/yyyy");
+        Date endDate = DateStr.strToDate(sc.nextLine());
 
-        Date registrationDeadline = getDateInput(sc, "Enter the registration deadline, in the format: dd/mm/yyyy");
+        System.out.println("Enter the registration deadline, in the format: dd/mm/yyyy");
+        Date registrationDeadline = DateStr.strToDate(sc.nextLine());
 
         System.out.println("Enter the location of the camp");
         String location = sc.nextLine();
@@ -176,25 +174,11 @@ public class CampManager {
         CampDBManager.createCamp(createdCamp);
     }
 
-    // method to repeatedly ask for a valid date
-    private static Date getDateInput(Scanner sc, String prompt) {
-        String inputDate;
-        while (true) {
-            System.out.println(prompt);
-            inputDate = sc.nextLine();
-            if (DateStr.isValidDate(inputDate)) {
-                return DateStr.strToDate(inputDate);
-            } else {
-                System.out.println("Invalid date format. Please use dd/mm/yyyy format.");
-            }
-        }
-    }
-    
-   /**
-     * Edits an existing camp based on user input and updates it in the camp database.
-     *
-     * @param campToBeEdited The Camp object to be edited.
-     */
+    /**
+ * Edits an existing camp based on user input and updates it in the camp database.
+ *
+ * @param campToBeEdited The Camp object to be edited.
+ */
     public static void editCamp (Camp campToBeEdited) {
         /*Things staff can edit:
          Start Date
@@ -283,11 +267,6 @@ public class CampManager {
 
     }
 
-    /**
-     * Deletes a camp based on user input.
-     *
-     * @param campToBeDeleted The Camp object to be deleted.
-     */
     public static void deleteCamp(Camp campToBeDeleted) {
         CampDBManager.deleteCamp(campToBeDeleted);
     }
@@ -296,7 +275,7 @@ public class CampManager {
      * Adds an attendee to a camp.
      *
      * @param toBeModified The Camp object to which the attendee is added.
-     * @param attendeeUserID   The user ID of the attendee.
+     * @param attendeeUserID The user ID of the attendee.
      */
     public static void addAttendee(Camp toBeModified, String attendeeUserID){
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
@@ -308,8 +287,8 @@ public class CampManager {
     /**
      * Adds a committee member to a camp.
      *
-     * @param toBeModified The Camp object to which the committee member is added.
-     * @param committeeUserID  The user ID of the committee member.
+     * @param toBeModified        The Camp object to which the committee member is added.
+     * @param committeeUserID    The user ID of the committee member.
      */
     public static void addCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
@@ -321,8 +300,8 @@ public class CampManager {
     /**
      * Removes an attendee from a camp.
      *
-     * @param toBeModified The Camp object from which the attendee is removed.
-     * @param attendeeUserID   The user ID of the attendee to be removed.
+     * @param toBeModified      The Camp object from which the attendee is removed.
+     * @param attendeeUserID    The user ID of the attendee to be removed.
      */
     public static void removeAttendee(Camp toBeModified, String attendeeUserID){
         List<String> attendeeList = new ArrayList<>(Arrays.asList(toBeModified.attendees));
@@ -334,8 +313,8 @@ public class CampManager {
     /**
      * Removes a committee member from a camp.
      *
-     * @param toBeModified  The Camp object from which the committee member is removed.
-     * @param committeeUserID  The user ID of the committee member to be removed.
+     * @param toBeModified        The Camp object from which the committee member is removed.
+     * @param committeeUserID    The user ID of the committee member to be removed.
      */
     public static void removeCommittee(Camp toBeModified, String committeeUserID){
         List<String> committeeList = new ArrayList<>(Arrays.asList(toBeModified.committeeList));
