@@ -44,14 +44,14 @@ public class Enquiry{
      */
     public void reply(User replier, String reply){
         EnquiryReply[] enqRDB = EnquiryManager.getEnquiryReplyDatabase();
-        int replyID = CSVReader.toInt(enqRDB[enqRDB.length-1].EnquiryReplyID)+1;
-        String line = String.format("%d,%s,%s", replyID, CSVReader.removeCommas(reply), replier.userID);
+        int replyID = CSVReader.toInt(enqRDB[enqRDB.length-1].getEnquiryReplyID())+1;
+        String line = String.format("%d,%s,%s", replyID, CSVReader.removeCommas(reply), replier.getUserId());
         CSVReader.addLine("data/replies.csv", line); //done with appending a new reply into database
         //but still need to update the enquiry database as well:
         List<Integer> intList = Arrays.stream(replies).boxed().collect(Collectors.toList());
         intList.add(replyID);
         String[] newIDStrings = intList.stream().map(Object::toString).toArray(String[]::new);
-        String enqLine = String.format("%s,%s,%s,%s,%s", enquiryID, student.userID, CSVReader.removeCommas(camp.campName), CSVReader.removeCommas(message), CSVReader.listToString(newIDStrings));
+        String enqLine = String.format("%s,%s,%s,%s,%s", enquiryID, student.getUserId(), CSVReader.removeCommas(camp.campName), CSVReader.removeCommas(message), CSVReader.listToString(newIDStrings));
         CSVReader.modifyLine("data/enquiry.csv", enquiryID, enqLine);
     }
 
@@ -67,7 +67,7 @@ public class Enquiry{
             return false;
         }
         this.message = newMessage;
-        String enqLine = String.format("%s,%s,%s,%s,[]", enquiryID, student.userID, CSVReader.removeCommas(camp.campName), CSVReader.removeCommas(newMessage));
+        String enqLine = String.format("%s,%s,%s,%s,[]", enquiryID, student.getUserId(), CSVReader.removeCommas(camp.campName), CSVReader.removeCommas(newMessage));
         CSVReader.modifyLine("data/enquiry.csv", newMessage, enqLine);
         return true;
     }

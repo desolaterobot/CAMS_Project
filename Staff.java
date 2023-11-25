@@ -40,7 +40,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      * Load Camp from CampManger into current stuff's ownCamps attribute.
      */
     private void loadOwnCamp() {
-        ownCamps.addAll(List.of(CampManager.getCampsByStaffID(this.userID)));
+        ownCamps.addAll(List.of(CampManager.getCampsByStaffID(this.getUserId())));
     }
 
     /**
@@ -143,7 +143,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
             }
             for (Suggestion suggestion:
             SuggestionManager.getSuggestionsForCamp(camp)) {
-                System.out.println(num + ") " +  suggestion.getCommitteeMember().name +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
+                System.out.println(num + ") " +  suggestion.getCommitteeMember().getName() +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                 num++;
             }
         }
@@ -166,7 +166,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
             for (Suggestion suggestion:
                     SuggestionManager.getSuggestionsForCamp(camp)) {
                 if (!suggestion.getApprovedStatus()) {
-                    System.out.println(num + ") " +  suggestion.getCommitteeMember().name +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
+                    System.out.println(num + ") " +  suggestion.getCommitteeMember().getName() +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                     allSuggestions.add(suggestion);
                     num++;
                 }
@@ -240,12 +240,12 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
 
         for (Enquiry enquiry :
                 EnquiryManager.getCampEnquiries(getOwnCamps().toArray(new Camp[1])[choice - 1])) {
-            System.out.println(enquiry.student.name + ": " +  enquiry.message);
+            System.out.println(enquiry.student.getName() + ": " +  enquiry.message);
             EnquiryReply[] replies = enquiry.getReplies();
             if (replies.length != 0) {
                 for (EnquiryReply reply :
                         replies) {
-                    System.out.println("\u21B3 " + reply.user.name + ": " + reply.reply);
+                    System.out.println("\u21B3 " + reply.user.getName() + ": " + reply.getReplyMessage());
                 }
             } else {
                 System.out.println("[No Replies]");
@@ -284,7 +284,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
             }
             for (Enquiry enquiry :
                     enquiries) {
-                System.out.println(enquiryChoiceCounter + ")" + enquiry.student.name + ": " +  enquiry.message);
+                System.out.println(enquiryChoiceCounter + ")" + enquiry.student.getName() + ": " +  enquiry.message);
                 allEnquiries.add(enquiry);
                 enquiryChoiceCounter++;
             }

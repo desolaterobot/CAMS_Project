@@ -27,7 +27,7 @@ public class PointsSystem extends CSVReader {
         int index = 0;
         int indexToModify = -1;
         for(String line : lines){
-            if(line.startsWith(user.name, 0)){
+            if(line.startsWith(user.getName(), 0)){
                 indexToModify = index;
             }
             index++;
@@ -59,8 +59,8 @@ public class PointsSystem extends CSVReader {
 		String file = "data/students.csv";
 		if (getCurrentPoints(user) != -1) {
 			String newPoint = Integer.toString(getCurrentPoints(user) + 1);
-	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.name, user.email, user.faculty, user.passHash, true, user.getCommitteeCamp(), newPoint);
-	        modifyLine(file, user.name, newLine);
+	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.getName(), user.getEmail(), user.getFaculty(), user.getPassword(), true, user.getCommitteeCamp(), newPoint);
+	        modifyLine(file, user.getName(), newLine);
 	        //System.out.println(user.isCommitteeMember);
 		}
 	}

@@ -4,10 +4,10 @@
  */
 public class EnquiryReply {
     /** The ID of the enquiry reply. */
-    String EnquiryReplyID;
+    private String EnquiryReplyID;
 
     /** The content of the reply. */
-    String reply;
+    private String reply;
 
     /** The committee member and staff who provided the reply. */
     User user;
@@ -23,5 +23,15 @@ public class EnquiryReply {
         this.EnquiryReplyID = EnquiryReplyID;
         this.reply = reply;
         this.user = user;
+    }
+    
+    public String getEnquiryReplyID() {
+    	return EnquiryReplyID;
+    }
+    public String getReplyMessage() {
+    	return reply;
+    }
+    public void setReplyMessage(String reply) {
+    	this.reply = reply;
     }
 }
