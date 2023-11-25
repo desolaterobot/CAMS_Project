@@ -69,7 +69,7 @@ public class CampCommitteeMember extends Student {
     	}
     }
 	
-    public void editOwnSuggestion() {
+    public void editSuggestion() {
 		Scanner input = new Scanner(System.in);
 		viewOwnSuggestions();
     	if (noOfPendingSuggestions > 0) {
@@ -86,7 +86,7 @@ public class CampCommitteeMember extends Student {
 		//input.close();
     }
     
-    public void deleteOwnSuggestion() {
+    public void deleteSuggestion() {
     	Scanner input = new Scanner(System.in);
 		viewOwnSuggestions();
     	if (noOfPendingSuggestions > 0) {
