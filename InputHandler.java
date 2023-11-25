@@ -7,8 +7,7 @@ public class InputHandler {
 		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
 		case 10:
-			commMem.replyToEnquiry();
-			
+			commMem.replyToEnquiry();	
 			break;
 		case 11:
 			commMem.viewOwnSuggestions();
@@ -20,6 +19,9 @@ public class InputHandler {
 			commMem.submitSuggestion();
 			break;
 		case 14:
+			commMem.deleteOwnSuggestion();
+			break;
+		case 15:
 			commMem.commGenerateReport();
 			break;
 		default:
