@@ -205,7 +205,7 @@ public class ReportGenerator extends CSVReader{
         	
         int x = 1;
         for(String s : camp.committeeList){
-            User u = UserManager.getUser(s);
+            Student u = UserManager.getStudent(s);
             int userPoint = PointsSystem.getCurrentPoints(u);
             addLine(filepath, String.format("%d. %s - %d pts", x, u.name, userPoint));
             x++;
