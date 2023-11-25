@@ -65,7 +65,7 @@ class UserManager extends CSVReader{
 		}
 
 		if(user.getUserId().equals(userId) && user.getPassword().equals(hash(password))) {
-				while (user.getPassword().equals(hash("password"))) {
+				if (user.getPassword().equals(hash("password"))) {
 					UserManager.changePassword(user);
 				}
 			return user;
@@ -342,35 +342,37 @@ class UserManager extends CSVReader{
     //changes the password hash entry of a user in the database
     public static void changePassword(User user){
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Please enter your new password.");
-		String newPassword = sc.nextLine();
-        if (newPassword.equals("password")) {
-			System.out.println("Please change your password to something that is not the default password! -- Password change failed!");
-		} else {
-	        String newPassHash = hash(newPassword);
-	        String file = null;
-			String newLine = null;
-	        if(user instanceof Staff){
-				System.out.println("Changing staff password...");
-	            file = "data/staff.csv";
-				newLine = String.format("%s,%s,%s,%s", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
-	        }else if(user instanceof CampCommitteeMember){
-				System.out.println("Changing committee password.");
-				CampCommitteeMember commitee = (CampCommitteeMember)user; //downcast!!
-				file = "data/students.csv";
-				newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.getName(), user.getEmail(), user.getFaculty(), newPassHash, commitee.getCommitteeCamp(), PointsSystem.getCurrentPoints(commitee));
-	        }else if(user instanceof Student){
-				file = "data/students.csv";
-				System.out.println("Changing student password...");
-				newLine = String.format("%s,%s,%s,%s,false,null,0", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
-			}else{
-				System.out.println("You did not pass in an inherited User object.");
-				System.out.println("Unable to change password.");
-				return;
+		String newPassword;
+		do {
+			System.out.println("Please enter your new password.");
+			newPassword = sc.nextLine();
+			if (newPassword.equals("password")) {
+				System.out.println("Please change your password to something that is not the default password! -- Password change failed!");
 			}
-	        modifyLine(file, user.getName(), newLine);
-			System.out.printf("Successfully changed password to %s for %s.\n", newPassword, user.getName());
+		} while (newPassword.equals("password"));
+ 
+        String newPassHash = hash(newPassword);
+        String file = null;
+		String newLine = null;
+        if(user instanceof Staff){
+			System.out.println("Changing staff password...");
+            file = "data/staff.csv";
+			newLine = String.format("%s,%s,%s,%s", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
+        }else if(user instanceof CampCommitteeMember){
+			System.out.println("Changing committee password.");
+			CampCommitteeMember commitee = (CampCommitteeMember)user; //downcast!!
+			file = "data/students.csv";
+			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.getName(), user.getEmail(), user.getFaculty(), newPassHash, commitee.getCommitteeCamp(), PointsSystem.getCurrentPoints(commitee));
+        }else if(user instanceof Student){
+			file = "data/students.csv";
+			System.out.println("Changing student password...");
+			newLine = String.format("%s,%s,%s,%s,false,null,0", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
+		}else{
+			System.out.println("You did not pass in an inherited User object.");
+			System.out.println("Unable to change password.");
+			return;
 		}
-    }
-
+        modifyLine(file, user.getName(), newLine);
+		System.out.printf("Successfully changed password to %s for %s.\n", newPassword, user.getName());
+	}
 }
