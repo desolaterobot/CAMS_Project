@@ -34,9 +34,9 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
 	public void viewCampEnquiries() {
 		Enquiry[] enquiries = EnquiryManager.getCampEnquiries(myCamp);
 		if (enquiries.length > 0) {
-			System.out.printf("Enquiries of %s: \n", myCamp.campName);
+			System.out.printf("Enquiries of %s: \n", myCamp.getCampName());
 			for (int i = 0; i < enquiries.length; i++) {
-	    		System.out.println("[" + i + "]: " + enquiries[i].message);
+	    		System.out.println("[" + i + "]: " + enquiries[i].getMessage());
 	    	}
 		} else {
 			System.out.println("There is no enquiry!");

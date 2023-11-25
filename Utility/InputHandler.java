@@ -2,9 +2,8 @@ package Utility;
 
 import java.util.Scanner;
 
-import Users.Staff;
-import Users.Student;
-import Users.CampCommitteeMember;
+import Users.*;
+
 
 public class InputHandler {
 	public static void handleCommitteeMemberChoice(Student student, int choice) {

@@ -65,11 +65,11 @@ public class Student extends User implements EnquiryInterface{
 		}
 		for(String s: registeredCamps) {
 			Camp c = CampManager.getCamp(s);
-			if(camp.startDate.before(c.startDate) && camp.endDate.after(c.startDate) ||
-					camp.startDate.before(c.endDate) && camp.endDate.after(c.endDate) ||
-					camp.startDate.before(c.startDate) && camp.endDate.after(c.endDate) ||
-					camp.startDate.after(c.endDate) && camp.endDate.before(c.endDate)) {
-				System.out.println("Dates clashed with " + c.campName + "!");
+			if(camp.getStartDate().before(c.getStartDate()) && camp.getEndDate().after(c.getStartDate()) ||
+					camp.getStartDate().before(c.getEndDate()) && camp.getEndDate().after(c.getEndDate()) ||
+					camp.getStartDate().before(c.getStartDate()) && camp.getEndDate().after(c.getEndDate()) ||
+					camp.getStartDate().after(c.getEndDate()) && camp.getEndDate().before(c.getEndDate())) {
+				System.out.println("Dates clashed with " + c.getCampName() + "!");
 				return false;
 			}
 		}
