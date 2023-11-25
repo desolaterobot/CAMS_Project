@@ -37,6 +37,24 @@ class UserManager extends CSVReader{
 		return User;
 		}
 
+	public User authUser(String userId, String password) {
+		User user = getUser(userId);
+
+		if (user ==  null) {
+			return null;
+		}
+
+		if(user.getUserId().equals(userId) && user.getPassword().equals(hash(password))) {
+				if(user.getPassword().equals(hash("password"))) {
+					UserManager.changePassword(user);
+				}
+			return user;
+		}
+
+
+		return null;
+	}
+
     /**
      * Hashes the input string using the SHA-256 hash algorithm.
      *
