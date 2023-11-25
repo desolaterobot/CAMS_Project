@@ -332,17 +332,41 @@ class UserManager extends CSVReader{
 
     //DATA MODIFICATION//////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Changes the password of the User. Requires a child User object, such as Student, CommiteeMember, or Staff
+     *
+     * @param user The User-inherited object.
+     */
+
     //changes the password hash entry of a user in the database
-    public static void changePassword(User user, String newPassword){
+    public static void changePassword(User user){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter your new password.");
+		String newPassword = sc.nextLine();
+		sc.close();
         String newPassHash = hash(newPassword);
-        String file;
-        if(user.Status == accountType.Staff){
+        String file = null;
+		String newLine = null;
+        if(user instanceof Staff){
+			System.out.println("Changing staff password...");
             file = "data/staff.csv";
-        }else{
-            file = "data/student.csv";
-        }
-        String newLine = String.format("%s,%s,%s,%s", user.name, user.email, user.faculty, newPassHash);
+			newLine = String.format("%s,%s,%s,%s", user.name, user.email, user.faculty, newPassHash);
+        }else if(user instanceof CampCommitteeMember){
+			System.out.println("Changing committee password.");
+			CampCommitteeMember commitee = (CampCommitteeMember)user; //downcast!!
+			file = "data/students.csv";
+			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.name, user.email, user.faculty, newPassHash, commitee.committeeCamp, PointsSystem.getCurrentPoints(commitee));
+        }else if(user instanceof Student){
+			file = "data/students.csv";
+			System.out.println("Changing student password...");
+			newLine = String.format("%s,%s,%s,%s,false,null,0", user.name, user.email, user.faculty, newPassHash);
+		}else{
+			System.out.println("You did not pass in an inherited User object.");
+			System.out.println("Unable to change password.");
+			return;
+		}
         modifyLine(file, user.name, newLine);
+		System.out.printf("Successfully changed password to %s for %s.\n", newPassword, user.name);
     }
 
 

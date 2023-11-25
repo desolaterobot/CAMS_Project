@@ -6,22 +6,22 @@ public class InputHandler {
 		// TODO Auto-generated method stub
 		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
-		case 10:
+		case 11:
 			commMem.replyToEnquiry();	
 			break;
-		case 11:
+		case 12:
 			commMem.viewOwnSuggestions();
 			break;
-		case 12:
+		case 13:
 			commMem.editOwnSuggestion();
 			break;
-		case 13:
+		case 14:
 			commMem.submitSuggestion();
 			break;
-		case 14:
+		case 15:
 			commMem.deleteOwnSuggestion();
 			break;
-		case 15:
+		case 16:
 			commMem.commGenerateReport();
 			break;
 		default:
@@ -36,7 +36,7 @@ public class InputHandler {
 		case 1:
 			System.out.println("Viewing Available Camps for: " + student.name);
 			System.out.println();
-			student.viewCamps();
+			CampFilter.filterAndPrintCamps(CampManager.getCampsForStudents(student));
 			break;
 		case 2:
 			System.out.print("Please Enter the Camp Name that you wish to register for: ");
@@ -86,6 +86,8 @@ public class InputHandler {
 			System.out.print("Enter the Enquiry ID which you wish to delete: ");
 			String deleteEnqID = sc.nextLine();
 			student.deleteEnquiry(deleteEnqID);
+		case 10:
+			UserManager.changePassword(student);
 		}
 	}
 
@@ -110,7 +112,7 @@ public class InputHandler {
 			break;
 		case 5:
 			System.out.println("View All Camps...");
-			staff.viewAllCamp();
+			CampFilter.filterAndPrintVisibleCamps();
 			break;
 		case 6:
 			System.out.println("View My Camps...");
@@ -146,8 +148,7 @@ public class InputHandler {
 			staff.generatePerformanceReport();
 			break;
 		case 14:
-			System.out.println("change password");
-			//change password function
+			UserManager.changePassword(staff);
 			break;
 		default:
 			return;
