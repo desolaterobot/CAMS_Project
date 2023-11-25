@@ -35,7 +35,7 @@ public class ReportGenerator extends CSVReader{
         //note that the newline character is automatically added at the end of each string, so no need "\n"
         //String.format() is used inside addLine() just to format the line before adding into the CSV file.
         addLine(filepath, String.format("%s Performance Report", camp.campName));
-        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).name));
+        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).getName()));
         addLine(filepath, String.format("Description: %s", camp.description));
         addLine(filepath, String.format("Location: %s", camp.location));
         addLine(filepath, String.format("Faculty: %s", camp.faculty));
@@ -45,14 +45,14 @@ public class ReportGenerator extends CSVReader{
         int x = 1;
         for(String s : camp.committeeList){
             User u = UserManager.getUser(s);
-            addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+            addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
             x++;
         }
         x = 1;
         addLine(filepath, String.format("\nAttendees: (%d/%d)", camp.attendees.length, camp.totalSlots));
         for(String s : camp.attendees){
             User u = UserManager.getUser(s);
-            addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+            addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
             x++;
         }
         System.out.printf("Report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
@@ -75,7 +75,7 @@ public class ReportGenerator extends CSVReader{
         
     	//generate camp details
     	addLine(filepath, String.format("%s Performance Report", camp.campName));
-        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).name));
+        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).getName()));
         addLine(filepath, String.format("Description: %s", camp.description));
         addLine(filepath, String.format("Location: %s", camp.location));
         addLine(filepath, String.format("Faculty: %s", camp.faculty));
@@ -89,7 +89,7 @@ public class ReportGenerator extends CSVReader{
     		addLine(filepath, String.format("\nAttendees: (%d/%d)", camp.attendees.length, camp.totalSlots));
     		for(String s : camp.attendees){
                 User u = UserManager.getUser(s);
-                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
                 x++;
             }
     	}
@@ -102,7 +102,7 @@ public class ReportGenerator extends CSVReader{
     		x = 1;
             for(String s : camp.committeeList){
                 User u = UserManager.getUser(s);
-                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
                 x++;
             }
     	}
@@ -115,7 +115,7 @@ public class ReportGenerator extends CSVReader{
     		x = 1;
             for(String s : camp.withdrawals){
                 User u = UserManager.getUser(s);
-                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
                 x++;
             }
     	}
@@ -136,7 +136,7 @@ public class ReportGenerator extends CSVReader{
     	writeLine(filepath, "", false);
     	
     	addLine(filepath, String.format("%s Performance Report", camp.campName));
-        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).name));
+        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).getName()));
         addLine(filepath, String.format("Description: %s", camp.description));
         addLine(filepath, String.format("Location: %s", camp.location));
         addLine(filepath, String.format("Faculty: %s", camp.faculty));
@@ -150,7 +150,7 @@ public class ReportGenerator extends CSVReader{
     		addLine(filepath, String.format("\nAttendees: (%d/%d)", camp.attendees.length, camp.totalSlots));
     		for(String s : camp.attendees){
                 User u = UserManager.getUser(s);
-                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
                 x++;
             }
     	}
@@ -163,7 +163,7 @@ public class ReportGenerator extends CSVReader{
     		x = 1;
             for(String s : camp.committeeList){
                 User u = UserManager.getUser(s);
-                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
                 x++;
             }
     	}
@@ -175,7 +175,7 @@ public class ReportGenerator extends CSVReader{
     		x = 1;
             for(String s : camp.withdrawals){
                 User u = UserManager.getUser(s);
-                addLine(filepath, String.format("%d. %s - %s", x, u.name, u.email));
+                addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
                 x++;
             }
     	}
@@ -197,7 +197,7 @@ public class ReportGenerator extends CSVReader{
     	writeLine(filepath, "", false);
     	
     	addLine(filepath, String.format("%s Performance Report", camp.campName));
-        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).name));
+        addLine(filepath, String.format("Staff-In-Charge: %s", UserManager.getUser(camp.staffInCharge).getName()));
         addLine(filepath, String.format("Description: %s", camp.description));
         addLine(filepath, String.format("Location: %s", camp.location));
         addLine(filepath, String.format("Faculty: %s", camp.faculty));
@@ -207,7 +207,7 @@ public class ReportGenerator extends CSVReader{
         for(String s : camp.committeeList){
             User u = UserManager.getUser(s);
             int userPoint = PointsSystem.getCurrentPoints(u);
-            addLine(filepath, String.format("%d. %s - %d pts", x, u.name, userPoint));
+            addLine(filepath, String.format("%d. %s - %d pts", x, u.getName(), userPoint));
             x++;
         }
 

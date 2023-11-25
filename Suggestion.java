@@ -47,12 +47,12 @@ public class Suggestion {
      */
     public boolean approve(User staff){
         if(this.approved){
-            System.out.printf("This suggestion has already been approved by %s\n", approvedBy.name);
+            System.out.printf("This suggestion has already been approved by %s\n", approvedBy.getName());
             return false;
         }
         this.approved = true;
         this.approvedBy = staff;
-        String modifiedLine = String.format("%s,%s,%s,%s,%s", this.suggestionID, this.committeeMember.userID, this.camp.campName, CSVReader.removeCommas(this.message), staff.userID);
+        String modifiedLine = String.format("%s,%s,%s,%s,%s", this.suggestionID, this.committeeMember.getUserId(), this.camp.campName, CSVReader.removeCommas(this.message), staff.getUserId());
         CSVReader.modifyLine("data/suggestions.csv", suggestionID, modifiedLine);
         return true;
     }
@@ -69,7 +69,7 @@ public class Suggestion {
             return false;
         }
         this.message = newMessage;
-        String modifiedLine = String.format("%s,%s,%s,%s,None", this.suggestionID, this.committeeMember.userID, this.camp.campName, CSVReader.removeCommas(newMessage));
+        String modifiedLine = String.format("%s,%s,%s,%s,None", this.suggestionID, this.committeeMember.getUserId(), this.camp.campName, CSVReader.removeCommas(newMessage));
         CSVReader.modifyLine("data/suggestions.csv", suggestionID, modifiedLine);
         return true;
     }

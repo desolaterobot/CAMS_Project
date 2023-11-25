@@ -9,7 +9,7 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
 			String committeeMemberOf) {
 		super(userId, email, faculty, password, isCommitteeMember, committeeMemberOf);
 		// TODO Auto-generated constructor stub
-		this.myCamp = CampManager.getCampsByCommiteeID(this.userID)[0];
+		this.myCamp = CampManager.getCampsByCommiteeID(this.getUserId())[0];
 		this.ownSuggestions = SuggestionManager.getSuggestionsByUser(this);
 		this.noOfPendingSuggestions = 0;
 	}

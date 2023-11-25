@@ -20,13 +20,13 @@ public class Student extends User implements EnquiryInterface{
 		this.registeredCamps = new ArrayList<>();
 		for(Camp c : camps) {
 			for(String s : c.attendees) {
-				if(s.equals(this.userID)) {
+				if(s.equals(this.getUserId())) {
 					if(!registeredCamps.contains(c.campName))
 						registeredCamps.add(c.campName);
 				}
 			}
 			for(String s : c.committeeList) {
-				if(s.equals(this.userID)) {
+				if(s.equals(this.getUserId())) {
 					if(!registeredCamps.contains(c.campName))
 						registeredCamps.add(c.campName);
 				}
@@ -52,7 +52,7 @@ public class Student extends User implements EnquiryInterface{
 		}
 		
 		for(String userId : camp.withdrawals) {
-			if(userId.equals(userID)) {
+			if(userId.equals(this.getUserId())) {
 				System.out.println("You cannot register for a Camp which you withdrew from!");
 				return false;
 			}
@@ -86,7 +86,7 @@ public class Student extends User implements EnquiryInterface{
 				if(isEligible(camp)) {
 					registeredCamps.add(campName);
 					camp.totalSlots--;
-					CampManager.addAttendee(camp, userID);
+					CampManager.addAttendee(camp, getUserId());
 					System.out.println("You have successfully registered to " + camp.campName + " as an attendee!");
 				}
 				else {
@@ -104,7 +104,7 @@ public class Student extends User implements EnquiryInterface{
 						camp.committeeSlots--;
 						committeeMemberOf = camp.campName;
 						isCommitteeMember = true;
-						CampManager.addCommittee(camp, userID);
+						CampManager.addCommittee(camp, getUserId());
 						UserManager.updateStudentDB(this);
 						System.out.println("You have successfully registered as a Camp Committee Member of " + camp.campName);
 					}
@@ -129,7 +129,7 @@ public class Student extends User implements EnquiryInterface{
 						camp.committeeSlots--;
 						committeeMemberOf = camp.campName;
 						isCommitteeMember = true;
-						CampManager.addCommittee(camp, userID);
+						CampManager.addCommittee(camp, getUserId());
 						UserManager.updateStudentDB(this);
 						System.out.println("You have successfully registered as a Camp Committee Member of " + camp.campName);
 					}
@@ -168,9 +168,9 @@ public class Student extends User implements EnquiryInterface{
 		else {
 			camp.totalSlots++;
 			registeredCamps.remove(campName);
-			CampManager.removeAttendee(camp, userID);
+			CampManager.removeAttendee(camp, getUserId());
 		}
-		CampManager.addWithdrawal(camp, userID);
+		CampManager.addWithdrawal(camp, getUserId());
 		System.out.println("You have successfully withdrew from camp: "+camp.campName);
 	}
 	
@@ -295,10 +295,10 @@ public class Student extends User implements EnquiryInterface{
 		}
 		System.out.print("[Replied] ");
 		System.out.println("Enquiry for: " + enquiry.camp.campName);
-		System.out.println(enquiry.student.name + ": " + enquiry.message);
+		System.out.println(enquiry.student.getName() + ": " + enquiry.message);
 		for(EnquiryReply enqReply : enqr) {
 			System.out.print("\u21B3 ");
-			System.out.println(enqReply.user.name + ": " + enqReply.reply);
+			System.out.println(enqReply.user.getName() + ": " + enqReply.getReplyMessage());
 		}
 	}
 	
@@ -312,7 +312,7 @@ public class Student extends User implements EnquiryInterface{
 				Boolean cc = false;
 				System.out.println("Camp Name : " + c.campName);
 				for(String s : c.committeeList) {
-					if (s.equals(userID)) {
+					if (s.equals(getUserId())) {
 						cc = true;
 						break;
 					}

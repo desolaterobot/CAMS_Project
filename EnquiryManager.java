@@ -63,7 +63,7 @@ public class EnquiryManager extends CSVReader{
     	Enquiry[] enqs = getEnquiryDatabase();
     	List<Enquiry> enqlist = new LinkedList<>();
     	for(Enquiry enq : enqs)
-    		if(enq.student.userID.equals(s.userID))
+    		if(enq.student.getUserId().equals(s.getUserId()))
     			enqlist.add(enq);
     	return enqlist.toArray(new Enquiry[enqlist.size()]);
     }
@@ -107,7 +107,7 @@ public static Enquiry getEnquiryByID(String id) {
      */
     public static void addEnquiry(User sender, Camp camp, String message){
         int enquiryID = getEnquiryDatabase().length;
-        String line = String.format("%d,%s,%s,%s,%s", enquiryID, sender.userID, removeCommas(camp.campName), removeCommas(message), listToString(new String[0]));
+        String line = String.format("%d,%s,%s,%s,%s", enquiryID, sender.getUserId(), removeCommas(camp.campName), removeCommas(message), listToString(new String[0]));
         addLine("data/enquiry.csv", line);
     }
     
@@ -120,9 +120,9 @@ public static Enquiry getEnquiryByID(String id) {
     	EnquiryReply[] enqrs = toBeUpdated.getReplies();
     	String[] strEnquiryReplyIDs = new String[enqrs.length];
     	for(int i=0; i<enqrs.length; i++) {
-    		strEnquiryReplyIDs[i] = enqrs[i].EnquiryReplyID;
+    		strEnquiryReplyIDs[i] = enqrs[i].getEnquiryReplyID();
     	}
-		String line =  String.format("%s,%s,%s,%s,%s", toBeUpdated.enquiryID, toBeUpdated.student.userID, removeCommas(toBeUpdated.camp.campName), removeCommas(toBeUpdated.message), listToString(strEnquiryReplyIDs));
+		String line =  String.format("%s,%s,%s,%s,%s", toBeUpdated.enquiryID, toBeUpdated.student.getUserId(), removeCommas(toBeUpdated.camp.campName), removeCommas(toBeUpdated.message), listToString(strEnquiryReplyIDs));
 		modifyLine("data/enquiry.csv", toBeUpdated.enquiryID, line);
     }
 

@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class InputHandler {
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
 		// TODO Auto-generated method stub
-		CampCommitteeMember commMem = new CampCommitteeMember(student.name, student.email, student.faculty, student.passHash, student.isCommitteeMember(), student.getCommitteeCamp());
+		CampCommitteeMember commMem = new CampCommitteeMember(student.getName(), student.getEmail(), student.getFaculty(), student.getPassword(), student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
 		case 11:
 			commMem.replyToEnquiry();	
@@ -34,11 +34,11 @@ public class InputHandler {
 		Scanner sc = new Scanner(System.in);
 		switch(choice) {
 		case 1:
-			System.out.println("Change Password for " + student.userID);
+			System.out.println("Change Password for " + student.getUserId());
 			UserManager.changePassword((User) student);
 			break;
 		case 2:
-			System.out.println("Viewing Available Camps for: " + student.name);
+			System.out.println("Viewing Available Camps for: " + student.getName());
 			System.out.println();
 			student.viewCamps();
 			break;
@@ -52,7 +52,7 @@ public class InputHandler {
 			System.out.println();
 			break;
 		case 4:
-			System.out.println("Viewing Camps Registered for UserID: " + student.userID + "...");
+			System.out.println("Viewing Camps Registered for UserID: " + student.getUserId() + "...");
 			System.out.println();
 			student.viewRegisteredCamps();
 			break;
@@ -70,7 +70,7 @@ public class InputHandler {
 			student.submitEnquiry(enqCamp, msg);
 			break;	
 		case 7:
-			System.out.println("Viewing Enquiries for UserID: " + student.userID);
+			System.out.println("Viewing Enquiries for UserID: " + student.getUserId());
 			student.viewEnquiries();
 			break;
 			
