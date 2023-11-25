@@ -13,13 +13,13 @@ public class InputHandler {
 			commMem.viewOwnSuggestions();
 			break;
 		case 12:
-			commMem.editOwnSuggestion();
+			commMem.editSuggestion();
 			break;
 		case 13:
 			commMem.submitSuggestion();
 			break;
 		case 14:
-			commMem.deleteOwnSuggestion();
+			commMem.deleteSuggestion();
 			break;
 		case 15:
 			commMem.commGenerateReport();
