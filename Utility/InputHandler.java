@@ -38,7 +38,7 @@ public class InputHandler {
 			commMem.commGenerateReport();
 			break;
 		case 17:
-			System.out.printf("Your current point(s): ", PointsSystem.getCurrentPoints(commMem));
+			System.out.printf("Your current point(s): %d\n", PointsSystem.getCurrentPoints(commMem));
 		default:
 			handleStudentChoice(student,choice);
 		}
