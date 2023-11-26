@@ -28,18 +28,38 @@ public class EnquiryReply {
         this.user = user;
     }
 
+    /**
+     * Gets the user (committee member or staff) who provided the reply.
+     *
+     * @return The user who provided the reply.
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Gets the ID of the enquiry reply.
+     *
+     * @return The ID of the enquiry reply.
+     */
     public String getEnquiryReplyID() {
         return EnquiryReplyID;
     }
 
+    /**
+     * Gets the content of the reply message.
+     *
+     * @return The content of the reply message.
+     */
     public String getReplyMessage() {
     	return reply;
     }
-    
+
+    /**
+     * Sets the content of the reply message.
+     *
+     * @param reply The new content of the reply message.
+     */
     public void setReplyMessage(String reply) {
     	this.reply = reply;
     }
