@@ -6,7 +6,11 @@ import Camp.Camp;
 import Utility.CSVReader;
 import Utility.DateStr;
 
+/**
+ * Manages the camp database by providing methods to convert, retrieve, create, delete, and save camp information.
+ */
 public class CampDBManager extends CSVReader {
+    
     /**
      * Converts a Camp object to a CSV-formatted string.
      *
@@ -40,7 +44,7 @@ public class CampDBManager extends CSVReader {
     /**
      * Create a camp into the camp database.
      *
-     * @param toBeDeleted The Camp object to be deleted.
+     * @param newCamp The Camp object to be added to the database.
      */
     public static void createCamp(Camp newCamp) {
         addLine("data/camps.csv", campToLine(newCamp));
@@ -56,7 +60,7 @@ public class CampDBManager extends CSVReader {
     }
 
     /**
-     * Commits the information of an existing camp to db.
+     * Commits the information of an existing camp to the database.
      *
      * @param updatedCamp The updated Camp object.
      */
