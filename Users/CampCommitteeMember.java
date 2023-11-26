@@ -174,7 +174,7 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
      */
     public static void main(String[] args) {
         // Create a test committee member
-    	CampCommitteeMember committeeMember = new CampCommitteeMember("BRANDON","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", true, "yet another camp");
+    	// CampCommitteeMember committeeMember = new CampCommitteeMember("BRANDON","BR015@e.ntu.edu.sg","EEE","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", true, "yet another camp");
 
         // Test submitSuggestion (working)
         //committeeMember.submitSuggestion();

@@ -93,7 +93,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void editCamp() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
-        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        Camp[] campList = getOwnCamps().toArray(new Camp[0]);
 
         CampPrinter.print(campList,false);
 
@@ -131,7 +131,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void deleteCamp() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to delete Camp");
-        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        Camp[] campList = getOwnCamps().toArray(new Camp[0]);
 
         CampPrinter.print(campList, false);
 
@@ -177,7 +177,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void viewStudentList() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to View Student List");
-        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        Camp[] campList = getOwnCamps().toArray(new Camp[0]);
         
         CampPrinter.print(campList, false);
 
@@ -256,7 +256,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void generatePerformanceReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to genereate Performance Report for that camp");
-        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        Camp[] campList = getOwnCamps().toArray(new Camp[0]);
         CampPrinter.print(campList, false);
         
         while (true) {
@@ -300,7 +300,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void generateCampReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to generate report for that Camp");
-        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        Camp[] campList = getOwnCamps().toArray(new Camp[0]);
         CampPrinter.print(campList, false);
         int choice = Integer.parseInt(sc.nextLine());
         generateCampReport(campList[choice-1]);
@@ -311,13 +311,13 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      */
     public void viewCampEnquiries() {
         System.out.println("Select Camp to view Enquiries");
-        CampPrinter.printCamps(getOwnCamps().toArray(new Camp[1]),false);
+        CampPrinter.printCamps(getOwnCamps().toArray(new Camp[0]),false);
         Scanner sc = new Scanner(System.in);
         System.out.print("Choice: ");
         int choice = Integer.parseInt(sc.nextLine());
 
         for (Enquiry enquiry :
-                EnquiryManager.getCampEnquiries(getOwnCamps().toArray(new Camp[1])[choice - 1])) {
+                EnquiryManager.getCampEnquiries(getOwnCamps().toArray(new Camp[0])[choice - 1])) {
             System.out.println(enquiry.getStudent().getName() + ": " +  enquiry.getMessage());
             EnquiryReply[] replies = EnquiryManager.getReplies(enquiry);
             if (replies.length != 0) {
@@ -389,7 +389,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void toggleVisibility() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to toggle visibility of Camp");
-        Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        Camp[] campList = getOwnCamps().toArray(new Camp[0]);
         CampPrinter.print(campList,false);
         
         while (true) {
@@ -422,7 +422,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      * @return true indicating successful display of camp information.
      */
     public boolean viewOwnCamp() {
-        CampPrinter.printCamps(getOwnCamps().toArray(new Camp[1]), false);
+        CampPrinter.printCamps(getOwnCamps().toArray(new Camp[0]), false);
         return true;
     }
 }

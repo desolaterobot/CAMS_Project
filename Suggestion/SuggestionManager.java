@@ -55,7 +55,9 @@ public class SuggestionManager extends SuggestionDBManager{
      */
     public static void addSuggestion(Camp camp, User committeeMember, String message){
         Suggestion[] suggDB = getSuggestionDatabase();
-        int suggID = CSVReader.toInt(suggDB[suggDB.length-1].getSuggestionID())+1;
+        int suggID;
+        if (suggDB.length == 0) { suggID = 0;}
+        else {suggID = CSVReader.toInt(suggDB[suggDB.length-1].getSuggestionID())+1;}
         Suggestion newSugg = new Suggestion(Integer.toString(suggID), committeeMember, camp, message, "None");
         addSuggDB(newSugg);
     }

@@ -1,5 +1,3 @@
-SuggestionID,CommiteeID,Camp,Message,ApprovedBy
-0,KOH1,super camp,Can we please have free food,None
-1,DON84,hyper camp,Camp not hyper enough%^& must be more hyper,UPAM
-3,AKY013,scse camp,This camp is so useless%^& remove it,None
-4,DIMAS001,stupid camp,test suggestion,None
+SuggestionID,CommiteeID,Camp,Message,ApprovedBy,
+0,SL22,Camp Ignite,Cater for student lunch and dinner,None
+1,SL22,Camp Ignite,Provide drawing board for every table,None

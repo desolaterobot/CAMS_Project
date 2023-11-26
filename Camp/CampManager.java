@@ -175,6 +175,7 @@ public class CampManager extends CampDBManager{
     
             System.out.println("Enter the total number of attendee slots.");
             int totalSlots = sc.nextInt();
+            sc.nextLine();
     
             int committeeSlots = -1;
             while (true) {

@@ -143,7 +143,9 @@ public class EnquiryManager extends EnquiryDBManager{
 	    EnquiryReply[] enqRDB = EnquiryDBManager.getEnquiryReplyDatabase();
 	    
 	    // Generate a new reply ID
-	    int replyID = toInt(enqRDB[enqRDB.length-1].getEnquiryReplyID())+1;
+        int replyID;
+        if (enqRDB.length == 0) { replyID = 0;}
+        else {replyID = toInt(enqRDB[enqRDB.length-1].getEnquiryReplyID())+1;}
 
 	    // Create a new EnquiryReply line
 	    String line = String.format("%d,%s,%s", replyID, removeCommas(reply), replier.getUserId());

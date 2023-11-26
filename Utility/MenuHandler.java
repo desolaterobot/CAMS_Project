@@ -49,7 +49,7 @@ public class MenuHandler {
 				System.out.println("13. Edit My Suggestions");
 				System.out.println("14. Submit New Suggestions");
 				System.out.println("15. Delete My Suggestions");
-				System.out.println("16. View Camp Details");	
+				System.out.println("16. Generate Camp Report");	
 			}
 		}
 
