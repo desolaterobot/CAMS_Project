@@ -92,11 +92,23 @@ public class MenuHandler {
 			if(choice==0) return;
 			
 			if(student.isCommitteeMember()) {
-				InputHandler.handleCommitteeMemberChoice(student,choice);
+				if (choice != 1) {
+					InputHandler.handleCommitteeMemberChoice(student,choice);
+				} else {
+					InputHandler.handleCommitteeMemberChoice(student,choice);
+					System.out.println("Please login again...");
+					return;
+				}
 			}
 			
 			else {
-				InputHandler.handleStudentChoice(student,choice);
+				if (choice != 1) {
+					InputHandler.handleStudentChoice(student,choice);
+				} else {
+					InputHandler.handleStudentChoice(student,choice);
+					System.out.println("Please login again...");
+					return;
+				}
 			}
 				
 				
@@ -119,7 +131,13 @@ public class MenuHandler {
 			
 			if(choice==0) return;
 			
-			InputHandler.handleStaffChoice(staff,choice);
+			if (choice != 14) {
+				InputHandler.handleStaffChoice(staff,choice);
+			} else {
+				InputHandler.handleStaffChoice(staff,choice);
+				System.out.println("Please login again...");
+				return;
+			}
 			}
 		}	
 	}
