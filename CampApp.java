@@ -18,7 +18,7 @@ public class CampApp {
      *
      * @param args Command-line arguments (not used).
      */
-	public static void main(String[] args0) {
+	public static void main(String[] args) {
 		CampApp app = new CampApp();
 		app.run();
 	}	
@@ -28,12 +28,12 @@ public class CampApp {
      */
 	public void run() {
 		System.out.println(
-			" ██████╗ █████╗ ███╗   ███╗███████╗\r\n" +
-			"██╔════╝██╔══██╗████╗ ████║██╔════╝\r\n" +
-			"██║     ███████║██╔████╔██║███████╗\r\n" +
-			"██║     ██╔══██║██║╚██╔╝██║╚════██║\r\n" +
-			"╚██████╗██║  ██║██║ ╚═╝ ██║███████║\r\n" +
-			" ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\r");
+				" ██████╗ █████╗ ███╗   ███╗███████╗\r\n" +
+				"██╔════╝██╔══██╗████╗ ████║██╔════╝\r\n" +
+				"██║     ███████║██╔████╔██║███████╗\r\n" +
+				"██║     ██╔══██║██║╚██╔╝██║╚════██║\r\n" +
+				"╚██████╗██║  ██║██║ ╚═╝ ██║███████║\r\n" +
+				" ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\r");
 		System.out.println("Camp Application And Management System");
 		UserManager UserManager = new UserManager();
 		while(true) {

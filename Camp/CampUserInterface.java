@@ -24,6 +24,6 @@ public interface CampUserInterface extends UserInterface {
      * @param password The password of the staff member.
      * @return A Staff object if authentication is successful; otherwise, null.
      */
-	public Staff authStaff(String UserId, String password);
+	public Staff authStaff(String userId, String password);
 
 }

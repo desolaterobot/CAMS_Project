@@ -64,6 +64,7 @@ public class SuggestionManager extends SuggestionDBManager{
      * Approves the suggestion and writes the data to the CSV file.
      *
      * @param suggestion The Suggestion object to be approved.
+     * @param staff The staff who approved the suggestion.
      * @return State of success
      */
     public static boolean approveSuggestion(Suggestion suggestion, Staff staff) {

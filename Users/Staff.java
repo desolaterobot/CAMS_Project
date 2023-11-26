@@ -50,7 +50,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     /**
      * Returns the list of camps that current staff is in charged of. To prevent circular referencing
      * ownCamps is only loaded when getOwnCamps is called.
-     * @return List<Camp> Lists of camps that current staff is in charged of.
+     * @return ownCamps Lists of camps that current staff is in charged of.
      */
     public List<Camp> getOwnCamps() {
         if (ownCamps.isEmpty()) {
@@ -354,6 +354,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
 
     /**
      * View Camps created by current staff.
+     * 
+     * @return true indicating successful display of camp information.
      */
     public boolean viewOwnCamp() {
         CampPrinter.printCamps(getOwnCamps().toArray(new Camp[1]), false);

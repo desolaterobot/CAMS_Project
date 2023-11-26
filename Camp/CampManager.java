@@ -79,12 +79,12 @@ public class CampManager extends CampDBManager{
      * @param committeeID The ID of the committee.
      * @return An array of Camp objects associated with the specified committee.
      */
-    public static Camp[] getCampsByCommiteeID(String commiteeID){
+    public static Camp[] getCampsByCommiteeID(String committeeID){
         List<Camp> campList = new LinkedList<>(); 
         for(Camp c : CampDBManager.getCampDatabase()){
             boolean includeThis = false;
             for(String attendee : c.committeeList){
-                if(attendee.equals(commiteeID)){
+                if(attendee.equals(committeeID)){
                     includeThis = true;
                     break;
                 }
@@ -366,7 +366,7 @@ public class CampManager extends CampDBManager{
      * Adds a withdrawal record for a user in a camp.
      *
      * @param toBeModified The Camp object to which the withdrawal is added.
-     * @param userID       The user ID for the withdrawal.
+     * @param UserID       The user ID for the withdrawal.
      */
     public static void addWithdrawal(Camp toBeModified, String UserID){
         List<String> withdrawalList = new ArrayList<>(Arrays.asList(toBeModified.withdrawals));

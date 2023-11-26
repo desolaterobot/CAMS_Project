@@ -10,6 +10,12 @@ import java.util.Scanner;
  * Additionally, it handles the conversion of data types such as lists, sentences, booleans, and integers.
  */
 public class CSVReader{
+	
+	/**
+     * Main method for testing the committee member functionalities.
+     *
+     * @param a Command-line arguments (not used).
+     */
     public static void main(String[] a){
         System.out.println("test");
     }
@@ -220,10 +226,10 @@ public class CSVReader{
     }
     
     /**
-     * Replaces commas in a string with a special pattern "%^&".
+     * Replaces commas in a string with a special pattern "%25 %5E &amp;".
      *
      * @param str The input string.
-     * @return The string with commas replaced by "%^&".
+     * @return The string with commas replaced by "%25 %5E &amp;".
      */
     //sentences are hard to include in a .csv, because they may contain commas
     //which causes delimiter error. in order to store sentences in CSV's 
@@ -234,10 +240,10 @@ public class CSVReader{
     }
 
     /**
-     * Replaces the special pattern "%^&" with commas in a string.
+     * Replaces the special pattern "%25 %5E &amp;" with commas in a string.
      *
      * @param str The input string with the special pattern.
-     * @return The string with "%^&" replaced by commas.
+     * @return The string with "%25 %5E &amp;" replaced by commas.
      */
     public static String getCommas(String str){
         return str.replace("%^&", ",");
