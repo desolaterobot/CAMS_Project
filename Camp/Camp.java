@@ -125,6 +125,10 @@ public class Camp {
         return committeeList;
     }
 
+    public void setCommitteeList(String[] committeeList) {
+        this.committeeList = committeeList;
+    }
+
     /**
      * Returns the number of slots reserved for committees.
      *

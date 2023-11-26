@@ -51,16 +51,17 @@ public class CampPrinter {
             return;
         } 
         int x = 1;
-        if(!onlyVisible){
-            for(Camp c : campArray){
-                c.visible = true;
-            }
-        }
         for(Camp c : campArray){
-            if(c.visible){
+            if (onlyVisible) {
+                if(c.visible){
+                System.out.printf("%d) %s\n", x, c.campName);
+                x++;
+                }
+            } else {
                 System.out.printf("%d) %s\n", x, c.campName);
                 x++;
             }
+            
         }
     }
 

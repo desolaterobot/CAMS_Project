@@ -58,6 +58,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      * Load Camp from CampManger into current stuff's ownCamps attribute.
      */
     private void loadOwnCamp() {
+        ownCamps = new ArrayList<>();
         ownCamps.addAll(List.of(CampManager.getCampsByStaffID(this.getUserId())));
     }
 
@@ -308,6 +309,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      */
     public boolean toggleVisibility(Camp camp) {
         camp.toggleVisibility();
+        loadOwnCamp();
+        CampDBManager.saveUpdatedCamp(camp);
         return camp.getVisible();
     }
 
