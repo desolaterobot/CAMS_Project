@@ -2,6 +2,8 @@ package Camp;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
+
 import Camp.CampPrinter;
 
 /**
@@ -15,7 +17,7 @@ public class CampFilter{
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
-        filterAndPrintVisibleCamps();
+        //filterAndPrintVisibleCamps();
     }
 
     /**
@@ -88,6 +90,8 @@ public class CampFilter{
 
     /**
      * Filters and prints all visible camps, allowing the user to choose the sorting criteria.
+     * 
+     * @param choice Select what kind of filtering.
      */
     public static void filterAndPrintVisibleCamps(int choice){
         Scanner sc = new Scanner(System.in);
@@ -106,6 +110,7 @@ public class CampFilter{
      * Filters and prints all camps being passed in, allowing the user to choose the sorting criteria.
      *
      * @param camps The array of camps being passed in.
+     * @param choice What kind of choice to sort by.
      */
     public static void filterAndPrintCamps(Camp[] camps, int choice){
         Scanner sc = new Scanner(System.in);
