@@ -90,31 +90,32 @@ public class MenuHandler {
 			
 			sc.nextLine();
 			
-			if(choice==0) return;
-			
-			if(student.isCommitteeMember()) {
-				if (choice != 1) {
-					InputHandler.handleCommitteeMemberChoice(student,choice);
+			try {
+				if(choice==0) return;
+				if(student.isCommitteeMember()) {
+					if (choice != 1) {
+						InputHandler.handleCommitteeMemberChoice(student,choice);
+					} else {
+						InputHandler.handleCommitteeMemberChoice(student,choice);
+						System.out.println("Please login again...");
+						return;
+					}	
 				} else {
-					InputHandler.handleCommitteeMemberChoice(student,choice);
-					System.out.println("Please login again...");
-					return;
+					if (choice != 1) {
+						InputHandler.handleStudentChoice(student,choice);
+					} else {
+						InputHandler.handleStudentChoice(student,choice);
+						System.out.println("Please login again...");
+						return;
+					}
 				}
-			}
-			
-			else {
-				if (choice != 1) {
-					InputHandler.handleStudentChoice(student,choice);
-				} else {
-					InputHandler.handleStudentChoice(student,choice);
-					System.out.println("Please login again...");
-					return;
-				}
-			}
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input. Please enter a number.");
+				sc.nextLine(); // Clear the invalid input
+		    	}	
 				
-				
-			}
 		}
+	}
 	
 	/**
      * Displays the Staff menu and handles user input based on their choices.
@@ -125,21 +126,22 @@ public class MenuHandler {
 		Scanner sc = new Scanner(System.in);
 		while(true) {
 			printStaffMenu();
-			
 			int choice = sc.nextInt();
-			
 			sc.nextLine();
-			
-			if(choice==0) return;
-			
-			if (choice != 14) {
-				InputHandler.handleStaffChoice(staff,choice);
-			} else {
-				InputHandler.handleStaffChoice(staff,choice);
-				System.out.println("Please login again...");
-				return;
-			}
-			}
+			try {
+				if(choice==0) return;
+				if (choice != 14) {
+					InputHandler.handleStaffChoice(staff,choice);
+				} else {
+					InputHandler.handleStaffChoice(staff,choice);
+					System.out.println("Please login again...");
+					return;
+				}
+			}catch (InputMismatchException e) {
+		                System.out.println("Invalid input. Please enter a number.");
+		                sc.nextLine(); // Clear the invalid input
+		    	}
 		}	
-	}
+	}	
+}
 
