@@ -37,33 +37,34 @@ public class CampApp {
 		System.out.println("Camp Application And Management System");
 		UserManager UserManager = new UserManager();
 		while(true) {
-			System.out.println("1.login");
-			System.out.println("2.exit");
-			
-			int choice = -1;
-			
-			try {
-				choice = Integer.parseInt(sc.nextLine());
-			} catch (Exception e) {
-				//let switch case handle error
-			}
-			switch(choice) {
-				case 1:
-					User authenticatedUser = UserManager.login();
-					if(authenticatedUser !=null) {
-						handleUserMenu(authenticatedUser);
-					}
-					else {
-						System.out.println("Incorrect Username or Password");
-					}
-					break;
-				case 2:
-					sc.close();
-					return;
-				default:
-					System.out.println("Invalid choice. Please try again");
-					break;
-			}
+			System.out.println("1. login");
+            System.out.println("2. exit");
+
+            int choice;
+            try {
+                choice = sc.nextInt();
+                sc.nextLine(); // Flush the buffer
+
+                switch (choice) {
+                    case 1:
+                        User authenticatedUser = UserManager.login();
+                        if (authenticatedUser != null) {
+                            handleUserMenu(authenticatedUser);
+                        } else {
+                            System.out.println("Incorrect authentication");
+                        }
+                        break;
+                    case 2:
+                        sc.close();
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                sc.nextLine(); // Clear the invalid input
+            }
 		}
 	}
 
