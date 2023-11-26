@@ -9,6 +9,9 @@ import Enquiry.EnquiryReply;
 import Users.UserManager;
 import Utility.CSVReader;
 
+/**
+ * Manages the storage and retrieval of enquiries and their replies in the CSV file.
+ */
 public class EnquiryDBManager extends CSVReader {
 	 /**
      * Retrieves the array of enquiry replies from the CSV file.
@@ -44,6 +47,7 @@ public class EnquiryDBManager extends CSVReader {
      * Edits an existing enquiry in the CSV file.
      *
      * @param toBeUpdated The Enquiry object to be updated.
+     * @param line        The updated CSV-formatted string representation of the Enquiry.
      */
     public static void updateEnquiryDB(Enquiry toBeUpdated, String line) {
 		modifyLine("data/enquiry.csv", toBeUpdated.getEnquiryID(), line);
@@ -61,14 +65,17 @@ public class EnquiryDBManager extends CSVReader {
     /**
      * Adds a new enquiry to the CSV file.
      *
-     * @param sender  The user sending the enquiry.
-     * @param camp    The camp related to the enquiry.
-     * @param message The message content of the enquiry.
+     * @param line The CSV-formatted string representation of the new enquiry.
      */
     public static void addEnquiryToDB(String line){
         addLine("data/enquiry.csv", line);
     }
-    
+
+	/**
+     * Adds a new reply to the CSV file.
+     *
+     * @param line The CSV-formatted string representation of the new reply.
+     */
     public static void addReplyToDB(String line){
     	addLine("data/replies.csv", line);
     }
