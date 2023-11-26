@@ -52,7 +52,7 @@ public class InputHandler {
 		switch(choice) {
 		case 1:
 			System.out.println("Change Password for " + student.getUserId());
-			UserManager.changePassword((User) student);
+			UserDBManager.changePassword((User) student);
 			break;
 		case 2:
 			System.out.println("Viewing Available Camps for: " + student.getName());
@@ -177,7 +177,7 @@ public class InputHandler {
 			break;
 		case 14:
 			//change password function
-			UserManager.changePassword(staff);
+			UserDBManager.changePassword(staff);
 			break;
 		default:
 			return;

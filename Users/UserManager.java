@@ -13,11 +13,11 @@ import Utility.CSVReader;
  * It includes methods for reading user data from CSV files, hashing passwords, and modifying user information.
  */
 public //this user manager class converts CSV data to User objects
-class UserManager extends CSVReader{
+class UserManager{
 
     public static void main(String[] a){
         System.out.println("test");
-        loadUsers();
+        UserDBManager.loadUsers();
     }
 
     /**

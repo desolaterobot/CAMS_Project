@@ -1,6 +1,7 @@
 package Camp;
 import java.util.Date;
 
+import Users.UserDBManager;
 import Users.UserManager;
 
 /**
@@ -92,7 +93,7 @@ public class Camp {
         this.visible = visible;
         this.committeeList = committeeList;
         this.attendees = attendees;
-        this.faculty = UserManager.getStaff(staffInCharge).getFaculty();
+        this.faculty = UserDBManager.getStaff(staffInCharge).getFaculty();
         this.withdrawals = withdrawals;
     }
     

@@ -1,6 +1,7 @@
 package Suggestion;
 import Camp.Camp;
 import Users.User;
+import Users.UserDBManager;
 import Users.UserManager;
 import Utility.CSVReader;
 
@@ -40,7 +41,7 @@ public class Suggestion {
             this.approvedBy = null;
             this.approved = false; 
         }else{
-            this.approvedBy = UserManager.getUser(approvedBy);
+            this.approvedBy = UserDBManager.getUser(approvedBy);
             this.approved = true;
         }
     }

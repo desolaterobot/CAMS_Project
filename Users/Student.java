@@ -124,7 +124,7 @@ public class Student extends User implements EnquiryInterface{
 						committeeMemberOf = camp.getCampName();
 						isCommitteeMember = true;
 						CampManager.addCommittee(camp, getUserId());
-						UserManager.updateStudentDB(this);
+						UserDBManager.updateStudentDB(this);
 						System.out.println("You have successfully registered as a Camp Committee Member of " + camp.getCampName());
 					}
 					else {
@@ -149,7 +149,7 @@ public class Student extends User implements EnquiryInterface{
 						committeeMemberOf = camp.getCampName();
 						isCommitteeMember = true;
 						CampManager.addCommittee(camp, getUserId());
-						UserManager.updateStudentDB(this);
+						UserDBManager.updateStudentDB(this);
 						System.out.println("You have successfully registered as a Camp Committee Member of " + camp.getCampName());
 					}
 					else {
@@ -422,7 +422,7 @@ public class Student extends User implements EnquiryInterface{
      */
 	public static void main(String[] args) { 
 		System.out.println("testing Student.java");
-		Student s = UserManager.getStudent("BGOH023");
+		Student s = UserDBManager.getStudent("BGOH023");
 //		Student s = new Student("BRYAN", "BGOH023@e.ntu.edu.sg", "SCSE", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", false, "null");
 //		System.out.println(s.userID);
 		s.viewCamps();

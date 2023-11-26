@@ -13,7 +13,7 @@ import Utility.CSVReader;
  */
 public class SuggestionManager extends CSVReader{
     public static void main(String[] args) {
-        addSuggestion(CampManager.getCamp("stupid camp"), UserManager.getUser("DIMAS001"), "test suggestion");
+        addSuggestion(CampManager.getCamp("stupid camp"), UserDBManager.getUser("DIMAS001"), "test suggestion");
     }
 
      /**
@@ -25,7 +25,7 @@ public class SuggestionManager extends CSVReader{
         List<Suggestion> suggList = new LinkedList<>();
         for(String s : getLines("data/suggestions.csv")){
             String[] items = s.split(",");
-            suggList.add(new Suggestion(items[0], UserManager.getUser(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), items[4]));
+            suggList.add(new Suggestion(items[0], UserDBManager.getUser(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), items[4]));
         }
         return suggList.toArray(new Suggestion[suggList.size()]); 
     }

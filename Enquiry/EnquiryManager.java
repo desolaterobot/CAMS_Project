@@ -6,6 +6,7 @@ import Camp.Camp;
 import Camp.CampManager;
 import Users.Student;
 import Users.User;
+import Users.UserDBManager;
 import Users.UserManager;
 import Utility.CSVReader;
 
@@ -24,7 +25,7 @@ public class EnquiryManager extends CSVReader{
         for(Enquiry e : allEnquiries){
             System.out.println(e.message);
         }
-        addEnquiry(UserManager.getStudent("DIMAS001"), CampManager.getCamp("hyper camp"), "is this camp hyper enough for me?");
+        addEnquiry(UserDBManager.getStudent("DIMAS001"), CampManager.getCamp("hyper camp"), "is this camp hyper enough for me?");
         Enquiry[] allEnquiries2 = getEnquiryDatabase();
         for(Enquiry e : allEnquiries2){
             System.out.println(e.message);
@@ -41,7 +42,7 @@ public class EnquiryManager extends CSVReader{
         List<EnquiryReply> replyList = new LinkedList<>();
         for(String s : replies){
             String[] item = s.split(",");
-            replyList.add(new EnquiryReply(item[0], getCommas(item[1]), UserManager.getUser(item[2])));
+            replyList.add(new EnquiryReply(item[0], getCommas(item[1]), UserDBManager.getUser(item[2])));
         }
         return replyList.toArray(new EnquiryReply[replyList.size()]);
     }
@@ -56,7 +57,7 @@ public class EnquiryManager extends CSVReader{
         List<Enquiry> enqlist = new LinkedList<>();
         for(String s : enqs){
             String[] items = s.split(",");
-            enqlist.add(new Enquiry(items[0], UserManager.getStudent(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), stringToList(items[4])));
+            enqlist.add(new Enquiry(items[0], UserDBManager.getStudent(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), stringToList(items[4])));
         }
         return enqlist.toArray(new Enquiry[enqlist.size()]);
     }
