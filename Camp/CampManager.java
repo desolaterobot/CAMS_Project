@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import DataManager.CampDBManager;
 import Users.Student;
 import Users.User;
 import Utility.DateStr;

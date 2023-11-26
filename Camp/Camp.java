@@ -112,6 +112,11 @@ public class Camp {
     public String[] getCommitteeList() {
         return committeeList;
     }
+    
+
+    public boolean getOnlyFaculty() {
+    	return this.onlyFaculty;
+    }
 
     public int getCommitteeSlots() {
         return committeeSlots;
@@ -176,5 +181,4 @@ public class Camp {
     public void releaseCommitteeSlots() {
         committeeSlots++;
     }
-
 }
