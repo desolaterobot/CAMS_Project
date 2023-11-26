@@ -176,8 +176,23 @@ public class CampManager extends CampDBManager{
             System.out.println("Enter the total number of attendee slots.");
             int totalSlots = sc.nextInt();
     
-            System.out.println("Enter the total number of committee slots.");
-            int commiteeSlots = sc.nextInt();
+            int committeeSlots = -1;
+            while (true) {
+                
+                System.out.println("Enter the total number of committee slots. (Max 10)");
+                try {
+                    committeeSlots = Integer.parseInt(sc.nextLine());
+                } catch (Exception e) {
+                    System.out.println("Invalid Number please try again.");
+                    continue; 
+                }
+                
+                if (committeeSlots > 10 || committeeSlots < 0) {
+                    System.out.println("Committee slot can only be between 0 and 10");
+                } else {
+                    break;
+                }
+            }
     
             System.out.println("Should this camp be open to the whole NTU (type 1) or only for your faculty? (type 0)");
             int choice = sc.nextInt();
@@ -190,7 +205,7 @@ public class CampManager extends CampDBManager{
     
             String[] emptyArray = new String[0];
     
-            Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.getUserId(), emptyArray, visible, totalSlots, commiteeSlots, emptyArray);
+            Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.getUserId(), emptyArray, visible, totalSlots, committeeSlots, emptyArray);
             
             CampDBManager.createCamp(createdCamp);
         } else {
@@ -243,16 +258,39 @@ public class CampManager extends CampDBManager{
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter the start date of the camp, in the format: dd/mm/yyyy");
-                    campToBeEdited.startDate = DateStr.strToDate(sc.nextLine());
+                    while (true) {
+                        System.out.println("Enter the start date of the camp, in the format: dd/mm/yyyy");
+                        campToBeEdited.startDate = DateStr.strToDate(sc.nextLine());
+
+                        if (campToBeEdited.startDate.before(campToBeEdited.endDate)) {
+                            break; // Valid date range
+                        } else {
+                            System.out.println("End date must be after the start date. Please re-enter the dates.");
+                        }
+                    }
                     break;
                 case 2:
-                    System.out.println("Enter the end date of the camp, in the format: dd/mm/yyyy");
-                    campToBeEdited.endDate = DateStr.strToDate(sc.nextLine());
+                    while (true) {
+                        System.out.println("Enter the end date of the camp, in the format: dd/mm/yyyy");
+                        campToBeEdited.endDate = DateStr.strToDate(sc.nextLine());
+                        
+                        if (campToBeEdited.startDate.before(campToBeEdited.endDate)) {
+                            break; // Valid date range
+                        } else {
+                            System.out.println("End date must be after the start date. Please re-enter the dates.");
+                        }
+                    }
                     break;
                 case 3:
-                    System.out.println("Enter the registration deadline, in the format: dd/mm/yyyy");
-                    campToBeEdited.registrationDeadline = DateStr.strToDate(sc.nextLine());
+                    while (true) {
+                        System.out.println("Enter the registration deadline, in the format: dd/mm/yyyy");
+                        campToBeEdited.registrationDeadline = DateStr.strToDate(sc.nextLine());
+                        if (campToBeEdited.registrationDeadline.before(campToBeEdited.startDate)) {
+                            break; // Valid registration deadline
+                        } else {
+                            System.out.println("Registration deadline must be before the start date. Please re-enter the date.");
+                        }
+                    }
                     break;
                 case 4:
                     campToBeEdited.onlyFaculty = !campToBeEdited.onlyFaculty;
@@ -267,12 +305,22 @@ public class CampManager extends CampDBManager{
                     campToBeEdited.totalSlots = Integer.parseInt(sc.nextLine());
                     break;
                 case 7:
-                    System.out.println("Enter the total number of committee slots. (Max 10)");
-                    int committeeSlots = Integer.parseInt(sc.nextLine());
-                    if (committeeSlots > 10 || committeeSlots < 0) {
-                        break;
-                    } else {
-                        campToBeEdited.committeeSlots = committeeSlots;
+                    while (true) {
+                        int committeeSlots = -1;
+                        System.out.println("Enter the total number of committee slots. (Max 10)");
+                        try {
+                            committeeSlots = Integer.parseInt(sc.nextLine());
+                        } catch (Exception e) {
+                           System.out.println("Invalid Number please try again.");
+                           continue; 
+                        }
+                        
+                        if (committeeSlots > 10 || committeeSlots < 0) {
+                            System.out.println("Committee slot can only be between 0 and 10");
+                        } else {
+                            campToBeEdited.committeeSlots = committeeSlots;
+                            break;
+                        }
                     }
                     break;
                 case 8:

@@ -33,6 +33,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     //    s.acceptSuggestion();
     //    s.viewSuggestions();
     //    s.editCamp();
+        // s.deleteCamp();
+        s.createCamp();
     }
 
     /**
@@ -91,9 +93,25 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+
         CampPrinter.print(campList,false);
-        int choice = Integer.parseInt(sc.nextLine());
-        editCamp(campList[choice-1]);
+
+        while (true) {
+            int choice = -1;
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                //Let if else below handle
+            }
+             
+            if (choice > campList.length || choice < 1)  {
+                System.out.println("Please enter a valid number");
+            } else {
+                editCamp(campList[choice-1]);
+                System.out.printf("%s has been successfully edited.\n",campList[choice-1].getCampName());
+                break;
+            }
+        }
     }
 
     /**
@@ -113,9 +131,26 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to delete Camp");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+
         CampPrinter.print(campList, false);
-        int choice = Integer.parseInt(sc.nextLine());
-        deleteCamp(campList[choice-1]);
+
+        while (true) {
+            int choice = -1;
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                //Let if else below handle
+            }
+             
+            if (choice > campList.length || choice < 1)  {
+                System.out.println("Please enter a valid number");
+            } else {
+                String tempCampName = campList[choice-1].getCampName();
+                deleteCamp(campList[choice-1]);
+                System.out.printf("%s has been successfully deleted.\n",tempCampName);
+                break;
+            }
+        }
     }
 
     /**
@@ -142,9 +177,24 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to View Student List");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
+        
         CampPrinter.print(campList, false);
-        int choice = Integer.parseInt(sc.nextLine());
-        viewStudentList(campList[choice-1]);
+
+        while (true) {
+            int choice = -1;
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                //Let if else below handle
+            }
+             
+            if (choice > campList.length || choice < 1)  {
+                System.out.println("Please enter a valid number");
+            } else {
+                viewStudentList(campList[choice-1]);
+                break;
+            }
+        }
     }
 
     /**
@@ -207,8 +257,22 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         System.out.println("Enter number to genereate Performance Report for that camp");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
         CampPrinter.print(campList, false);
-        int choice = Integer.parseInt(sc.nextLine());
-        generatePerformanceReport(campList[choice-1]);
+        
+        while (true) {
+            int choice = -1;
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                //Let if else below handle
+            }
+             
+            if (choice > campList.length || choice < 1)  {
+                System.out.println("Please enter a valid number");
+            } else {
+                generatePerformanceReport(campList[choice-1]);
+                break;
+            }
+        }
     }
 
     /**
@@ -337,7 +401,6 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
              
             if (choice > campList.length || choice < 1)  {
                 System.out.println("Please enter a valid number");
-                choice = Integer.parseInt(sc.nextLine());
             } else {
                 System.out.printf("%s visibility has been toggled to: %b\n",campList[choice-1].getCampName(),toggleVisibility(campList[choice-1]));
                 break;

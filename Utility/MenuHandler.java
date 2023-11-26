@@ -65,7 +65,7 @@ public class MenuHandler {
 			System.out.println("5. View All Camps");
 			System.out.println("6. View My Camps");
 			System.out.println("7. View Student List");
-			System.out.println("8. View Enquieries");
+			System.out.println("8. View Enquiries");
 			System.out.println("9. Reply Enquiries");
 			System.out.println("10. View Suggestions");
 			System.out.println("11. Approve Suggestion");
