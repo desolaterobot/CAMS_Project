@@ -188,8 +188,17 @@ public class UserDBManager extends CSVReader {
      */
     public static void changePassword(User user){
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Please enter your new password.");
-		String newPassword = sc.nextLine();
+		String newPassword;
+		do {
+			System.out.println("Please enter your new password.");
+			newPassword = sc.nextLine();
+			if (newPassword.equals("password")) {
+				System.out.println("Please change your password to something that is not the default password! -- Password change failed!");
+			} else if (hash(newPassword).equals(user.getPassword())){
+					System.out.println("You're using your old password! -- Password change failed!");
+			}
+		} while (newPassword.equals("password")|| hash(newPassword).equals(user.getPassword()));
+ 
         String newPassHash = UserManager.hash(newPassword);
         String file = null;
 		String newLine = null;
