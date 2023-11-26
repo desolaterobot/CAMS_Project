@@ -12,14 +12,17 @@ import Users.User;
 import Users.UserManager;
 import Utility.CSVReader;
 
+/**
+ * Manages the storage and retrieval of user information from CSV files.
+ */
 public class UserDBManager extends CSVReader {
 	//DATA READING///////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Finds a single user by the given userID.
+     * Finds a single student by the given userID.
      *
-     * @param userID The ID of the user to find.
-     * @return The User object if found, otherwise null.
+     * @param userID The ID of the student to find.
+     * @return The Student object if found, otherwise null.
      */
     public static Student getStudent(String userID){
     	List<Student> Students = loadStudents();
@@ -32,7 +35,13 @@ public class UserDBManager extends CSVReader {
         System.out.printf("Student %s not found in database.\n", userID);
         return null;
     }
-    
+
+	/**
+     * Finds a single staff member by the given userID.
+     *
+     * @param userID The ID of the staff member to find.
+     * @return The Staff object if found, otherwise null.
+     */
     public static Staff getStaff(String userID) {
     	List<Staff> Staffs = loadStaff();
     	
@@ -44,7 +53,13 @@ public class UserDBManager extends CSVReader {
         System.out.printf("Staff %s not found in database.\n", userID);
         return null;
     }
-    
+
+	/**
+     * Finds a single user by the given userID.
+     *
+     * @param userID The ID of the user to find.
+     * @return The User object if found, otherwise null.
+     */
     public static User getUser(String userID) {
     	List<User> Users = loadUsers();
     	
@@ -56,7 +71,12 @@ public class UserDBManager extends CSVReader {
         System.out.printf("Staff %s not found in database.\n", userID);
         return null;
     }
-    
+
+	/**
+     * Loads a list of students from the CSV file.
+     *
+     * @return A list of Student objects.
+     */
 	public static List<Student> loadStudents() {
 		List<Student> users = new ArrayList<>();
 		String file = "data/students.csv";
@@ -85,7 +105,12 @@ public class UserDBManager extends CSVReader {
 		}
 		return users;
 	}
-	
+
+	 /**
+     * Loads a list of staff members from the CSV file.
+     *
+     * @return A list of Staff objects.
+     */
 	public static List<Staff> loadStaff() {
 		List<Staff> users = new ArrayList<>();
 		String file = "data/staff.csv";
@@ -106,8 +131,11 @@ public class UserDBManager extends CSVReader {
 		return users;
 	}
 	
-	
-	
+	/**
+     * Loads a list of all users (both students and staff) from the CSV files.
+     *
+     * @return A list of User objects.
+     */
 	public static List<User> loadUsers(){
 		List<User> Users = new ArrayList<>();
 		String[] files = {"data/students.csv","data/staff.csv"};
@@ -138,98 +166,26 @@ public class UserDBManager extends CSVReader {
 		}
 		return Users;		
 	}
-	
+
+	/**
+     * Updates a student's information in the CSV file.
+     *
+     * @param student The Student object to be updated.
+     */
 	public static void updateStudentDB(Student student) {
 		String line = String.format("%s,%s,%s,%s,%s,%s", 
         removeCommas(student.getName()), removeCommas(student.getEmail()), removeCommas(student.getFaculty()), removeCommas(student.getPassword()), 
         removeCommas(Boolean.toString(student.isCommitteeMember()).toUpperCase()), removeCommas(student.getCommitteeCamp()));
 		modifyLine("data/students.csv", student.getName(), line);
 	}
-	
-    /**
-     * Returns an array of User objects representing staff members.
-     *
-     * @return An array of User objects.
-     */
-//    public static User[] getStaff(){
-//        return getUsers("data/staff.csv");
-//    }
-
-    /**
-     * Returns an array of User objects representing students.
-     *
-     * @return An array of User objects.
-     */
-//    public static User[] getStudents(){
-//        return getUsers("data/student.csv");
-//    }
-
-    /**
-     * Returns an array of User objects representing both staff and students.
-     *
-     * @return An array of User objects.
-     */
-//    public static User[] getStaff(){
-//        List<User> userList = new ArrayList<User>();
-//        User[] arr1 = null;
-//        arr1 = getUsers("data/staff.csv");
-//        arr2 = getUsers("data/student.csv");
-//        for(User u : arr1){
-//            userList.add(u);
-//        }
-//        return userList;
-//    }
-    
-//    public static User[] getStudents() {
-//    	List<User> userList = new ArrayList<User>();
-//    	
-//    	User[] arr1 = null;
-//        arr1 = getUsers("data/student.csv");
-//        
-//        for(User u : arr1){
-//            userList.add(u);
-//        }
-//        
-//        return userList
-//        
-//    }
-
-    /**
-     * Checks if a given username and password pair is valid.
-     * Returns a User object of the specified userID if the password is correct.
-     *
-     * @param userID The user ID.
-     * @param password The user password.
-     * @return The User object if authentication is successful, otherwise null.
-     */
-//    public static User validateUser(String userID, String password){
-//        User[] userList = getStaffStudents();
-//        User foundUser = null;
-//        for(User user : userList){
-//            if(userID.equals(user.userID)){
-//                foundUser = user;
-//            }
-//        }
-//        if(foundUser == null){
-//            System.out.println("User not found. Try again.");
-//            return null;
-//        }
-//        if(!foundUser.passHash.equals(hash(password))){
-//            System.out.println("Incorrect password. Try again");
-//            return null;
-//        }
-//        return foundUser;
-//    }
 
     //DATA MODIFICATION//////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Changes the password of the User. Requires a child User object, such as Student, CommiteeMember, or Staff
+     * Changes the password of the User. Requires a child User object, such as Student, CommitteeMember, or Staff
      *
      * @param user The User-inherited object.
      */
-
-    //changes the password hash entry of a user in the database
     public static void changePassword(User user){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter your new password.");
