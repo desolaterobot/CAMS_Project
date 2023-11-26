@@ -73,6 +73,7 @@ class UserManager{
 		if(User.getUserId().equals(userId) && User.getPassword().equals(hash(password))) {
 				while(User.getPassword().equals(hash("password"))) {
 					UserDBManager.changePassword(User);
+					User = UserDBManager.getUser(userId);
 				}
 			
 			return User;
