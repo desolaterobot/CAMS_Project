@@ -89,11 +89,12 @@ public class CSVReader{
     }
 
     /**
-     * Writes a line to a CSV file. Will overwrite the file in the process!
-     *
-     * @param filepath The path of the CSV file to which the line will be added.
-     * @param line     The line to be written to the CSV file.
-     */
+ * Writes a line to a specified file path.
+ *
+ * @param filepath The path of the file to write to.
+ * @param line The content of the line to be written.
+ * @param newLine If true, appends a newline character after the line; if false, no newline character is appended.
+ */
     public static void writeLine(String filepath, String line, boolean newLine){
         FileWriter fw = null;
         try{
