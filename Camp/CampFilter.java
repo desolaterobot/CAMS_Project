@@ -10,14 +10,17 @@ import Camp.CampPrinter;
  * Provides methods for filtering and sorting camps based on various criteria.
  */
 public class CampFilter{
-
     /**
      * Main method to demonstrate filtering and printing visible camps.
      *
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
+<<<<<<< Updated upstream
         //filterAndPrintVisibleCamps();
+=======
+        // filterAndPrintVisibleCamps();
+>>>>>>> Stashed changes
     }
 
     /**
@@ -93,13 +96,11 @@ public class CampFilter{
      * 
      * @param choice Select what kind of filtering.
      */
-    public static void filterAndPrintVisibleCamps(int choice){
+    public static void filterAndPrintCamps(int choice){
         Scanner sc = new Scanner(System.in);
         List<Camp> campList = new LinkedList<>();
         for(Camp c : CampManager.getAllCamps()){
-            if(c.visible){
-                campList.add(c);
-            }   
+            campList.add(c);
         }
 
         CampFilter.sort(campList, choice);

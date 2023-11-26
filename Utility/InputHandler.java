@@ -150,7 +150,7 @@ public class InputHandler {
 			System.out.println("View All Camps...");
 			CampFilter.printFilterChoices();
 			int filterChoice = Integer.parseInt(sc.nextLine());
-			CampFilter.filterAndPrintVisibleCamps(filterChoice); //dimas edited this!!!!
+			CampFilter.filterAndPrintCamps(filterChoice); //dimas edited this!!!!
 			break;
 		case 6:
 			System.out.println("View My Camps...");
