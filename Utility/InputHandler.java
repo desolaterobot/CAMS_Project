@@ -124,6 +124,8 @@ public class InputHandler {
 			System.out.print("Enter the Enquiry ID which you wish to delete: ");
 			String deleteEnqID = sc.nextLine();
 			student.deleteEnquiry(deleteEnqID);
+		default:
+			System.out.println("Please input a value between 0-11!");
 		}
 	}
 
