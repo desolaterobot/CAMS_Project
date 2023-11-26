@@ -51,6 +51,7 @@ public class MenuHandler {
 				System.out.println("15. Delete My Suggestions");
 				System.out.println("16. Generate Camp Report");	
 				System.out.println("17. View current points");
+				System.out.println("18. View Student List");
 			}
 		}
 

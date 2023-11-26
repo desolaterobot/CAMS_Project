@@ -167,6 +167,24 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     	ReportGenerator.commMemGenerateReport(myCamp);
     }
 
+/**
+     * View the list of students in the current Camp.
+     *
+     * @param camp The camp to view the student list.
+     */
+    public void viewStudentList() {
+		Camp camp = CampManager.getCamp(getCommitteeCamp());
+        System.out.println("======Student List======");
+        for (String student : camp.getAttendees()) {
+            System.out.println(UserManager.getUser(student).getName());
+            
+        }
+        System.out.println("======Camp Commitee=====");
+        for (String campCom : camp.getCommitteeList()) {
+            System.out.println(UserManager.getUser(campCom).getName());
+        }
+    }
+
 	/**
      * Main method for testing the committee member functionalities.
      *

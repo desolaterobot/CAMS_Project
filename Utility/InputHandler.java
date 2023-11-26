@@ -39,6 +39,8 @@ public class InputHandler {
 			break;
 		case 17:
 			System.out.printf("Your current point(s): %d\n", PointsSystem.getCurrentPoints(commMem));
+		case 18:
+			commMem.viewStudentList();
 		default:
 			handleStudentChoice(student,choice);
 		}
