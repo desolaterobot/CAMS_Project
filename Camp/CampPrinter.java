@@ -25,24 +25,26 @@ public class CampPrinter {
                 System.out.println("---------------------------------------------------------------------------");
                 System.out.printf("%d) %s created by %s\n", x, c.campName, c.staffInCharge);
                 System.out.printf("%s\n", c.description);
-                System.out.printf("Visiblity of Camp: %b\n", c.visible);
+                System.out.printf("Camp is visible to students: %b\n", c.visible);
+                System.out.printf("Camp is available to: %s\n",c.getOnlyFaculty() ? c.getFaculty() : "All");
                 System.out.printf("Location: %s\n", c.location);
                 System.out.printf("From %s to %s\n", DateStr.dateToStr(c.startDate), DateStr.dateToStr(c.endDate));
                 System.out.printf("Registration Deadline: %s\n", DateStr.dateToStr(c.registrationDeadline));
                 System.out.printf("Total slots left: %d/%d\n", (c.totalSlots-c.attendees.length),c.totalSlots);
-                System.out.printf("Total commitee slots left: %d/%d\n", (c.committeeSlots-c.committeeList.length),c.committeeSlots);
+                System.out.printf("Total committee slots left: %d/%d\n", (c.committeeSlots-c.committeeList.length),c.committeeSlots);
                 x++;
                 }
             } else {
                 System.out.println("---------------------------------------------------------------------------");
                 System.out.printf("%d) %s created by %s\n", x, c.campName, c.staffInCharge);
                 System.out.printf("%s\n", c.description);
-                System.out.printf("Visiblity of Camp: %b\n", c.visible);
+                System.out.printf("Camp is visible to students: %b\n", c.visible);
+                System.out.printf("Camp is available to: %s\n", c.getOnlyFaculty() ? c.getFaculty() : "All");
                 System.out.printf("Location: %s\n", c.location);
                 System.out.printf("From %s to %s\n", DateStr.dateToStr(c.startDate), DateStr.dateToStr(c.endDate));
                 System.out.printf("Registration Deadline: %s\n", DateStr.dateToStr(c.registrationDeadline));
                 System.out.printf("Total slots left: %d/%d\n", (c.totalSlots-c.attendees.length),c.totalSlots);
-                System.out.printf("Total commitee slots left: %d/%d\n", (c.committeeSlots-c.committeeList.length),c.committeeSlots);
+                System.out.printf("Total committee slots left: %d/%d\n", (c.committeeSlots-c.committeeList.length),c.committeeSlots);
                 x++;
             }
             
