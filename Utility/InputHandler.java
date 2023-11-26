@@ -142,6 +142,7 @@ public class InputHandler {
 		case 3:
 			System.out.println("Deleting Camp...");
 			staff.deleteCamp();
+			System.out.println("Camp deleted!");
 			break;
 		case 4:
 			System.out.println("Toggling Visibility...");
