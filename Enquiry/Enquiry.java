@@ -44,31 +44,66 @@ public class Enquiry{
         this.replies = Arrays.stream(replies).mapToInt(Integer::parseInt).toArray();
     }
 
-
+/**
+     * Gets the camp associated with the enquiry.
+     *
+     * @return The camp associated with the enquiry.
+     */
     public Camp getCamp() {
         return camp;
     }
 
+    /**
+     * Gets the unique identifier for the enquiry.
+     *
+     * @return The unique identifier for the enquiry.
+     */
     public String getEnquiryID() {
         return enquiryID;
     }
 
+    /**
+     * Gets the content of the enquiry message.
+     *
+     * @return The content of the enquiry message.
+     */
+
     public String getMessage() {
         return message;
     }
-    
+
+    /**
+     * Gets an array of reply IDs associated with the enquiry.
+     *
+     * @return An array of reply IDs associated with the enquiry.
+     */
     public int[] getReplies() {
     	return replies;
     }
-    
+
+    /**
+     * Sets the content of the enquiry message.
+     *
+     * @param message The new content of the enquiry message.
+     */
     public void setMessage(String message) {
     	this.message = message;
     }
 
+    /**
+     * Gets the user (student) making the enquiry.
+     *
+     * @return The user (student) making the enquiry.
+     */
     public User getStudent() {
         return student;
     }
-    
+
+    /**
+     * Sets the camp associated with the enquiry.
+     *
+     * @param camp The new camp associated with the enquiry.
+     */
     public void setCamp(Camp camp) {
     	this.camp = camp;
     }
