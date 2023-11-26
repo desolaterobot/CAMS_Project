@@ -38,16 +38,17 @@ public class MenuHandler {
 			System.out.println("4. View Registered Camps");
 			System.out.println("5. Withdraw Camp");
 			System.out.println("6. Submit Enquiry");
-			System.out.println("7. View Enquiries");
-			System.out.println("8. View Enquiry Replies");
-			System.out.println("9. Edit Enquiry");
-			System.out.println("10. Delete Enquiry");
+			System.out.println("7. View My Own Enquiries");
+			System.out.println("8. View My Own Enquiry Replies");
+			System.out.println("9. Edit My Own Enquiry");
+			System.out.println("10. Delete My Own Enquiry");
 			if(student.isCommitteeMember()) {
-				System.out.println("11. Reply Enquiry");
-				System.out.println("12. View Suggestions");
-				System.out.println("13. Edit Suggestions");
-				System.out.println("14. Submit Suggestions");
-				System.out.println("15. Delete Suggestions");
+				System.out.printf("Opertions for %s\n", student.getCommitteeCamp());
+				System.out.println("11. Reply to Camp Enquiry");
+				System.out.println("12. View My Suggestions");
+				System.out.println("13. Edit My Suggestions");
+				System.out.println("14. Submit My Suggestions");
+				System.out.println("15. Delete My Suggestions");
 				System.out.println("16. View Camp Details");	
 			}
 		}
