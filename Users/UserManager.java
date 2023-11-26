@@ -12,7 +12,7 @@ import DataManager.UserDBManager;
  * The UserManager class manages user-related operations in the Camp Application and Management System.
  * It includes methods for reading user data from CSV files, hashing passwords, and modifying user information.
  */
-public class UserManager extends UserDBManager{
+public class UserManager extends UserDBManager implements UserInterface{
 
 	/**
      * Main method for testing purposes.
