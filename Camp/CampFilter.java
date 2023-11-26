@@ -61,6 +61,8 @@ public class CampFilter{
             case 7:
                 campList.sort( (c1, c2) -> c1.registrationDeadline.compareTo(c2.registrationDeadline));
                 break;
+            case 8:
+                break;
             default:
                 System.out.println("Invalid method!");
                 return null;
