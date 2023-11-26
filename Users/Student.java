@@ -250,7 +250,7 @@ public class Student extends User implements EnquiryInterface{
 			System.out.println("Enquiry Submitted! You may view/edit/delete your enquiry before it is processed!");
 		}
 		else {
-			System.out.println("You are a committee member of this camp!")
+			System.out.println("You are a committee member of this camp!");
 		}
 	}
 	
