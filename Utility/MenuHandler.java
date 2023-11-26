@@ -94,27 +94,24 @@ public class MenuHandler {
 			
 			try {
 				if(choice==0) return;
-				if(student.isCommitteeMember()) {
-					if (choice != 1) {
-						InputHandler.handleCommitteeMemberChoice(student,choice);
-					} else {
-						InputHandler.handleCommitteeMemberChoice(student,choice);
-						System.out.println("Please login again...");
-						return;
-					}	
-				} else {
-					if (choice != 1) {
-						InputHandler.handleStudentChoice(student,choice);
-					} else {
-						InputHandler.handleStudentChoice(student,choice);
-						System.out.println("Please login again...");
-						return;
-					}
-				}
+				if (choice >= 1 && choice <= 10) {
+			                InputHandler.handleStudentChoice(student, choice);
+			                if (choice == 1) {
+			                    System.out.println("Please login again...");
+			                    return;
+			                }
+	            		} 
+			    // Additional checks for committee member specific choices
+			    else if (student.isCommitteeMember() && choice >= 11 && choice <= 18) {
+				InputHandler.handleCommitteeMemberChoice(student, choice);
+			    } 
+			    else {
+				System.out.println("Invalid choice. Please try again.");
+			    }
 			} catch (InputMismatchException e) {
-				System.out.println("Invalid input. Please enter a number.");
-				sc.nextLine(); // Clear the invalid input
-		    	}	
+			    System.out.println("Invalid input. Please enter a number.");
+			    sc.nextLine(); // Clear the invalid input
+			} 	
 				
 		}
 	}
