@@ -1,5 +1,6 @@
 package Suggestion;
 import Camp.Camp;
+import Users.Staff;
 import Users.User;
 import Users.UserManager;
 import Utility.CSVReader;

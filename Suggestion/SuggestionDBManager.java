@@ -1,3 +1,5 @@
+package Suggestion;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +30,9 @@ public class SuggestionDBManager extends CSVReader{
      * @return An String of CSV-formatted information about a suggestion.
      */
     private static String suggToLine(Suggestion s){
-        return String.format("%s,%s,%s,%s,%s", s.getSuggestionID(), s.getCommitteeMember().getUserId(), s.getCamp().getCampName(), removeCommas(s.getMessage()), s.getApprovedBy().getUserId());
+    	String approvedByUserId = (s.getApprovedBy() != null) ? s.getApprovedBy().getUserId() : "None";
+    	
+        return String.format("%s,%s,%s,%s,%s", s.getSuggestionID(), s.getCommitteeMember().getUserId(), s.getCamp().getCampName(), removeCommas(s.getMessage()), approvedByUserId);
     }
 
     /**
