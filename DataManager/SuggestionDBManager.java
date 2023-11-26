@@ -8,6 +8,9 @@ import Suggestion.Suggestion;
 import Users.UserManager;
 import Utility.CSVReader;
 
+/**
+ * Manages the storage and retrieval of suggestions in the CSV file.
+ */
 public class SuggestionDBManager extends CSVReader{
 
     /**
@@ -27,7 +30,8 @@ public class SuggestionDBManager extends CSVReader{
     /**
      * Converts a suggestion object into String format.
      *
-     * @return An String of CSV-formatted information about a suggestion.
+     * @param s The suggestion object to be converted.
+     * @return A CSV-formatted string representation of the suggestion.
      */
     private static String suggToLine(Suggestion s){
     	String approvedByUserId = (s.getApprovedBy() != null) ? s.getApprovedBy().getUserId() : "None";
@@ -36,18 +40,18 @@ public class SuggestionDBManager extends CSVReader{
     }
 
     /**
-     * Adds a line onto the Suggestion CSV file.
+     * Adds a line to the Suggestion CSV file.
      *
-     * @param s The suggestion object to be added into the CSV file.
+     * @param s The suggestion object to be added to the CSV file.
      */
     public static void addSuggDB(Suggestion s){
         addLine("data/suggestions.csv", suggToLine(s));
     }
 
      /**
-     * Updates a line onto the Suggestion CSV file.
+     * Updates a line in the Suggestion CSV file.
      *
-     * @param s The suggestion object to be modified into the CSV file.
+     * @param s The suggestion object to be updated in the CSV file.
      */
     public static void updateSuggDB(Suggestion s){
         modifyLine("data/suggestions.csv", s.getSuggestionID(), suggToLine(s));
