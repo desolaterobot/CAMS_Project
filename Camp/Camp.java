@@ -278,4 +278,5 @@ public class Camp {
      */
     public void setCommitteeList(String[] committeeList) {
         this.committeeList = committeeList;
+    }
 }
