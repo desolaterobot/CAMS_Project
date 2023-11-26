@@ -165,7 +165,7 @@ public class ReportGenerator extends CSVReader{
     	choice = input.nextLine();
     	
     	if (choice.contains("Y")||choice.contains("y")) {
-    		addLine(filepath, String.format("\nComittee Members: (%d/%d)", camp.getCommitteeList(), camp.getCommitteeSlots()));
+    		addLine(filepath, String.format("\nComittee Members: (%d/%d)", camp.getCommitteeList().length, camp.getCommitteeSlots()));
     		x = 1;
             for(String s : camp.getCommitteeList()){
                 User u = UserManager.getUser(s);
@@ -186,7 +186,6 @@ public class ReportGenerator extends CSVReader{
             }
     	}
         System.out.printf("Report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
-        input.close();
     }
 
     /**
