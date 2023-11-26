@@ -20,7 +20,7 @@ public class EnquiryManager extends EnquiryDBManager{
     /**
      * Main method for testing and demonstrating the functionality of the EnquiryManager class.
      *
-     * @param args Command-line arguments (not used).
+     * @param a Command-line arguments (not used).
      */
     public static void main(String[] a){
         Enquiry[] allEnquiries = EnquiryDBManager.getEnquiryDatabase();

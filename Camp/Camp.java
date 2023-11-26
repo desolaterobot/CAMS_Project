@@ -68,7 +68,7 @@ public class Camp {
      * @param startDate          The start date of the camp.
      * @param endDate            The end date of the camp.
      * @param registrationDeadline The registration deadline for the camp.
-     * @param commiteeList       An array of committee names associated with the camp.
+     * @param committeeList       An array of committee names associated with the camp.
      * @param onlyFaculty        A boolean indicating whether the camp is available only to faculty.
      * @param location           The location of the camp.
      * @param description        The description of the camp.
@@ -274,7 +274,7 @@ public class Camp {
     }
     /**
      * Set the Committee List to a new value.
-     * @param committeeList
+     * @param committeeList The new array of committee members.
      */
     public void setCommitteeList(String[] committeeList) {
         this.committeeList = committeeList;
