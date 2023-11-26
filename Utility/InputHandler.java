@@ -2,6 +2,7 @@ package Utility;
 
 import java.util.Scanner;
 
+import Camp.*;
 import Users.*;
 
 /**
@@ -9,7 +10,6 @@ import Users.*;
  * It includes methods for processing choices of students, camp committee members, and staff members.
  */
 public class InputHandler {
-
 	/**
      * Handles choices specific to camp committee members.
      *
@@ -62,8 +62,9 @@ public class InputHandler {
 			break;
 		case 2:
 			System.out.println("Viewing Available Camps for: " + student.getName());
-			System.out.println();
-			student.viewCamps();
+			CampFilter.printFilterChoices();
+			int filterChoice = Integer.parseInt(sc.nextLine());
+			CampFilter.filterAndPrintCamps(CampManager.getCampsForStudents(student), filterChoice); //dimas edited this!!!
 			break;
 		case 3:
 			student.viewCamps();
@@ -127,6 +128,7 @@ public class InputHandler {
      * @param choice The user's choice.
      */
 	public static void handleStaffChoice(Staff staff,int choice) {
+		Scanner sc = new Scanner(System.in);
 		switch(choice) {
 		case 1:
 			System.out.println("Creating Camp...");
@@ -146,7 +148,9 @@ public class InputHandler {
 			break;
 		case 5:
 			System.out.println("View All Camps...");
-			staff.viewAllCamp();
+			CampFilter.printFilterChoices();
+			int filterChoice = Integer.parseInt(sc.nextLine());
+			CampFilter.filterAndPrintVisibleCamps(filterChoice); //dimas edited this!!!!
 			break;
 		case 6:
 			System.out.println("View My Camps...");

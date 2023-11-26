@@ -2,7 +2,7 @@ package Camp;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
+import Camp.CampPrinter;
 
 /**
  * Provides methods for filtering and sorting camps based on various criteria.
@@ -69,17 +69,9 @@ public class CampFilter{
     }
 
     /**
-     * Filters and prints all visible camps, allowing the user to choose the sorting criteria.
+     * Prints all the possible choices of filters.
      */
-    public static void filterAndPrintVisibleCamps(){
-        Scanner sc = new Scanner(System.in);
-        List<Camp> campList = new LinkedList<>();
-        for(Camp c : CampManager.getAllCamps()){
-            if(c.visible){
-                campList.add(c);
-            }   
-        }
-
+    public static void printFilterChoices(){
         System.out.println("Select the way you want to filter the camps:");
         System.out.println(
         "0: alphabetical, based on camp name."+"\n"+
@@ -89,15 +81,22 @@ public class CampFilter{
         "4: by increasing number of attendees."+"\n"+
         "5: by increasing number of commitee members."+"\n"+
         "6: by increasing camp dates."+"\n"+
-        "7: by increasing camp registration deadlines"
+        "7: by increasing camp registration deadlines"+"\n"+
+        "8: by increasing camp creation date."
         );
+    }
 
-        int choice;
-        do{
-            choice = sc.nextInt();
-        }while(choice > 7 || choice < 0);
-
-        sc.close();
+    /**
+     * Filters and prints all visible camps, allowing the user to choose the sorting criteria.
+     */
+    public static void filterAndPrintVisibleCamps(int choice){
+        Scanner sc = new Scanner(System.in);
+        List<Camp> campList = new LinkedList<>();
+        for(Camp c : CampManager.getAllCamps()){
+            if(c.visible){
+                campList.add(c);
+            }   
+        }
 
         CampFilter.sort(campList, choice);
         CampPrinter.printCamps(campList.toArray(new Camp[campList.size()]), true);
@@ -108,7 +107,7 @@ public class CampFilter{
      *
      * @param camps The array of camps being passed in.
      */
-    public static void filterAndPrintCamps(Camp[] camps){
+    public static void filterAndPrintCamps(Camp[] camps, int choice){
         Scanner sc = new Scanner(System.in);
         List<Camp> campList = new LinkedList<>();
         for(Camp c : camps){
@@ -116,25 +115,6 @@ public class CampFilter{
                 campList.add(c);
             }   
         }
-
-        System.out.println("Select the way you want to filter the camps:");
-        System.out.println(
-        "0: alphabetical, based on camp name."+"\n"+
-        "1: alphabetical, based on location."+"\n"+
-        "2: alphabetical, based on description."+"\n"+
-        "3: alphabetical, based on faculty."+"\n"+
-        "4: by increasing number of attendees."+"\n"+
-        "5: by increasing number of commitee members."+"\n"+
-        "6: by increasing camp dates."+"\n"+
-        "7: by increasing camp registration deadlines"
-        );
-
-        int choice;
-        do{
-            choice = sc.nextInt();
-        }while(choice > 7 || choice < 0);
-
-        sc.close();
 
         CampFilter.sort(campList, choice);
         CampPrinter.printCamps(campList.toArray(new Camp[campList.size()]), true);
