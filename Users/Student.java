@@ -244,8 +244,14 @@ public class Student extends User implements EnquiryInterface{
      */
 	public void submitEnquiry(String campName, String enquiry) {
 		Camp camp = CampManager.getCamp(campName);
-		EnquiryManager.addEnquiry(this, camp, enquiry);
-		System.out.println("Enquiry Submitted! You may view/edit/delete your enquiry before it is processed!");
+		if(camp!=null && !this.committeeMemberOf.contains(campName)) {
+
+			EnquiryManager.addEnquiry(this, camp, enquiry);
+			System.out.println("Enquiry Submitted! You may view/edit/delete your enquiry before it is processed!");
+		}
+		else {
+			System.out.println("You are a committee member of this camp!")
+		}
 	}
 	
 	/**
