@@ -113,8 +113,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to delete Camp");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
-        int choice = Integer.parseInt(sc.nextLine());
         CampPrinter.print(campList, false);
+        int choice = Integer.parseInt(sc.nextLine());
         deleteCamp(campList[choice-1]);
     }
 
@@ -126,11 +126,12 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void viewStudentList(Camp camp) {
         System.out.println("======Student List======");
         for (String student : camp.getAttendees()) {
-            System.out.println(student);
+            System.out.println(UserManager.getUser(student).getName());
+            
         }
         System.out.println("======Camp Commitee=====");
         for (String campCom : camp.getCommitteeList()) {
-            System.out.println(campCom);
+            System.out.println(UserManager.getUser(campCom).getName());
         }
     }
 
@@ -139,7 +140,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      */
     public void viewStudentList() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter number to view Camp");
+        System.out.println("Enter number to View Student List");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
         CampPrinter.print(campList, false);
         int choice = Integer.parseInt(sc.nextLine());
@@ -203,7 +204,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     
     public void generatePerformanceReport() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter number to edit Camp");
+        System.out.println("Enter number to genereate Performance Report for that camp");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
         CampPrinter.print(campList, false);
         int choice = Integer.parseInt(sc.nextLine());
@@ -233,7 +234,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      */
     public void generateCampReport() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter number to generate report of that Camp");
+        System.out.println("Enter number to generate report for that Camp");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
         CampPrinter.print(campList, false);
         int choice = Integer.parseInt(sc.nextLine());
@@ -338,7 +339,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
                 System.out.println("Please enter a valid number");
                 choice = Integer.parseInt(sc.nextLine());
             } else {
-                System.out.printf("%s has been toggled to: %b",campList[choice-1].getCampName(),toggleVisibility(campList[choice-1]));
+                System.out.printf("%s visibility has been toggled to: %b\n",campList[choice-1].getCampName(),toggleVisibility(campList[choice-1]));
                 break;
             }
         }
