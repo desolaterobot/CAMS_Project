@@ -12,24 +12,12 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.time.LocalDate;
 
-/**
- * Represents a Student with functionalities related to camp registration, enquiries, and viewing registered camps.
- */
 public class Student extends User implements EnquiryInterface{
 	private List<String> registeredCamps;
 	private boolean isCommitteeMember;
 	private String committeeMemberOf;
-	
-	/**
-     * Constructs a Student object with the specified attributes.
-     *
-     * @param name             The name of the student.
-     * @param email            The email of the student.
-     * @param faculty          The faculty of the student.
-     * @param password         The password hash of the student.
-     * @param isCommitteeMember Whether the student is a camp committee member.
-     * @param committeeMemberOf The camp for which the student is a committee member.
-     */
+//	private Camp[] camp_db;
+		
 	public Student(String name, String email, String faculty, String password, Boolean isCommitteeMember, String committeeMemberOf) {
 		super(name, email, faculty, password);
 		this.isCommitteeMember = isCommitteeMember;
@@ -52,15 +40,13 @@ public class Student extends User implements EnquiryInterface{
 		}
 	}
 	
-	/**
-     * Checks if the student is eligible to register for the given camp.
-     *
-     * @param camp The camp to check eligibility for.
-     * @return True if eligible, false otherwise.
-     */
+	//Private Methods
 	private boolean isEligible(Camp camp) {
+		//add checker for camps withdrew and registration deadline
 		LocalDate currentDate = LocalDate.now();
 		LocalDate registrationDeadline = camp.getRegistrationDeadline().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+//		System.out.println(currentDate);
+//		System.out.println(registrationDeadline);
 		if(currentDate.isAfter(registrationDeadline)) {
 			System.out.println("Registration is closed for this camp.");
 			return false;
@@ -90,14 +76,15 @@ public class Student extends User implements EnquiryInterface{
 		
 		return true;
 	}
+	
+	private boolean isEnquiryProcessed(Enquiry enq) {
+		EnquiryReply[] enqr = EnquiryManager.getReplies(enq);
+		return enqr.length>0;
+	}
 
-	//camp 
-	/**
-     * Registers the student for a camp, either as an attendee or a committee member.
-     *
-     * @param campName        The name of the camp to register for.
-     * @param committeeMember Whether the student is registering as a committee member.
-     */
+	//Public Methods
+	
+	//Camp Methods
 	public void registerCamp(String campName, boolean committeeMember) {
 		Camp camp = CampManager.getCamp(campName);
 		if(!registeredCamps.contains(campName)) {
@@ -166,12 +153,7 @@ public class Student extends User implements EnquiryInterface{
 			}
 		}
 	}
-
-	/**
-     * Withdraws the student from a registered camp.
-     *
-     * @param campName The name of the camp to withdraw from.
-     */
+	
 	public void withdrawCamp(String campName) {
 		Camp camp = CampManager.getCamp(campName);
 		if(!registeredCamps.contains(campName)) {
@@ -180,6 +162,11 @@ public class Student extends User implements EnquiryInterface{
 		}
 		
 		if(camp.getCampName().equals(committeeMemberOf)) {
+//			camp.committeeSlots++;
+//			camp.totalSlots++;
+//			isCommitteeMember = false;
+//			committeeMemberOf = null;
+//			CampManager.removeCommittee(camp, userID);
 			System.out.println("You are a committee member of this camp. You can't withdraw from this camp!");
 			return;
 		}
@@ -191,10 +178,7 @@ public class Student extends User implements EnquiryInterface{
 		CampManager.addWithdrawal(camp, getUserId());
 		System.out.println("You have successfully withdrew from camp: "+camp.getCampName());
 	}
-
-	/**
-     * Views the available camps for the student to register.
-     */
+	
 	public void viewCamps() {
 		System.out.println("CAMPS AVAILABLE TO YOU:");
 		System.out.println("------------------------------------------------------------------");
@@ -209,37 +193,22 @@ public class Student extends User implements EnquiryInterface{
 			System.out.println("------------------------------------------------------------------");
 		}
 		System.out.println("\n");
+		//for testing
+//		System.out.println();
+//		for(Camp c : db) {
+//			System.out.println(c.campName + " , " + c.faculty + " , " + Boolean.toString(c.visible) + " , " +Boolean.toString(c.visible));
+//		}
 	}
 	
 	
 	//Enquiry Methods
-
-	/**
-     * Submits an enquiry for a specific camp.
-     *
-     * @param campName The name of the camp for the enquiry.
-     * @param enquiry  The enquiry message.
-     */
 	public void submitEnquiry(String campName, String enquiry) {
 		Camp camp = CampManager.getCamp(campName);
 		EnquiryManager.addEnquiry(this, camp, enquiry);
 		System.out.println("Enquiry Submitted! You may view/edit/delete your enquiry before it is processed!");
 	}
 	
-	/**
-     * Checks if the enquiry has been processed (replied to).
-     *
-     * @param enq The enquiry to check.
-     * @return True if processed, false otherwise.
-     */
-	private boolean isEnquiryProcessed(Enquiry enq) {
-		EnquiryReply[] enqr = enq.getReplies();
-		return enqr.length>0;
-	}
-
-	/**
-     * Views the enquiries made by the student.
-     */
+	
 	public void viewEnquiries() {
 		//A student can view, edit, and delete their enquiries before it is processed
 		Enquiry[] enqs = EnquiryManager.getStudentEnquiries(this);
@@ -258,12 +227,7 @@ public class Student extends User implements EnquiryInterface{
 		}
 		System.out.println("-----------------------------------------------------------------------");
 	}
-
-	/**
-     * Edits an existing enquiry made by the student.
-     *
-     * @param enqID The ID of the enquiry to edit.
-     */
+	
 	public void editEnquiry(String enqID) {
 		Enquiry enq = EnquiryManager.getEnquiryByID(enqID);
 		
@@ -283,7 +247,8 @@ public class Student extends User implements EnquiryInterface{
 			System.out.println("Original Message: " + enq.getMessage());
 			System.out.print("Enter New Message: ");
 			String newMsg = sc.nextLine();
-			enq.edit(newMsg);
+			enq.setMessage(newMsg);
+			EnquiryManager.editEnquiry(enq);
 			break;
 			
 		case 2:
@@ -292,8 +257,10 @@ public class Student extends User implements EnquiryInterface{
 			String sCamp = sc.nextLine();
 			System.out.println(sCamp);
 			Camp nCamp = CampManager.getCamp(sCamp);
-			if(nCamp != null)
-				enq.edit(nCamp);
+			if(nCamp != null) {
+				enq.setCamp(nCamp);
+				EnquiryManager.editEnquiry(enq);
+			}
 			else {
 				System.out.println("Change camp unsuccessful!");
 				return;
@@ -307,12 +274,7 @@ public class Student extends User implements EnquiryInterface{
 		EnquiryManager.editEnquiry(enq);
 		System.out.println("You have successfully edited your enquiry!");
 	}
-
-	/**
-     * Deletes an existing enquiry made by the student.
-     *
-     * @param enqID The ID of the enquiry to delete.
-     */
+	
 	public void deleteEnquiry(String enqID) {
 		Enquiry enq = EnquiryManager.getEnquiryByID(enqID);
 		if(enq.equals(null));
@@ -331,18 +293,14 @@ public class Student extends User implements EnquiryInterface{
 		}
 		System.out.println("Invalid Enquiry ID!");
 	}
-
-	/**
-     * Views details of a specific enquiry made by the student.
-     *
-     * @param enquiryID The ID of the enquiry to view.
-     */
+	
 	public void viewEnquiry(String enquiryID) {
 		Enquiry enquiry = EnquiryManager.getEnquiryByID(enquiryID);
 		if(enquiry.equals(null)) return;
-		EnquiryReply[] enqr = enquiry.getReplies();
+		EnquiryReply[] enqr = EnquiryManager.getReplies(enquiry);
 		if(enqr.length <= 0) {
 			System.out.println("There are no replies yet for this enquiry.\n");
+			return;
 		}
 		System.out.print("[Replied] ");
 		System.out.println("Enquiry for: " + enquiry.getCamp().getCampName());
@@ -352,15 +310,13 @@ public class Student extends User implements EnquiryInterface{
 			System.out.println(enqReply.getUser().getName() + ": " + enqReply.getReplyMessage());
 		}
 	}
-
-	/**
-     * Views the list of camps that the student is registered for.
-     */
+	
 	public void viewRegisteredCamps(){
 		if(!registeredCamps.isEmpty()) {
 			System.out.println("YOUR REGISTERED CAMPS:");
 			System.out.println("------------------------------------------------------------------");
 			for(String campName : registeredCamps) {
+//				System.out.println("debug: " + campName);
 				Camp c = CampManager.getCamp(campName);
 				Boolean cc = false;
 				System.out.println("Camp Name : " + c.getCampName());
@@ -385,41 +341,19 @@ public class Student extends User implements EnquiryInterface{
 	
 	
 	//Getters Setters
-
-	/**
-     * Checks if the student is a committee member for any camp.
-     *
-     * @return True if committee member, false otherwise.
-     */
 	public boolean isCommitteeMember() {
 		return isCommitteeMember;
 	}
-
-	/**
-     * Sets the committee member status for the student.
-     *
-     * @param b True if committee member, false otherwise.
-     */
+	
 	public void setCommitteeMember(Boolean b) {
 		isCommitteeMember = b;
 	}
-
-	/**
-     * Gets the name of the camp for which the student is a committee member.
-     *
-     * @return The camp name.
-     */
+	
 	public String getCommitteeCamp() {
 		return committeeMemberOf;
 	}
 	
-	// For Testing
-
-    /**
-     * Main method for testing the Student class.
-     *
-     * @param args Command-line arguments.
-     */
+	//FOR TESTING
 	public static void main(String[] args) { 
 		System.out.println("testing Student.java");
 		Student s = UserManager.getStudent("BGOH023");

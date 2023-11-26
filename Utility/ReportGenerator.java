@@ -6,9 +6,6 @@ import Camp.CampManager;
 import Users.PointsSystem;
 import Users.User;
 import Users.UserManager;
-import Enquiry.Enquiry;
-import Enquiry.EnquiryManager;
-import Enquiry.EnquiryReply;
 
 /**
  * The ReportGenerator class provides methods for generating performance reports for camps.
@@ -107,7 +104,7 @@ public class ReportGenerator extends CSVReader{
     	System.out.println("Would you like to include camp committees? Y/N: ");
     	choice = input.nextLine();
     	if (choice.contains("Y")||choice.contains("y")) {
-    		addLine(filepath, String.format("\nComittee Members: (%d/%d)", camp.getCommitteeList().length, camp.getCommitteeSlots()));
+    		addLine(filepath, String.format("\nComittee Members: (%d/%d)", camp.getCommitteeList(), camp.getCommitteeSlots()));
     		x = 1;
             for(String s : camp.getCommitteeList()){
                 User u = UserManager.getUser(s);
@@ -125,28 +122,6 @@ public class ReportGenerator extends CSVReader{
             for(String s : camp.getWithdrawals()){
                 User u = UserManager.getUser(s);
                 addLine(filepath, String.format("%d. %s - %s", x, u.getName(), u.getEmail()));
-                x++;
-            }
-    	}
-        
-      //generate student enquiry details
-    	System.out.println("Would you like to include students' enquiry? Y/N: ");
-    	choice = input.nextLine();
-    	if (choice.contains("Y")||choice.contains("y")) {
-    		addLine(filepath, String.format("\nEnquiries: (%d)", EnquiryManager.getCampEnquiries(camp).length));
-    		x = 1;
-            for(Enquiry e : EnquiryManager.getCampEnquiries(camp)){
-            	if (e.getReplies().length > 0) {
-            		addLine(filepath, String.format("%d. %s - %s", x, e.getStudent().getName(), e.getMessage()));
-            		addLine(filepath, String.format("   Replies: "));
-            		for (EnquiryReply r : e.getReplies()) {
-            			addLine(filepath, String.format("     %s - %s", r.getUser().getName(),  r.getReplyMessage()));
-            		}
-            	} else {
-            		addLine(filepath, String.format("%d. [%s] %s - %s", x, e.getEnquiryID(), e.getStudent(), e.getMessage()));
-            	}
-                
-            	
                 x++;
             }
     	}
@@ -210,29 +185,8 @@ public class ReportGenerator extends CSVReader{
                 x++;
             }
     	}
-    	
-    	//generate student enquiry details
-    	System.out.println("Would you like to include students' enquiry? Y/N: ");
-    	choice = input.nextLine();
-    	if (choice.contains("Y")||choice.contains("y")) {
-    		addLine(filepath, String.format("\nEnquiries: (%d)", EnquiryManager.getCampEnquiries(camp).length));
-    		x = 1;
-            for(Enquiry e : EnquiryManager.getCampEnquiries(camp)){
-            	if (e.getReplies().length > 0) {
-            		addLine(filepath, String.format("%d. %s - %s", x, e.getStudent().getName(), e.getMessage()));
-            		addLine(filepath, String.format("   Replies: "));
-            		for (EnquiryReply r : e.getReplies()) {
-            			addLine(filepath, String.format("     %s - %s", r.getUser().getName(),  r.getReplyMessage()));
-            		}
-            	} else {
-            		addLine(filepath, String.format("%d. [%s] %s - %s", x, e.getEnquiryID(), e.getStudent(), e.getMessage()));
-            	}
-                
-            	
-                x++;
-            }
-    	}
         System.out.printf("Report sucessfully generated with the name %s in the reports folder.\n", filepath.split("/")[1]);
+        input.close();
     }
 
     /**

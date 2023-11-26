@@ -1,129 +1,19 @@
-package Users;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+package DataManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Users.CampCommitteeMember;
+import Users.PointsSystem;
+import Users.Staff;
+import Users.Student;
+import Users.User;
+import Users.UserManager;
 import Utility.CSVReader;
-import DataManager.UserDBManager;
 
-/**
- * The UserManager class manages user-related operations in the Camp Application and Management System.
- * It includes methods for reading user data from CSV files, hashing passwords, and modifying user information.
- */
-public //this user manager class converts CSV data to User objects
-class UserManager extends UserDBManager{
-
-    public static void main(String[] a){
-        System.out.println("test");
-        loadUsers();
-    }
-
-    /**
-     * Retrieves an array of User objects from the specified CSV file.
-     *
-     * @param userfilepath The path of the CSV file containing user data.
-     * @return An array of User objects.
-     */
-//    private static User[] getUsers(String userfilepath){
-//        String[] staffList = null;
-//        staffList = getLines(userfilepath);
-//        List<User> userList = new ArrayList<User>();
-//        User[] userarray = new User[staffList.length];
-//        for(String s : staffList){
-//            String[] stringValues = s.split(",");
-//            boolean isCommitteeMember = Boolean.parseBoolean(stringValues[4]);
-//            User newUser = new User(stringValues[0], stringValues[1], stringValues[2], stringValues[3], isCommitteeMember ,stringValues[5]);
-//            userList.add(newUser);
-//        }
-//        return userList.toArray(userarray);
-//    }
-    
-	public User login() {
-		//prompt for userID and pw
-		//authenticate user
-		//if student, showStudentMenu()
-		//if staff, showStaffMenu()
-		//else return to login menu for incorrect auth
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.println("User ID");
-		String userId = sc.nextLine();
-		
-		System.out.println("Password");
-		String password = sc.nextLine();
-		User User = authUser(userId,password);
-		return User;
-		}
-
-	
-	public User authUser(String userId, String password) {
-		User user = getUser(userId);
-		
-		if (user ==  null) {
-			return null;
-		}
-
-		if(user.getUserId().equals(userId) && user.getPassword().equals(hash(password))) {
-				if (user.getPassword().equals(hash("password"))) {
-					UserManager.changePassword(user);
-				}
-			return user;
-		}
-		
-		
-		return null;
-	}
-
-	public Student authStudent(String userId, String password) {
-		List<Student> Students = loadStudents("data/student.csv");
-		
-		for(Student s : Students) {
-			if(s.getUserId().equals(userId) && s.getPassword().equals(hash(password))) {
-			return s;
-			}
-		}
-		return null;
-	}
-	
-	public Staff authSaff(String userId, String password) {
-		List<Staff> Staffs = loadStaff("data/staff.csv");
-		
-		for(Staff s : Staffs) {
-			if(s.getUserId().equals(userId) && s.getPassword().equals(hash(password))) {
-			return s;
-			}
-		}
-		return null;
-	}
-
-    /**
-     * Hashes the input string using the SHA-256 hash algorithm.
-     *
-     * @param data The input string to be hashed.
-     * @return The hashed string.
-     */
-    public static String hash(String data){
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(data.getBytes());
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    //DATA READING///////////////////////////////////////////////////////////////////////////////////////
+public class UserDBManager extends CSVReader {
+	//DATA READING///////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Finds a single user by the given userID.
@@ -132,7 +22,7 @@ class UserManager extends UserDBManager{
      * @return The User object if found, otherwise null.
      */
     public static Student getStudent(String userID){
-    	List<Student> Students = loadStudents("data/students.csv");
+    	List<Student> Students = loadStudents();
     	
         for(Student u : Students){
             if(u.getUserId().equals(userID)){
@@ -144,7 +34,7 @@ class UserManager extends UserDBManager{
     }
     
     public static Staff getStaff(String userID) {
-    	List<Staff> Staffs = loadStaff("data/staff.csv");
+    	List<Staff> Staffs = loadStaff();
     	
     	for(Staff u : Staffs){
             if(u.getUserId().equals(userID)){
@@ -163,12 +53,13 @@ class UserManager extends UserDBManager{
                 return u;
             }
         }
-        System.out.printf("User %s not found in database.\n", userID);
+        System.out.printf("Staff %s not found in database.\n", userID);
         return null;
     }
     
-	public static List<Student> loadStudents(String file) {
+	public static List<Student> loadStudents() {
 		List<Student> users = new ArrayList<>();
+		String file = "data/students.csv";
 		
 		String[] lines = CSVReader.getLines(file);
 		
@@ -195,8 +86,9 @@ class UserManager extends UserDBManager{
 		return users;
 	}
 	
-	public static List<Staff> loadStaff(String file) {
+	public static List<Staff> loadStaff() {
 		List<Staff> users = new ArrayList<>();
+		String file = "data/staff.csv";
 		
 		String[] lines = CSVReader.getLines(file);
 		
@@ -231,12 +123,9 @@ class UserManager extends UserDBManager{
 				String faculty = part[2];
 				String password = part[3];
 				
-				boolean isCommitteeMember = false;
-				String whichCampCommittee = null;
-				
 				if(file.toLowerCase().contains("student")) {
-					isCommitteeMember = Boolean.parseBoolean(part[4]);
-					whichCampCommittee = part[5];
+					boolean isCommitteeMember = Boolean.parseBoolean(part[4]);
+					String whichCampCommittee = part[5];
 					
 					Student student = new Student(name, email, faculty, password, isCommitteeMember, whichCampCommittee);
 					Users.add(student);
@@ -343,34 +232,20 @@ class UserManager extends UserDBManager{
     //changes the password hash entry of a user in the database
     public static void changePassword(User user){
 		Scanner sc = new Scanner(System.in);
-		String newPassword;
-		do {
-			System.out.println("Please enter your new password.");
-			newPassword = sc.nextLine();
-			if (newPassword.equals("password")) {
-				System.out.println("Please change your password to something that is not the default password! -- Password change failed!");
-			}
-			if (hash(newPassword).equals(user.getPassword())){
-					System.out.println("You're using your old password!");
-			}
-		} while (newPassword.equals("password")|| hash(newPassword).equals(user.getPassword()));
- 
-        String newPassHash = hash(newPassword);
+		System.out.println("Please enter your new password.");
+		String newPassword = sc.nextLine();
+        String newPassHash = UserManager.hash(newPassword);
         String file = null;
 		String newLine = null;
         if(user instanceof Staff){
 			System.out.println("Changing staff password...");
             file = "data/staff.csv";
 			newLine = String.format("%s,%s,%s,%s", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
-        }else if(user instanceof CampCommitteeMember){
-			System.out.println("Changing committee password.");
-			CampCommitteeMember commitee = (CampCommitteeMember)user; //downcast!!
-			file = "data/students.csv";
-			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.getName(), user.getEmail(), user.getFaculty(), newPassHash, commitee.getCommitteeCamp(), PointsSystem.getCurrentPoints(commitee));
         }else if(user instanceof Student){
 			file = "data/students.csv";
 			System.out.println("Changing student password...");
-			newLine = String.format("%s,%s,%s,%s,false,null,0", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
+			Student s = (Student) user;
+			newLine = String.format("%s,%s,%s,%s,%b,%s,0", s.getName(), s.getEmail(), s.getFaculty(), newPassHash,s.isCommitteeMember(),s.getCommitteeCamp());
 		}else{
 			System.out.println("You did not pass in an inherited User object.");
 			System.out.println("Unable to change password.");
@@ -378,5 +253,5 @@ class UserManager extends UserDBManager{
 		}
         modifyLine(file, user.getName(), newLine);
 		System.out.printf("Successfully changed password to %s for %s.\n", newPassword, user.getName());
-	}
+    }
 }

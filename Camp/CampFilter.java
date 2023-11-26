@@ -1,37 +1,30 @@
 package Camp;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Provides methods for filtering and sorting camps based on various criteria.
- */
 public class CampFilter{
 
-    /**
-     * Main method to demonstrate filtering and printing visible camps.
-     *
-     * @param args Command line arguments (not used).
-     */
     public static void main(String[] args) {
         filterAndPrintVisibleCamps();
     }
 
     /**
-     * Sorts an array of camps according to multiple parameters.
-     *
-     * @param campList The list of camps to be sorted.
-     * @param method   A number indicating the parameter used to sort the camps.
-     *                 0: alphabetical, based on camp name.
-     *                 1: alphabetical, based on location.
-     *                 2: alphabetical, based on description.
-     *                 3: alphabetical, based on faculty.
-     *                 4: by increasing number of attendees.
-     *                 5: by increasing number of committee members.
-     *                 6: by increasing camp dates.
-     *                 7: by increasing camp registration deadlines.
+     * Sort an array of camps according to multiple parameters.
+     * 0: alphabetical, based on camp name.
+     * 1: alphabetical, based on location.
+     * 2: alphabetical, based on description.
+     * 3: alphabetical, based on faculty.
+     * 4: by increasing number of attendees.
+     * 5: by increasing number of commitee members.
+     * 6: by increasing camp dates.
+     * 7: by increasing camp registration deadlines
+     * @param campArray The array of camps being taken.
+     * @param method A number indicating the parameter used to sort the camps.
      * @return An array of camps sorted by the user's preference.
      */
+
     public static Camp[] sort(List<Camp> campList, int method){
         switch (method) {
             case 0:
@@ -67,7 +60,8 @@ public class CampFilter{
     }
 
     /**
-     * Filters and prints all visible camps, allowing the user to choose the sorting criteria.
+     * Print all visible camps, but asks for sorting options first.
+     * 
      */
     public static void filterAndPrintVisibleCamps(){
         Scanner sc = new Scanner(System.in);
@@ -102,8 +96,7 @@ public class CampFilter{
     }
 
     /**
-     * Filters and prints all camps being passed in, allowing the user to choose the sorting criteria.
-     *
+     * Print all camps being passed in, but asks for sorting options first.
      * @param camps The array of camps being passed in.
      */
     public static void filterAndPrintCamps(Camp[] camps){

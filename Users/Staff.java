@@ -1,22 +1,21 @@
 package Users;
 import java.util.*;
 
-import Camp.*;
+import Camp.Camp;
+import Camp.CampManager;
+import Camp.CampPrinter;
 import Enquiry.*;
 import Suggestion.*;
 import Utility.ReportGenerator;
 
-/**
- * Represents a staff member with various functionalities related to camp management.
- */
+
 public class Staff extends User implements EnquiryReplyInterface, ApproveSuggestionInterface {
     /**
-     * A list of camps current Staff is in-charged of. To prevent circular referencing,
+     * A list of camps current Staff is in-charged of. To prevent circular referencing
      * ownCamps is only loaded when getOwnCamps is called.
      */
     private List<Camp> ownCamps = new ArrayList<>();
 
-    
     public static void main(String[] args) {
         System.out.println("Testing...");
         Staff s = new Staff("Alexei","OURIN@ntu.edu.sg","ADM","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
@@ -29,22 +28,13 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     //    s.editCamp();
     }
 
-    /**
-     * Constructs a Staff object with the specified attributes.
-     *
-     * @param name      The name of the staff member.
-     * @param email     The email of the staff member.
-     * @param faculty   The faculty of the staff member.
-     * @param passHash  The password hash of the staff member.
-     */
     public Staff(String name, String email, String faculty, String passHash) {
         super(name, email, faculty, passHash);
     }
 
     /**
-     * Returns the list of camps that current staff is in charged of. To prevent circular referencing,
+     * Returns the list of camps that current staff is in charged of. To prevent circular referencing
      * ownCamps is only loaded when getOwnCamps is called.
-     *
      * @return List<Camp> Lists of camps that current staff is in charged of.
      */
     public List<Camp> getOwnCamps() {
@@ -58,7 +48,6 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      * Load Camp from CampManger into current stuff's ownCamps attribute.
      */
     private void loadOwnCamp() {
-        ownCamps = new ArrayList<>();
         ownCamps.addAll(List.of(CampManager.getCampsByStaffID(this.getUserId())));
     }
 
@@ -71,10 +60,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
 
     /**
      * Given Camp, edit the particulars of this camp.
-     *
-     * @param camp The camp to be edited.
+     * @param camp
      */
-
     public void editCamp(Camp camp) {
         CampManager.editCamp(camp);
     }
@@ -92,8 +79,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
 
     /**
      * Delete the given Camp.
-     *
-     * @param camp The camp to be deleted.
+     * @param camp
      */
     public void deleteCamp(Camp camp) {
         CampManager.deleteCamp(camp);
@@ -107,15 +93,18 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         System.out.println("Enter number to delete Camp");
         int campCounter = 1;
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
-        CampPrinter.print(campList, false);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.getCampName());
+            campCounter++;
+        }
         int choice = Integer.parseInt(sc.nextLine());
         deleteCamp(campList[choice-1]);
+
     }
 
     /**
      * View the list of Students in the current Camp.
-     *
-     * @param camp The camp for which the student list is to be viewed.
+     * @param camp
      */
     public void viewStudentList(Camp camp) {
         System.out.println("======Student List======");
@@ -134,8 +123,12 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void viewStudentList() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
+        int campCounter = 1;
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
-        CampPrinter.print(campList, false);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.getCampName());
+            campCounter++;
+        }
         int choice = Integer.parseInt(sc.nextLine());
         viewStudentList(campList[choice-1]);
     }
@@ -192,43 +185,49 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     }
 
     /**
-     * Display list of camps to generate camp report.
+     * Generate Camp Report
+     * @param camp
+     */
+    public void generateCampReport(Camp camp) {
+        ReportGenerator.staffGenerateReport(camp);
+    }
+
+    /**
+     * Display list of camps to generate camp report
      */
     public void generatePerformanceReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
+        int campCounter = 1;
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
-        CampPrinter.print(campList, false);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.getCampName());
+            campCounter++;
+        }
         int choice = Integer.parseInt(sc.nextLine());
         generatePerformanceReport(campList[choice-1]);
     }
 
     /**
-     * Generate Camp Report for the given camp.
-     *
-     * @param camp The camp for which the report is to be generated.
+     * Generate Performance Report given camp
+     * @param camp
      */
     public void generatePerformanceReport(Camp camp) {
         ReportGenerator.staffGeneratePerformanceReport(camp);
     }
 
     /**
-     * Generate Camp Report for the given camp.
-     *
-     * @param camp The camp for which the report is to be generated.
-     */
-    public void generateCampReport(Camp camp) {
-        ReportGenerator.staffGenerateReport(camp);
-    }
-    
-    /**
-     * Display list of camps to generate performance report.
+     * Display List of camps to generate performance report
      */
     public void generateCampReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to generate report of that Camp");
+        int campCounter = 1;
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
-        CampPrinter.print(campList, false);
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.getCampName());
+            campCounter++;
+        }
         int choice = Integer.parseInt(sc.nextLine());
         generateCampReport(campList[choice-1]);
     }
@@ -246,7 +245,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         for (Enquiry enquiry :
                 EnquiryManager.getCampEnquiries(getOwnCamps().toArray(new Camp[1])[choice - 1])) {
             System.out.println(enquiry.getStudent().getName() + ": " +  enquiry.getMessage());
-            EnquiryReply[] replies = enquiry.getReplies();
+            EnquiryReply[] replies = EnquiryManager.getReplies(enquiry);
             if (replies.length != 0) {
                 for (EnquiryReply reply :
                         replies) {
@@ -255,20 +254,17 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
             } else {
                 System.out.println("[No Replies]");
             }
-
-
         }
     }
 
     /**
-     * Given Enquiry, reply to that enquiry.
-     *
-     * @param enquiry The Enquiry to reply to.
+     * Given Enquiry reply to that enquiry.
+     * @param enquiry Enquiry that is replying to.
      */
     public void replyToEnquiry(Enquiry enquiry) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Reply: ");
-        enquiry.reply(this,sc.nextLine());
+        EnquiryManager.replyEnquiry(this,sc.nextLine(),enquiry);
     }
 
     /**
@@ -302,15 +298,12 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         replyToEnquiry(allEnquiries.get(enquiryChoice-1));
     }
     /**
-     * Toggle the visibility of the given Camp.
-     *
-     * @param camp The camp object of visibility to change.
-     * @return The result of the change.
+     * Toggle the visibility of given Camp.
+     * @param camp camp object of visibility to change
+     * @return result of the change
      */
     public boolean toggleVisibility(Camp camp) {
         camp.toggleVisibility();
-        loadOwnCamp();
-        CampDBManager.saveUpdatedCamp(camp);
         return camp.getVisible();
     }
 
@@ -320,19 +313,13 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     public void toggleVisibility() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to toggle visibility of Camp");
+        int campCounter = 1;
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
-        CampPrinter.print(campList,false);
-        int choice = Integer.parseInt(sc.nextLine());
-        while (true) {
-            if (choice > campList.length || choice < 1)  {
-                System.out.println("Please enter a valid number");
-                choice = Integer.parseInt(sc.nextLine());
-            } else {
-                toggleVisibility(campList[choice-1]);
-                break;
-            }
+        for (Camp camp : campList) {
+            System.out.printf("%d) %s\n",campCounter,camp.getCampName());
         }
-        
+        int choice = Integer.parseInt(sc.nextLine());
+        toggleVisibility(campList[choice-1]);
     }
 
     /**

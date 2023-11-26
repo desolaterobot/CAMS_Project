@@ -4,6 +4,7 @@ import java.util.List;
 
 import Camp.Camp;
 import Camp.CampManager;
+import DataManager.SuggestionDBManager;
 import Users.*;
 import Utility.CSVReader;
 
@@ -11,24 +12,7 @@ import Utility.CSVReader;
  * The SuggestionManager class manages suggestions from commitee members, interacting with CSV data.
  * It provides methods to retrieve, add, and manipulate suggestions.
  */
-public class SuggestionManager extends CSVReader{
-    public static void main(String[] args) {
-        addSuggestion(CampManager.getCamp("stupid camp"), UserManager.getUser("DIMAS001"), "test suggestion");
-    }
-
-     /**
-     * Retrieves the array of all suggestions from the CSV file.
-     *
-     * @return An array of Suggestion objects containing suggestion data.
-     */
-    public static Suggestion[] getSuggestionDatabase(){
-        List<Suggestion> suggList = new LinkedList<>();
-        for(String s : getLines("data/suggestions.csv")){
-            String[] items = s.split(",");
-            suggList.add(new Suggestion(items[0], UserManager.getUser(items[1]), CampManager.getCamp(items[2]), getCommas(items[3]), items[4]));
-        }
-        return suggList.toArray(new Suggestion[suggList.size()]); 
-    }
+public class SuggestionManager extends SuggestionDBManager{
 
     /**
      * Retrieves the array of all suggestions for a specific camp.
@@ -72,12 +56,57 @@ public class SuggestionManager extends CSVReader{
     public static void addSuggestion(Camp camp, User committeeMember, String message){
         Suggestion[] suggDB = getSuggestionDatabase();
         int suggID = CSVReader.toInt(suggDB[suggDB.length-1].getSuggestionID())+1;
-        String line = String.format("%s,%s,%s,%s,None", suggID, committeeMember.getUserId(), camp.getCampName(), removeCommas(message));
-        addLine("data/suggestions.csv", line);
+        Suggestion newSugg = new Suggestion(Integer.toString(suggID), committeeMember, camp, message, "None");
+        addSuggDB(newSugg);
     }
 
-    public static void approveSuggestion(Suggestion suggestion, Staff staff) {
-        suggestion.approve(staff);
+    /**
+     * Approves the suggestion and writes the data to the CSV file.
+     *
+     * @param suggestion The Suggestion object to be approved.
+     * @return State of success
+     */
+    public static boolean approveSuggestion(Suggestion suggestion, Staff staff) {
+        if(suggestion.getApprovedStatus()){
+            System.out.println("Suggestion has already been approved.");
+            return false;
+        }
+        suggestion.setApprovedBy(staff);
+        suggestion.setApprovedStatus(true);
         PointsSystem.addPoint((Student) suggestion.getCommitteeMember());
+        updateSuggDB(suggestion);
+        return true;
+    }
+
+    /**
+     * Edits a suggestion in database, only works if it is not approved.
+     *
+     * @param suggestion The Suggestion object to be edited.
+     * @param newMessage The new suggestion message
+     * @return status of success
+     */
+    public static boolean editSuggestion(Suggestion suggestion, String newMessage){
+        if(suggestion.getApprovedStatus()){
+            System.out.println("Cannot edit suggestions that are already approved.");
+            return false;
+        }
+        suggestion.setMessage(newMessage);
+        updateSuggDB(suggestion);
+        return true;
+    }
+
+     /**
+     * Deletes a suggestion in database, only works if it is not approved.
+     *
+     * @param suggestion The Suggestion object to be deleted.
+     * @return status of success
+     */
+    public static boolean deleteSuggestion(Suggestion suggestion){
+        if(suggestion.getApprovedStatus()){
+            System.out.println("Cannot delete approved suggestions.");
+            return false;
+        }
+        deleteSuggDB(suggestion);
+        return true;
     }
 }

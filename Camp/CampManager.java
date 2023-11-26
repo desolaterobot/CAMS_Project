@@ -9,11 +9,12 @@ import java.util.Scanner;
 import Users.Student;
 import Users.User;
 import Utility.DateStr;
+import DataManager.CampDBManager;
 
 /**
  * Manages camps, including reading from and writing to CSV files, creating, editing, and deleting camps.
  */
-public class CampManager {
+public class CampManager extends CampDBManager{
 
     /**
      * Main method for testing the functionality of the CampManager class.
