@@ -4,10 +4,19 @@ import java.util.Scanner;
 
 import Users.*;
 
-
+/**
+ * The InputHandler class provides methods for handling user choices based on their roles in the Camp Application and Management System.
+ * It includes methods for processing choices of students, camp committee members, and staff members.
+ */
 public class InputHandler {
+
+	/**
+     * Handles choices specific to camp committee members.
+     *
+     * @param student The camp committee member.
+     * @param choice  The user's choice.
+     */
 	public static void handleCommitteeMemberChoice(Student student, int choice) {
-		// TODO Auto-generated method stub
 		CampCommitteeMember commMem = new CampCommitteeMember(student.getName(), student.getEmail(), student.getFaculty(), student.getPassword(), student.isCommitteeMember(), student.getCommitteeCamp());
 		switch(choice) {
 		case 11:
@@ -32,7 +41,13 @@ public class InputHandler {
 			handleStudentChoice(student,choice);
 		}
 	}
-	
+
+	/**
+     * Handles choices specific to students.
+     *
+     * @param student The student.
+     * @param choice  The user's choice.
+     */
 	public static void handleStudentChoice(Student student, int choice) {
 		Scanner sc = new Scanner(System.in);
 		switch(choice) {
@@ -100,7 +115,12 @@ public class InputHandler {
 		}
 	}
 
-
+	/**
+     * Handles choices specific to staff members.
+     *
+     * @param staff  The staff member.
+     * @param choice The user's choice.
+     */
 	public static void handleStaffChoice(Staff staff,int choice) {
 		switch(choice) {
 		case 1:
