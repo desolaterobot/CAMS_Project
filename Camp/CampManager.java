@@ -144,11 +144,28 @@ public class CampManager extends CampDBManager{
         String name = sc.nextLine();
 
         if (getCamp(name) == null) {
-            Date startDate = getDateInput(sc, "Enter the start date of the camp, in the format: dd/mm/yyyy");
-    
-            Date endDate = getDateInput(sc, "Enter the end date of the camp, in the format: dd/mm/yyyy");
-    
-            Date registrationDeadline = getDateInput(sc, "Enter the registration deadline, in the format: dd/mm/yyyy");
+            Date startDate, endDate, registrationDeadline;
+            while(true) {
+                startDate = getDateInput(sc, "Enter the start date of the camp, in the format: dd/mm/yyyy");
+                endDate = getDateInput(sc, "Enter the end date of the camp, in the format: dd/mm/yyyy");
+
+                if (startDate.before(endDate)) {
+                    break; // Valid date range
+                } else {
+                    System.out.println("End date must be after the start date. Please re-enter the dates.");
+                }
+            }
+
+            // Loop until valid registration deadline is entered
+            while(true) {
+                registrationDeadline = getDateInput(sc, "Enter the registration deadline, in the format: dd/mm/yyyy");
+
+                if (registrationDeadline.before(startDate)) {
+                    break; // Valid registration deadline
+                } else {
+                    System.out.println("Registration deadline must be before the start date. Please re-enter the date.");
+                }
+            }
     
             System.out.println("Enter the location of the camp");
             String location = sc.nextLine();
