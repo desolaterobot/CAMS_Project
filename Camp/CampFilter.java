@@ -16,11 +16,7 @@ public class CampFilter{
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
-<<<<<<< Updated upstream
         //filterAndPrintVisibleCamps();
-=======
-        // filterAndPrintVisibleCamps();
->>>>>>> Stashed changes
     }
 
     /**
