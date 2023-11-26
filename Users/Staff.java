@@ -67,7 +67,10 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      */
     private void loadOwnCamp() {
         ownCamps = new ArrayList<>();
-        ownCamps.addAll(List.of(CampManager.getCampsByStaffID(this.getUserId())));
+        // ownCamps.addAll(List.of());
+        for (Camp camp : CampManager.getCampsByStaffID(this.getUserId())) {
+            ownCamps.add(camp);
+        }
     }
 
     /**
@@ -202,16 +205,24 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      * View All suggestion form the camps current staff is in charged of.
      */
     public void viewCampSuggestions() {
+        getOwnCamps();
+        if (ownCamps.size() == 0) {
+                System.out.println("[No Suggestions]");
+                return;
+            }
         for (Camp camp:
         getOwnCamps()) {
             System.out.println("Suggestions for " + camp.getCampName() + ":");
             int num = 1;
-            if (ownCamps.size() == 0) {
+            
+            Suggestion[] suggestionList = SuggestionManager.getSuggestionsForCamp(camp);
+            if (suggestionList.length == 0) {
                 System.out.println("[No Suggestion]");
                 continue;
             }
+
             for (Suggestion suggestion:
-            SuggestionManager.getSuggestionsForCamp(camp)) {
+            suggestionList) {
                 System.out.println(num + ") " +  suggestion.getCommitteeMember().getName() +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                 num++;
             }
@@ -222,18 +233,25 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      * Accept the suggestion of the Camps that current staff is in charged of.
      */
     public void approveSuggestion() {
+        getOwnCamps();
+        if (ownCamps.size() == 0) {
+                System.out.println("[No Suggestions]");
+                return;
+            }
         System.out.println("Enter Number to accept the suggestion");
         List<Suggestion> allSuggestions = new ArrayList<>();
         int num = 1;
         for (Camp camp:
                 getOwnCamps()) {
             System.out.println("Suggestions for " + camp.getCampName() + ":");
-            if (ownCamps.size() == 0) {
+
+            Suggestion[] suggestionList = SuggestionManager.getSuggestionsForCamp(camp);
+            if (suggestionList.length == 0) {
                 System.out.println("[No Suggestion]");
                 continue;
             }
             for (Suggestion suggestion:
-                    SuggestionManager.getSuggestionsForCamp(camp)) {
+                    suggestionList) {
                 if (!suggestion.getApprovedStatus()) {
                     System.out.println(num + ") " +  suggestion.getCommitteeMember().getName() +": " + suggestion.getMessage() + ". Is Approved: " + suggestion.getApprovedStatus());
                     allSuggestions.add(suggestion);
@@ -241,6 +259,10 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
                 }
 
             }
+        }
+        if (allSuggestions.size() == 0) {
+            System.out.println("Nothing to approve");
+            return;
         }
         Scanner sc = new Scanner(System.in);
         System.out.print("Choice: ");
