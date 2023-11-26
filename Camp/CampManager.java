@@ -126,7 +126,7 @@ public class CampManager extends CampDBManager{
                 return c;
             }
         }
-        System.out.println("Camp not found.");
+        //System.out.println("Camp not found.");
         return null;
     }
 

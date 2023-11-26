@@ -113,8 +113,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to delete Camp");
         Camp[] campList = getOwnCamps().toArray(new Camp[1]);
-        int choice = Integer.parseInt(sc.nextLine());
         CampPrinter.print(campList, false);
+        int choice = Integer.parseInt(sc.nextLine());
         deleteCamp(campList[choice-1]);
     }
 
@@ -338,7 +338,7 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
                 System.out.println("Please enter a valid number");
                 choice = Integer.parseInt(sc.nextLine());
             } else {
-                System.out.printf("%s has been toggled to: %b",campList[choice-1].getCampName(),toggleVisibility(campList[choice-1]));
+                System.out.printf("%s visibility has been toggled to: %b\n",campList[choice-1].getCampName(),toggleVisibility(campList[choice-1]));
                 break;
             }
         }

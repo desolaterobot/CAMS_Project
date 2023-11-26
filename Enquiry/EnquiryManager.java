@@ -155,7 +155,7 @@ public class EnquiryManager extends EnquiryDBManager{
 	    List<Integer> intList = Arrays.stream(enq.getReplies()).boxed().collect(Collectors.toList());
 	    intList.add(replyID);
 	    String[] newIDStrings = intList.stream().map(Object::toString).toArray(String[]::new);
-	    String enqLine = String.format("%s,%s,%s,%s,%s", enq.getEnquiryID(), replier.getUserId(), removeCommas(enq.camp.getCampName()), removeCommas(enq.message), listToString(newIDStrings));
+	    String enqLine = String.format("%s,%s,%s,%s,%s", enq.getEnquiryID(), enq.getStudent().getUserId(), removeCommas(enq.camp.getCampName()), removeCommas(enq.message), listToString(newIDStrings));
 	    EnquiryDBManager.updateEnquiryDB(enq, enqLine);
     }
 }

@@ -50,7 +50,9 @@ public class PointsSystem extends UserDBManager{
 				//System.out.println(Boolean.parseBoolean(part[4]));
 				return points;
 			}
-        }
+        } else {
+			return 0;
+		}
 		return -1;
 	}
 

@@ -173,9 +173,9 @@ public class UserDBManager extends CSVReader {
      * @param student The Student object to be updated.
      */
 	public static void updateStudentDB(Student student) {
-		String line = String.format("%s,%s,%s,%s,%s,%s", 
+		String line = String.format("%s,%s,%s,%s,%s,%s,%d", 
         removeCommas(student.getName()), removeCommas(student.getEmail()), removeCommas(student.getFaculty()), removeCommas(student.getPassword()), 
-        removeCommas(Boolean.toString(student.isCommitteeMember()).toUpperCase()), removeCommas(student.getCommitteeCamp()));
+        removeCommas(Boolean.toString(student.isCommitteeMember()).toUpperCase()), removeCommas(student.getCommitteeCamp()), PointsSystem.getCurrentPoints(student));
 		modifyLine("data/students.csv", student.getName(), line);
 	}
 
