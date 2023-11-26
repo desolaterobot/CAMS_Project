@@ -104,7 +104,7 @@ public class ReportGenerator extends CSVReader{
     	System.out.println("Would you like to include camp committees? Y/N: ");
     	choice = input.nextLine();
     	if (choice.contains("Y")||choice.contains("y")) {
-    		addLine(filepath, String.format("\nComittee Members: (%d/%d)", camp.getCommitteeList(), camp.getCommitteeSlots()));
+    		addLine(filepath, String.format("\nComittee Members: (%d/%d)", camp.getCommitteeList().length, camp.getCommitteeSlots()));
     		x = 1;
             for(String s : camp.getCommitteeList()){
                 User u = UserManager.getUser(s);
