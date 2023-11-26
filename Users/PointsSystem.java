@@ -67,7 +67,7 @@ public class PointsSystem extends UserDBManager{
 			String newPoint = Integer.toString(getCurrentPoints(user) + 1);
 	        String newLine = String.format("%s,%s,%s,%s,%s,%s,%s", user.getName(), user.getEmail(), user.getFaculty(), user.getPassword(), true, user.getCommitteeCamp(), newPoint);
 	        modifyLine(file, user.getName(), newLine);
-	        //System.out.println(user.isCommitteeMember);
+	       	System.out.println("1 point added!");
 		}
 	}
 	
