@@ -127,7 +127,7 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
 
     		
     	} else {
-    		System.out.println("No pending suggestion available for editing.\n");
+    		System.out.println("No pending suggestion available for editing.");
     	}
 		//input.close();
     }

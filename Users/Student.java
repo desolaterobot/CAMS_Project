@@ -137,6 +137,7 @@ public class Student extends User implements EnquiryInterface{
 			}
 			else {
 				if(isCommitteeMember) {
+					System.out.println("Camp Registration Failed!");
 					System.out.println("You are already a camp committee member of " + committeeMemberOf);
 				}
 				else if(camp.getCommitteeSlots() > 0) {
@@ -155,6 +156,7 @@ public class Student extends User implements EnquiryInterface{
 					}
 				}
 				else if(camp.getCommitteeSlots() <= 0){
+					System.out.println("Camp Registration Failed!");
 					System.out.println("There are no available slots for camp committee for this camp!");
 				}
 			}
