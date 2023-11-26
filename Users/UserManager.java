@@ -82,28 +82,6 @@ class UserManager{
 		return null;
 	}
 
-	public Student authStudent(String userId, String password) {
-		List<Student> Students = UserDBManager.loadStudents();
-		
-		for(Student s : Students) {
-			if(s.getUserId().equals(userId) && s.getPassword().equals(hash(password))) {
-			return s;
-			}
-		}
-		return null;
-	}
-	
-	public Staff authSaff(String userId, String password) {
-		List<Staff> Staffs = UserDBManager.loadStaff();
-		
-		for(Staff s : Staffs) {
-			if(s.getUserId().equals(userId) && s.getPassword().equals(hash(password))) {
-			return s;
-			}
-		}
-		return null;
-	}
-
     /**
      * Hashes the input string using the SHA-256 hash algorithm.
      *
