@@ -53,7 +53,12 @@ public class InputHandler {
 		switch(choice) {
 		case 1:
 			System.out.println("Change Password for " + student.getUserId());
-			UserManager.changePassword((User) student);
+			if (student.isCommitteeMember()) {
+				CampCommitteeMember commMem = new CampCommitteeMember(student.getName(), student.getEmail(), student.getFaculty(), student.getPassword(), student.isCommitteeMember(), student.getCommitteeCamp());
+				UserManager.changePassword(commMem);
+			} else {
+				UserManager.changePassword((User) student);
+			}
 			break;
 		case 2:
 			System.out.println("Viewing Available Camps for: " + student.getName());
