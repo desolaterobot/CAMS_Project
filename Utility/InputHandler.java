@@ -42,6 +42,7 @@ public class InputHandler {
 		case 18:
 			commMem.viewStudentList();
 		default:
+			System.out.println("Please input a value between 0-17!");
 			handleStudentChoice(student,choice);
 		}
 	}
@@ -196,6 +197,7 @@ public class InputHandler {
 			UserManager.changePassword(staff);
 			break;
 		default:
+			System.out.println("Please input a value between 0-14!");
 			return;
 		
 	}
