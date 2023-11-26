@@ -45,14 +45,23 @@ public class User {
      * @return The user's ID.
      */
 	public String getUserId() {
-		// TODO Auto-generated method stub
 		return this.userID;
 	}
-	
+
+	/**
+     * Retrieves the user's Name.
+     *
+     * @return The user's Name.
+     */
 	public String getName() {
 		return name;
 	}
-	
+
+	/**
+     * Retrieves the user's Email.
+     *
+     * @return The user's Email.
+     */
 	public String getEmail() {
 		return email;
 	}
@@ -63,10 +72,14 @@ public class User {
      * @return The user's password hash.
      */
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.passHash;
 	}
-	
+
+	/**
+     * Retrieves the user's Faculty.
+     *
+     * @return The user's Faculty.
+     */
 	public String getFaculty() {
 		return faculty;
 	}
