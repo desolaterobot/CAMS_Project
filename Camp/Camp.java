@@ -127,6 +127,7 @@ public class Camp {
         return committeeList;
     }
     
+    
     /**
  * Retrieves the faculty restriction status for the staff member in charge of the camp.
  *
@@ -271,4 +272,10 @@ public class Camp {
     public void releaseCommitteeSlots() {
         committeeSlots++;
     }
+    /**
+     * Set the Committee List to a new value.
+     * @param committeeList
+     */
+    public void setCommitteeList(String[] committeeList) {
+        this.committeeList = committeeList;
 }
