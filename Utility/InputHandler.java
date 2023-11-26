@@ -90,7 +90,7 @@ public class InputHandler {
 			break;
 		case 5:
 			student.viewRegisteredCamps();
-			System.out.print("Please Enter the Camp Name that you wish to withraw from: ");
+			System.out.print("Please Enter the Camp Name that you wish to withdraw from: ");
 			String wCampName = sc.nextLine();
 			student.withdrawCamp(wCampName);
 			break;
