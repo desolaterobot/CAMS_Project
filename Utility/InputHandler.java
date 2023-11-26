@@ -42,7 +42,7 @@ public class InputHandler {
 		case 18:
 			commMem.viewStudentList();
 		default:
-			System.out.println("Please input a value between 0-17!");
+			System.out.println("Please input a value between 0-18!");
 			handleStudentChoice(student,choice);
 		}
 	}
@@ -124,8 +124,10 @@ public class InputHandler {
 			System.out.print("Enter the Enquiry ID which you wish to delete: ");
 			String deleteEnqID = sc.nextLine();
 			student.deleteEnquiry(deleteEnqID);
+			break;
 		default:
-			System.out.println("Please input a value between 0-11!");
+			System.out.println("Please input a value between 0-10!");
+			break;
 		}
 	}
 
