@@ -96,7 +96,11 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
         		if (ownSuggestions[i].getApprovedStatus() == false) {
         			System.out.println("[" + i + "]: " + ownSuggestions[i].getMessage());
         			noOfPendingSuggestions++;
-        		}
+        		} 
+				else if (ownSuggestions[i].getApprovedStatus() == true) {
+					System.out.println("[" + i + "]: " + ownSuggestions[i].getMessage() + " [Approved by: " + ownSuggestions[i].getApprovedBy().getName()+ "]");
+        			noOfPendingSuggestions++;
+				}
         	}	
     		System.out.print("\n");
     	} else {
@@ -116,8 +120,12 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     		input.nextLine();
     		System.out.print("Please input the new suggestion: ");
     		String newSuggestion = input.nextLine();
-    		SuggestionManager.editSuggestion(ownSuggestions[suggestionIndex], newSuggestion);
-    		System.out.println("Suggestion edited.\n");
+    		if (SuggestionManager.editSuggestion(ownSuggestions[suggestionIndex], newSuggestion)) {
+				System.out.println("Suggestion edited.\n");
+			} 
+			//dont print anything if fail
+
+    		
     	} else {
     		System.out.println("No pending suggestion available for editing.\n");
     	}
@@ -133,8 +141,11 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
     	if (noOfPendingSuggestions > 0) {
 			System.out.print("Please select the suggestion to delete: ");
 			int suggestionIndex = input.nextInt();
-			SuggestionManager.deleteSuggestion(ownSuggestions[suggestionIndex]);
-			System.out.println("Suggestion deleted.\n");
+			if (SuggestionManager.deleteSuggestion(ownSuggestions[suggestionIndex])) {
+				System.out.println("Suggestion deleted.\n");
+			}
+			//dont print anything if fail
+			
     	} else {
     		System.out.println("No suggestion available to delete.\n");
     	}
