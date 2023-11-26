@@ -251,8 +251,11 @@ public class Student extends User implements EnquiryInterface{
 			EnquiryManager.addEnquiry(this, camp, enquiry);
 			System.out.println("Enquiry Submitted! You may view/edit/delete your enquiry before it is processed!");
 		}
-		else {
+		else if(camp!=null && this.committeeMemberOf.contains(campName)) {
 			System.out.println("You are a committee member of this camp!");
+		}
+		else {
+			System.out.println("Failed to submit enquiry.");
 		}
 	}
 	
@@ -263,7 +266,7 @@ public class Student extends User implements EnquiryInterface{
 		//A student can view, edit, and delete their enquiries before it is processed
 		Enquiry[] enqs = EnquiryManager.getStudentEnquiries(this);
 		if(enqs.length <= 0) {
-			System.out.println("No enquries made yet. You can make an enquiry with option 5.");
+			System.out.println("No enquries made yet. You can make an enquiry with option 6.");
 			return;
 		}
 		System.out.println("ENQUIRIES MADE BY YOU:");
@@ -452,10 +455,10 @@ public class Student extends User implements EnquiryInterface{
 		Student s = UserManager.getStudent("BGOH023");
 //		Student s = new Student("BRYAN", "BGOH023@e.ntu.edu.sg", "SCSE", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", false, "null");
 //		System.out.println(s.userID);
-		s.viewCamps();
-//		s.registerCamp("scse camp", false);
-		s.viewRegisteredCamps();
-		s.withdrawCamp("stupid camp");
+//		s.viewCamps();
+////		s.registerCamp("scse camp", false);
+//		s.viewRegisteredCamps();
+//		s.withdrawCamp("stupid camp");
 		
 //		System.out.println(Arrays.toString(camp.attendees) +" , "+ Arrays.toString(camp.committeeList)+" , "+ Arrays.toString(camp.withdrawals));
 //		System.out.println(Integer.toString(camp.totalSlots) +" , "+ Integer.toString(camp.committeeSlots));
