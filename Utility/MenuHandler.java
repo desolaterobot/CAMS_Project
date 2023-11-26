@@ -131,7 +131,7 @@ public class MenuHandler {
 			
 			if(choice==0) return;
 			
-			if (choice != 1) {
+			if (choice != 14) {
 				InputHandler.handleStaffChoice(staff,choice);
 			} else {
 				InputHandler.handleStaffChoice(staff,choice);
