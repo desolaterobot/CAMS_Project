@@ -46,6 +46,7 @@ public class InputHandler {
 		default:
 			System.out.println("Please input a value between 0-18!");
 			handleStudentChoice(student,choice);
+			break;
 		}
 	}
 
