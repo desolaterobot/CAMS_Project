@@ -349,9 +349,8 @@ class UserManager extends UserDBManager{
 			newPassword = sc.nextLine();
 			if (newPassword.equals("password")) {
 				System.out.println("Please change your password to something that is not the default password! -- Password change failed!");
-			}
-			if (hash(newPassword).equals(user.getPassword())){
-					System.out.println("You're using your old password!");
+			}else if (hash(newPassword).equals(user.getPassword())){
+					System.out.println("You're using your old password! -- Password change failed!");
 			}
 		} while (newPassword.equals("password")|| hash(newPassword).equals(user.getPassword()));
  
