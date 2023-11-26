@@ -411,7 +411,7 @@ public class Student extends User implements EnquiryInterface{
 		return isCommitteeMember;
 	}
 
-	**
+	/**
      * Sets whether the student is a committee member.
      *
      * @param b value indicating whether the student is a committee member.
