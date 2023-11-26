@@ -2,13 +2,14 @@ package Users;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataManager.UserDBManager;
 import Utility.CSVReader;
 
 
 /**
  * The PointsSystem class provides methods for managing and retrieving points for users in the system.
  */
-public class PointsSystem extends CSVReader {
+public class PointsSystem extends UserDBManager{
 
 	/**
      * Default constructor for the PointsSystem class.
@@ -26,7 +27,7 @@ public class PointsSystem extends CSVReader {
 	public static int getCurrentPoints(User user) {
 		String file = "data/students.csv";
         
-		String[] lines = CSVReader.getLinesWithHeader(file);
+		String[] lines = getLinesWithHeader(file);
         int index = 0;
         int indexToModify = -1;
         for(String line : lines){
