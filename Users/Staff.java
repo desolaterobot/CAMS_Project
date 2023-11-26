@@ -8,14 +8,23 @@ import Enquiry.*;
 import Suggestion.*;
 import Utility.ReportGenerator;
 
-
+/**
+ * The class represents a staff member involved in managing camps. It extends the {@code User} class
+ * and implements interfaces for handling enquiries and approving suggestions.
+ * The class includes methods for managing camps, handling enquiries, approving suggestions, and generating reports.
+ */
 public class Staff extends User implements EnquiryReplyInterface, ApproveSuggestionInterface {
     /**
-     * A list of camps current Staff is in-charged of. To prevent circular referencing
+     * A list of camps that the current staff is in charge of. To prevent circular referencing,
      * ownCamps is only loaded when getOwnCamps is called.
      */
     private List<Camp> ownCamps = new ArrayList<>();
 
+    /**
+     * Main method for testing and demonstrating the functionality of the Staff class.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         System.out.println("Testing...");
         Staff s = new Staff("Alexei","OURIN@ntu.edu.sg","ADM","5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
@@ -28,6 +37,14 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     //    s.editCamp();
     }
 
+    /**
+     * Constructs a new Staff object with the given parameters.
+     *
+     * @param name     The name of the staff member.
+     * @param email    The email of the staff member.
+     * @param faculty  The faculty of the staff member.
+     * @param passHash The password hash of the staff member.
+     */
     public Staff(String name, String email, String faculty, String passHash) {
         super(name, email, faculty, passHash);
     }
@@ -59,8 +76,9 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     }
 
     /**
-     * Given Camp, edit the particulars of this camp.
-     * @param camp
+     * Given a Camp, edit the particulars of this camp.
+     *
+     * @param camp The camp to edit.
      */
     public void editCamp(Camp camp) {
         CampManager.editCamp(camp);
@@ -79,7 +97,8 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
 
     /**
      * Delete the given Camp.
-     * @param camp
+     *
+     * @param camp The camp to delete.
      */
     public void deleteCamp(Camp camp) {
         CampManager.deleteCamp(camp);
@@ -103,8 +122,9 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     }
 
     /**
-     * View the list of Students in the current Camp.
-     * @param camp
+     * View the list of students in the current Camp.
+     *
+     * @param camp The camp to view the student list.
      */
     public void viewStudentList(Camp camp) {
         System.out.println("======Student List======");
@@ -183,18 +203,11 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
         SuggestionManager.approveSuggestion(allSuggestions.get(choice-1),this);
         System.out.println("Suggestion is approved");
     }
-
+    
     /**
-     * Generate Camp Report
-     * @param camp
+     * Display List of camps to generate performance report
      */
-    public void generateCampReport(Camp camp) {
-        ReportGenerator.staffGenerateReport(camp);
-    }
-
-    /**
-     * Display list of camps to generate camp report
-     */
+    
     public void generatePerformanceReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter number to edit Camp");
@@ -209,15 +222,25 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
     }
 
     /**
-     * Generate Performance Report given camp
-     * @param camp
-     */
+ * Generate a performance report for the specified camp.
+ *
+ * @param camp The camp for which to generate the performance report.
+ */
     public void generatePerformanceReport(Camp camp) {
         ReportGenerator.staffGeneratePerformanceReport(camp);
     }
 
     /**
-     * Display List of camps to generate performance report
+ * Generate a report for the specified camp.
+ *
+ * @param camp The camp for which to generate the report.
+ */
+    public void generateCampReport(Camp camp) {
+        ReportGenerator.staffGenerateReport(camp);
+    }
+    
+    /**
+     * Display list of camps to generate camp report
      */
     public void generateCampReport() {
         Scanner sc = new Scanner(System.in);
