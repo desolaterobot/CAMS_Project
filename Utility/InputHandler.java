@@ -87,6 +87,7 @@ public class InputHandler {
 			student.withdrawCamp(wCampName);
 			break;
 		case 6:
+			student.viewCamps();
 			System.out.print("To which camp would you like to submit your enquiry to? ");
 			String enqCamp = sc.nextLine();
 			System.out.print("Please Enter your Enquiry: ");
