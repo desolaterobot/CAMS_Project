@@ -5,6 +5,7 @@ import Camp.*;
 import Enquiry.*;
 import Suggestion.*;
 import Utility.ReportGenerator;
+import DataManager.CampDBManager;
 
 /**
  * The class represents a staff member involved in managing camps. It extends the {@code User} class
