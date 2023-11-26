@@ -80,10 +80,11 @@ public class EnquiryManager extends EnquiryDBManager{
     } 
     
     /**
-     * Gets an array of EnquiryReply objects corresponding to the replies associated with this enquiry.
-     *
-     * @return An array of EnquiryReply objects.
-     */
+ * Gets an array of EnquiryReply objects corresponding to the replies associated with this enquiry.
+ *
+ * @param enquiry The Enquiry object for which replies are retrieved.
+ * @return An array of EnquiryReply objects.
+ */
 	public static EnquiryReply[] getReplies(Enquiry enquiry){
         List<EnquiryReply> replyList = new LinkedList<>();
         EnquiryReply[] database = getEnquiryReplyDatabase();
@@ -118,7 +119,7 @@ public class EnquiryManager extends EnquiryDBManager{
     /**
      * Edits an existing enquiry in the CSV file.
      *
-     * @param toBeUpdated The Enquiry object to be updated.
+     * @param toBeEdited The Enquiry object to be updated.
      */
     public static void editEnquiry(Enquiry toBeEdited) {
     	EnquiryReply[] enqrs = getReplies(toBeEdited);
@@ -131,18 +132,26 @@ public class EnquiryManager extends EnquiryDBManager{
     }
 
 	/**
-	 * Adds a reply to the enquiry.
-	 *
-	 * @param replier The user providing the reply.
-	 * @param reply   The content of the reply.
-	 */
+ * Adds a reply to the given enquiry, updating both the EnquiryReply and Enquiry databases.
+ *
+ * @param replier The user providing the reply.
+ * @param reply   The content of the reply.
+ * @param enq     The Enquiry object to which the reply is added.
+ */
     public static void replyEnquiry(User replier, String reply, Enquiry enq){
+	    // Retrieve the existing EnquiryReply database
 	    EnquiryReply[] enqRDB = EnquiryDBManager.getEnquiryReplyDatabase();
+	    
+	    // Generate a new reply ID
 	    int replyID = toInt(enqRDB[enqRDB.length-1].getEnquiryReplyID())+1;
+
+	    // Create a new EnquiryReply line
 	    String line = String.format("%d,%s,%s", replyID, removeCommas(reply), replier.getUserId());
+
+	    // Add the new reply to the EnquiryReply database
 	    EnquiryDBManager.addReplyToDB(line);//done with appending a new reply into database
 	    
-	    //but still need to update the enquiry database as well:
+	    // Update the Enquiry database with the new reply ID
 	    List<Integer> intList = Arrays.stream(enq.getReplies()).boxed().collect(Collectors.toList());
 	    intList.add(replyID);
 	    String[] newIDStrings = intList.stream().map(Object::toString).toArray(String[]::new);
