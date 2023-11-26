@@ -46,42 +46,92 @@ public class Suggestion {
         }
     }
     
-    //Getters and Setters
+    /**
+     * Gets the unique identifier for the suggestion.
+     *
+     * @return The suggestion ID.
+     */
     public String getSuggestionID() {
     	return suggestionID;
     }
-    
+
+    /**
+     * Sets the suggestion ID.
+     *
+     * @param suggestionID The new suggestion ID.
+     */
     public void setSuggestionID(String suggestionID) {
     	this.suggestionID = suggestionID;
     }
-    
+
+    /**
+     * Gets the committee member making the suggestion.
+     *
+     * @return The committee member User object.
+     */
     public User getCommitteeMember() {
     	return committeeMember;
     }
-    
+
+    /**
+     * Gets the camp associated with the suggestion.
+     *
+     * @return The camp object.
+     */
     public Camp getCamp() {
     	return camp;
     }
-    
+
+    /**
+     * Gets the content of the suggestion.
+     *
+     * @return The suggestion message.
+     */
     public String getMessage() {
     	return message;
     }
+
+    /**
+     * Sets the content of the suggestion.
+     *
+     * @param message The new suggestion message.
+     */
     public void setMessage(String message) {
     	this.message = message;
     }
-    
+
+    /**
+     * Gets the approval status of the suggestion.
+     *
+     * @return {@code true} if approved, {@code false} otherwise.
+     */
     public Boolean getApprovedStatus() {
     	return approved;
     }
-    
+
+    /**
+     * Sets the approval status of the suggestion.
+     *
+     * @param approved The new approval status.
+     */
     public void setApprovedStatus(Boolean approved) {
     	this.approved = approved;
     }
 
+    /**
+     * Sets the staff member who approved the suggestion.
+     *
+     * @param approvedBy The staff member User object who approved the suggestion.
+     */
     public void setApprovedBy(Staff approvedBy){
         this.approvedBy = approvedBy;
     }
-    
+
+    /**
+     * Gets the staff member who approved the suggestion.
+     *
+     * @return The staff member User object, or {@code null} if not approved.
+     */
     public User getApprovedBy() {
     	return approvedBy;
     }
