@@ -19,7 +19,7 @@ public class CampManager extends CampDBManager{
     /**
      * Main method for testing the functionality of the CampManager class.
      *
-     * @param args Command-line arguments (not used).
+     * @param a Command-line arguments (not used).
      */
     public static void main(String[] a){
         System.out.println("test");
@@ -181,7 +181,14 @@ public class CampManager extends CampDBManager{
         }
     }
 
-    // method to repeatedly ask for a valid date
+   /**
+ * Prompts the user for a valid date input in the "dd/mm/yyyy" format.
+ * Repeatedly asks for input until a valid date is provided.
+ *
+ * @param sc      Scanner object for input
+ * @param prompt  The prompt message requesting the date input
+ * @return A Date object representing the valid input date
+ */
     private static Date getDateInput(Scanner sc, String prompt) {
         String inputDate;
         while (true) {
@@ -201,17 +208,6 @@ public class CampManager extends CampDBManager{
      * @param campToBeEdited The Camp object to be edited.
      */
     public static void editCamp (Camp campToBeEdited) {
-        /*Things staff can edit:
-         Start Date
-         End Date
-         Registration Deadline
-         Faculty only visibility
-         Location
-         Description
-         Total Slots
-         Committee Slots
-         */
-        //init new camp
         Scanner sc = new Scanner(System.in);
 
         while (true) {
