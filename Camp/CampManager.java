@@ -142,38 +142,42 @@ public class CampManager {
         System.out.println("Enter the name of the camp.");
         String name = sc.nextLine();
 
-        Date startDate = getDateInput(sc, "Enter the start date of the camp, in the format: dd/mm/yyyy");
-
-        Date endDate = getDateInput(sc, "Enter the end date of the camp, in the format: dd/mm/yyyy");
-
-        Date registrationDeadline = getDateInput(sc, "Enter the registration deadline, in the format: dd/mm/yyyy");
-
-        System.out.println("Enter the location of the camp");
-        String location = sc.nextLine();
-
-        System.out.println("Enter a brief description for this camp.");
-        String description = sc.nextLine();
-
-        System.out.println("Enter the total number of attendee slots.");
-        int totalSlots = sc.nextInt();
-
-        System.out.println("Enter the total number of committee slots.");
-        int commiteeSlots = sc.nextInt();
-
-        System.out.println("Should this camp be open to the whole NTU (type 1) or only for your faculty? (type 0)");
-        int choice = sc.nextInt();
-        boolean onlyFaculty = choice == 1 ? false : true;
-
-        System.out.println("Initial visibility? Visible (type 1) or Invisible? (type 0)");
-        int choice2 = sc.nextInt();
-        boolean visible = choice2 == 1 ? true : false;
-        sc.nextLine();
-
-        String[] emptyArray = new String[0];
-
-        Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.getUserId(), emptyArray, visible, totalSlots, commiteeSlots, emptyArray);
-        
-        CampDBManager.createCamp(createdCamp);
+        if (getCamp(name) == null) {
+            Date startDate = getDateInput(sc, "Enter the start date of the camp, in the format: dd/mm/yyyy");
+    
+            Date endDate = getDateInput(sc, "Enter the end date of the camp, in the format: dd/mm/yyyy");
+    
+            Date registrationDeadline = getDateInput(sc, "Enter the registration deadline, in the format: dd/mm/yyyy");
+    
+            System.out.println("Enter the location of the camp");
+            String location = sc.nextLine();
+    
+            System.out.println("Enter a brief description for this camp.");
+            String description = sc.nextLine();
+    
+            System.out.println("Enter the total number of attendee slots.");
+            int totalSlots = sc.nextInt();
+    
+            System.out.println("Enter the total number of committee slots.");
+            int commiteeSlots = sc.nextInt();
+    
+            System.out.println("Should this camp be open to the whole NTU (type 1) or only for your faculty? (type 0)");
+            int choice = sc.nextInt();
+            boolean onlyFaculty = choice == 1 ? false : true;
+    
+            System.out.println("Initial visibility? Visible (type 1) or Invisible? (type 0)");
+            int choice2 = sc.nextInt();
+            boolean visible = choice2 == 1 ? true : false;
+            sc.nextLine();
+    
+            String[] emptyArray = new String[0];
+    
+            Camp createdCamp = new Camp(name, startDate, endDate, registrationDeadline, emptyArray, onlyFaculty, location, description, staffInCharge.getUserId(), emptyArray, visible, totalSlots, commiteeSlots, emptyArray);
+            
+            CampDBManager.createCamp(createdCamp);
+        } else {
+            System.out.println("Your camp name clashes with an existing camp! -- Create camp failed!");
+        }
     }
 
     // method to repeatedly ask for a valid date
