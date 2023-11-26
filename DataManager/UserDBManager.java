@@ -59,7 +59,7 @@ public class UserDBManager extends CSVReader {
     
 	public static List<Student> loadStudents() {
 		List<Student> users = new ArrayList<>();
-		String file = "data/students";
+		String file = "data/students.csv";
 		
 		String[] lines = CSVReader.getLines(file);
 		
@@ -88,7 +88,7 @@ public class UserDBManager extends CSVReader {
 	
 	public static List<Staff> loadStaff() {
 		List<Staff> users = new ArrayList<>();
-		String file = "data/staff";
+		String file = "data/staff.csv";
 		
 		String[] lines = CSVReader.getLines(file);
 		
@@ -123,12 +123,9 @@ public class UserDBManager extends CSVReader {
 				String faculty = part[2];
 				String password = part[3];
 				
-				boolean isCommitteeMember = false;
-				String whichCampCommittee = null;
-				
 				if(file.toLowerCase().contains("student")) {
-					isCommitteeMember = Boolean.parseBoolean(part[4]);
-					whichCampCommittee = part[5];
+					boolean isCommitteeMember = Boolean.parseBoolean(part[4]);
+					String whichCampCommittee = part[5];
 					
 					Student student = new Student(name, email, faculty, password, isCommitteeMember, whichCampCommittee);
 					Users.add(student);
@@ -244,15 +241,11 @@ public class UserDBManager extends CSVReader {
 			System.out.println("Changing staff password...");
             file = "data/staff.csv";
 			newLine = String.format("%s,%s,%s,%s", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
-        }else if(user instanceof CampCommitteeMember){
-			System.out.println("Changing committee password.");
-			CampCommitteeMember commitee = (CampCommitteeMember)user; //downcast!!
-			file = "data/students.csv";
-			newLine = String.format("%s,%s,%s,%s,true,%s,%d", user.getName(), user.getEmail(), user.getFaculty(), newPassHash, commitee.getCommitteeCamp(), PointsSystem.getCurrentPoints(commitee));
         }else if(user instanceof Student){
 			file = "data/students.csv";
 			System.out.println("Changing student password...");
-			newLine = String.format("%s,%s,%s,%s,false,null,0", user.getName(), user.getEmail(), user.getFaculty(), newPassHash);
+			Student s = (Student) user;
+			newLine = String.format("%s,%s,%s,%s,%b,%s,0", s.getName(), s.getEmail(), s.getFaculty(), newPassHash,s.isCommitteeMember(),s.getCommitteeCamp());
 		}else{
 			System.out.println("You did not pass in an inherited User object.");
 			System.out.println("Unable to change password.");
