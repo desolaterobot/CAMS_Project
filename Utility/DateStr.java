@@ -42,8 +42,12 @@ public class DateStr {
         }
         return str;
     }
-
-     // method to validate the date format
+/**
+ * Checks if a given string represents a valid date in the format "dd/MM/yyyy".
+ *
+ * @param str The string to be checked for a valid date.
+ * @return True if the string represents a valid date; false otherwise.
+ */
     public static boolean isValidDate(String str) {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setLenient(false); // Set to false to strictly validate dates
