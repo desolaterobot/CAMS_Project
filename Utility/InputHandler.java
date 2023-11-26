@@ -39,8 +39,10 @@ public class InputHandler {
 			break;
 		case 17:
 			System.out.printf("Your current point(s): %d\n", PointsSystem.getCurrentPoints(commMem));
+			break;
 		case 18:
 			commMem.viewStudentList();
+			break;
 		default:
 			System.out.println("Please input a value between 0-18!");
 			handleStudentChoice(student,choice);

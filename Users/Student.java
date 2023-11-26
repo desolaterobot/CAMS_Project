@@ -123,6 +123,11 @@ public class Student extends User implements EnquiryInterface{
      */
 	public void registerCamp(String campName, boolean committeeMember) {
 		Camp camp = CampManager.getCamp(campName);
+		
+		if(camp==null) {
+			System.out.println("Camp not found");
+			return;
+		}
 		if(!registeredCamps.contains(campName)) {
 			if(!committeeMember) {
 				if(isEligible(camp)) {
@@ -365,6 +370,11 @@ public class Student extends User implements EnquiryInterface{
      */
 	public void viewEnquiry(String enquiryID) {
 		Enquiry enquiry = EnquiryManager.getEnquiryByID(enquiryID);
+		
+		if (enquiry == null) {
+			System.out.println("Incorect input");
+			return;
+		}
 		if(enquiry.equals(null)) return;
 		EnquiryReply[] enqr = EnquiryManager.getReplies(enquiry);
 		if(enqr.length <= 0) {

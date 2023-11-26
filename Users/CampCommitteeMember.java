@@ -169,8 +169,6 @@ public class CampCommitteeMember extends Student implements EnquiryReplyInterfac
 
 /**
      * View the list of students in the current Camp.
-     *
-     * @param camp The camp to view the student list.
      */
     public void viewStudentList() {
 		Camp camp = CampManager.getCamp(getCommitteeCamp());
