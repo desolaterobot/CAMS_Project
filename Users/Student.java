@@ -365,6 +365,9 @@ public class Student extends User implements EnquiryInterface{
 		if(enquiry.equals(null)) return;
 		EnquiryReply[] enqr = EnquiryManager.getReplies(enquiry);
 		if(enqr.length <= 0) {
+			System.out.print("[Unreplied] ");
+			System.out.println("Enquiry for: " + enquiry.getCamp().getCampName());
+			System.out.println(enquiry.getStudent().getName() + ": " + enquiry.getMessage() + "\n");
 			System.out.println("There are no replies yet for this enquiry.\n");
 			return;
 		}
