@@ -367,6 +367,11 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
      * View all Enquiries and select the one that you want to reply.
      */
     public void replyToEnquiry() {
+        getOwnCamps();
+        if (ownCamps.size() == 0) {
+                System.out.println("[No Suggestions]");
+                return;
+            }
         List<Enquiry> allEnquiries = new ArrayList<>();
         System.out.println("Enter the number of the Enquiry you want to reply");
         int enquiryChoiceCounter = 1;
@@ -387,6 +392,10 @@ public class Staff extends User implements EnquiryReplyInterface, ApproveSuggest
                 enquiryChoiceCounter++;
             }
 
+        }
+        if (allEnquiries.size() == 0) {
+            System.out.println("Nothing to reply to.");
+            return;
         }
         Scanner sc = new Scanner(System.in);
         System.out.print("Choice: ");
