@@ -124,9 +124,12 @@ public class InputHandler {
 			
 		case 10:
 			student.viewEnquiries();
-			System.out.print("Enter the Enquiry ID which you wish to delete: ");
-			String deleteEnqID = sc.nextLine();
-			student.deleteEnquiry(deleteEnqID);
+			Enquiry[] enqs = EnquiryManager.getStudentEnquiries(student);
+			if(enqs.length > 0) {
+				System.out.print("Enter the Enquiry ID which you wish to delete: ");
+				String deleteEnqID = sc.nextLine();
+				student.deleteEnquiry(deleteEnqID);
+			}
 			break;
 		default:
 			System.out.println("Please input a value between 0-10!");
