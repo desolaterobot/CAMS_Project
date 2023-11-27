@@ -87,14 +87,11 @@ public class Student extends User implements EnquiryInterface{
 				return false;
 			}
 		}
-		for(String s: registeredCamps) {
-			Camp c = CampManager.getCamp(s);
-			if(camp.getStartDate().before(c.getStartDate()) && camp.getEndDate().after(c.getStartDate()) ||
-					camp.getStartDate().before(c.getEndDate()) && camp.getEndDate().after(c.getEndDate()) ||
-					camp.getStartDate().before(c.getStartDate()) && camp.getEndDate().after(c.getEndDate()) ||
-					camp.getStartDate().after(c.getEndDate()) && camp.getEndDate().before(c.getEndDate())) {
-				System.out.println("Dates clashed with " + c.getCampName() + "!");
-				return false;
+		for (String s : registeredCamps) {
+	        Camp c = CampManager.getCamp(s);
+	        if (camp.getStartDate().before(c.getEndDate()) && camp.getEndDate().after(c.getStartDate())) {
+	            System.out.println("Dates clashed with " + c.getCampName() + "!");
+	            return false;
 			}
 		}
 		
